@@ -1,7 +1,5 @@
 # Hello JavaScript!
 
-[[toc]]
-
 ### javascript
 1. 原型链
 
