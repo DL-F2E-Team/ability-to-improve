@@ -3,14 +3,17 @@ module.exports = {
     description: 'Not just playing around',
     base: '/ability-to-improve/',
     markdown: {
-        lineNumbers: true
+        lineNumbers: true,
+        toc: {
+            includeLevel: [1, 2]
+        },
     },
     themeConfig: {
-        nav: [{
-            text: 'javascript',
-            link: '/'
-        }],
-        sidebar: ['/']
+        // nav: [{
+        //     text: 'javascript',
+        //     link: '/'
+        // }],
+        sidebar: ['/', '/html/', '/style/', '/http/', '/react/', '/vue/']
     }
     // themeConfig: {
     //     // 添加导航栏
@@ -27,6 +30,4 @@ module.exports = {
     //             ]
     //         }
     //     ],
-    //     // 为以下路由添加侧边栏
-    //     sidebar: ['/', '/git', '/vue']}
 }
