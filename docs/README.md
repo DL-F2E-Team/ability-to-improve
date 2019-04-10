@@ -199,10 +199,11 @@ categories:
 ```
 
 ## React
+
 ### React
 ```
-1.  jsx
-2.  ReactDOM.render()
+1. jsx
+2. ReactDOM.render()
 3. 组件（createClass，Component，SFC）、元素、实例
 4. state、props
 5.  时间处理（bind(this)） => bind、apply、call
@@ -216,8 +217,10 @@ categories:
 13. 异步处理redux：redux-chunk、redux-saga
 14. context
 15. getDerivedStateFromProps，getSnapshotBeforeUpdate
+
 @version 16.4
 1. 增加Pointer Events
+
 @version 16.6
 1. React.memo(【函数组件】) ~ React.PureComponent   【memoization => 缓存】
 2. React.lazy(() => import【组件】)

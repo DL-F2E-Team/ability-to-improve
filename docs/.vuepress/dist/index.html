@@ -7,7 +7,7 @@
     <meta name="description" content="Not just playing around">
     
     
-    <link rel="preload" href="/ability-to-improve/assets/css/0.styles.192826cb.css" as="style"><link rel="preload" href="/ability-to-improve/assets/js/app.fd03769e.js" as="script"><link rel="preload" href="/ability-to-improve/assets/js/2.56a133bd.js" as="script"><link rel="preload" href="/ability-to-improve/assets/js/6.529c5f23.js" as="script"><link rel="prefetch" href="/ability-to-improve/assets/js/10.e4a30f47.js"><link rel="prefetch" href="/ability-to-improve/assets/js/11.c272dd5b.js"><link rel="prefetch" href="/ability-to-improve/assets/js/12.4d5768ad.js"><link rel="prefetch" href="/ability-to-improve/assets/js/3.ac4ff040.js"><link rel="prefetch" href="/ability-to-improve/assets/js/4.310d8c1f.js"><link rel="prefetch" href="/ability-to-improve/assets/js/5.e21312db.js"><link rel="prefetch" href="/ability-to-improve/assets/js/7.6550ddbc.js"><link rel="prefetch" href="/ability-to-improve/assets/js/8.231103cf.js"><link rel="prefetch" href="/ability-to-improve/assets/js/9.6c472900.js">
+    <link rel="preload" href="/ability-to-improve/assets/css/0.styles.192826cb.css" as="style"><link rel="preload" href="/ability-to-improve/assets/js/app.ae9efaec.js" as="script"><link rel="preload" href="/ability-to-improve/assets/js/2.c5f14c98.js" as="script"><link rel="preload" href="/ability-to-improve/assets/js/7.d2a71d73.js" as="script"><link rel="prefetch" href="/ability-to-improve/assets/js/10.0bc2159f.js"><link rel="prefetch" href="/ability-to-improve/assets/js/11.743a450d.js"><link rel="prefetch" href="/ability-to-improve/assets/js/12.f1bc7dc9.js"><link rel="prefetch" href="/ability-to-improve/assets/js/3.7f9f22ff.js"><link rel="prefetch" href="/ability-to-improve/assets/js/4.b2f9d132.js"><link rel="prefetch" href="/ability-to-improve/assets/js/5.ecf469f3.js"><link rel="prefetch" href="/ability-to-improve/assets/js/6.4efd1e05.js"><link rel="prefetch" href="/ability-to-improve/assets/js/8.27e1bab1.js"><link rel="prefetch" href="/ability-to-improve/assets/js/9.7259afe6.js">
     <link rel="stylesheet" href="/ability-to-improve/assets/css/0.styles.192826cb.css">
   </head>
   <body>
@@ -141,8 +141,8 @@
 2. action -&gt; dispatch mutation
 3. mutation -&gt; commit（只在这里进行数据修改）
 4. module
-</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><h2 id="react"><a href="#react" aria-hidden="true" class="header-anchor">#</a> React</h2> <h3 id="react-2"><a href="#react-2" aria-hidden="true" class="header-anchor">#</a> React</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>1.  jsx
-2.  ReactDOM.render()
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><h2 id="react"><a href="#react" aria-hidden="true" class="header-anchor">#</a> React</h2> <h3 id="react-2"><a href="#react-2" aria-hidden="true" class="header-anchor">#</a> React</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>1. jsx
+2. ReactDOM.render()
 3. 组件（createClass，Component，SFC）、元素、实例
 4. state、props
 5.  时间处理（bind(this)） =&gt; bind、apply、call
@@ -156,8 +156,10 @@
 13. 异步处理redux：redux-chunk、redux-saga
 14. context
 15. getDerivedStateFromProps，getSnapshotBeforeUpdate
+
 @version 16.4
 1. 增加Pointer Events
+
 @version 16.6
 1. React.memo(【函数组件】) ~ React.PureComponent   【memoization =&gt; 缓存】
 2. React.lazy(() =&gt; import【组件】)
@@ -165,7 +167,7 @@
 4. static getDerivedStateFromError()
 5.  Suspense组件【悬念组件？】
 6. 废弃 React.StrictMode
-</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br></div></div><h3 id="dva"><a href="#dva" aria-hidden="true" class="header-anchor">#</a> dva</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>1. redux-saga
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br></div></div><h3 id="dva"><a href="#dva" aria-hidden="true" class="header-anchor">#</a> dva</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>1. redux-saga
 </code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h2 id="其他"><a href="#其他" aria-hidden="true" class="header-anchor">#</a> 其他</h2> <h3 id="网络协议"><a href="#网络协议" aria-hidden="true" class="header-anchor">#</a> 网络协议</h3> <div class="language- line-numbers-mode"><pre class="language-text"><code>1. HTTP1.1和HTTP1.0
 2. 强缓存、弱缓存（协商缓存）
 </code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><!----> <span class="next"><a href="/ability-to-improve/javascript/">
@@ -173,6 +175,6 @@
         </a>
         →
       </span></p></div> </main></div><div class="global-ui"></div></div>
-    <script src="/ability-to-improve/assets/js/app.fd03769e.js" defer></script><script src="/ability-to-improve/assets/js/2.56a133bd.js" defer></script><script src="/ability-to-improve/assets/js/6.529c5f23.js" defer></script>
+    <script src="/ability-to-improve/assets/js/app.ae9efaec.js" defer></script><script src="/ability-to-improve/assets/js/2.c5f14c98.js" defer></script><script src="/ability-to-improve/assets/js/7.d2a71d73.js" defer></script>
   </body>
 </html>

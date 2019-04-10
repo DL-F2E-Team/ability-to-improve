@@ -148,15 +148,22 @@ var cloneObj = function(obj){
 
 ## 知道哪些排序的方法？实现思路
 
-
-## 原型链
-
 回答：
 
 ## `jQuery`是如何暴露`$`符号的
 
-回答：
+```js
+window.jQuery = window.$ = jQuery
+```
 
-## `for in`能不能把原型链循环出来
+## `for in`能否把原型链循环出来
 
-回答：
+能。
+
+### 如何避免？
+
+使用 `hasOwnProperty`。
+
+## 原型链
+
+![solar](./images/1.jpg)
