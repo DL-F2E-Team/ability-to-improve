@@ -2,7 +2,9 @@
 
 <TOC/>
 
-## 1. 输出结果是
+## 求以下输出结果
+
+### 输出结果是
 
 ```js
 var tasks = [];
@@ -25,8 +27,9 @@ Promise.all(tasks).then(function(i){
   },1000)
 })
 ```
+回答：Console
 
-## 2. 输出结果是
+### 输出结果是
 
 ```js
 for(var i = 0; i < 5; i++){
@@ -37,14 +40,15 @@ for(var i = 0; i < 5; i++){
 
 console.log(new Date(), i)
 ```
+回答：Console
 
-## 3. 前端性能优化
+## 前端性能优化
 
-## 4. 前端与后端交互，如何实现数据加密
+## 前端与后端交互，如何实现数据加密
 
-## 5. 前端在混合开发中的交互
+## 前端在混合开发中的交互
 
-## 6. 创建原生的ajax请求
+## 创建原生的ajax请求
 ```js
  ajax({
      url: "./TestXHR.aspx",              //请求地址
@@ -106,7 +110,7 @@ console.log(new Date(), i)
  }
 ```
 
-## 7. `<div name="abc" abc="1"></div>` 如何获取其中的 `abc` 属性
+## `<div name="abc" abc="1"></div>` 如何获取其中的 `abc` 属性
 ```js
 // jq
 $('[name="abc"]').attr('abc');
@@ -116,11 +120,11 @@ var a = document.getElementByName('abc');
 a.getAttribute('abc');
 ```
 
-## 8. 什么是MVVM，简单解释下
+## 什么是MVVM，简单解释下
 
-## 9. 实现数组去重
+## 实现数组去重
 
-## 10. 实现浅复制和深复制
+## 实现浅复制和深复制
 
 ```js
 var cloneObj = function(obj){
@@ -140,19 +144,19 @@ var cloneObj = function(obj){
 };
 ```
 
-## 11. 实现菲波那切数列
+## 实现菲波那切数列
 
-## 12. 知道哪些排序的方法？实现思路
+## 知道哪些排序的方法？实现思路
 
 
-## 13. 原型链
-
-回答：
-
-## 14. `jQuery`是如何暴露`$`符号的
+## 原型链
 
 回答：
 
-## 15. `for in`能不能把原型链循环出来
+## `jQuery`是如何暴露`$`符号的
+
+回答：
+
+## `for in`能不能把原型链循环出来
 
 回答：
