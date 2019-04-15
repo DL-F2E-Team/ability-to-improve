@@ -2,7 +2,7 @@
 
 <TOC/>
 
-## 1. 游览器缓存机制（强缓存，弱缓存）
+## 游览器缓存机制（强缓存，弱缓存）
 
 ### 强缓存
 ```
@@ -94,3 +94,11 @@ Accept-Ranges: bytes
 * If-Modified-Since：客户端保留的资源上次的修改时间。
 * Etag：资源的内容标识。（不唯一，通常为文件的md5或者一段hash值，只要保证写入和验证时的方法一致即可）
 * If-None-Match： 客户端保留的资源内容标识。
+
+### 外链知识
+
+[掘金 - 从前端角度理解缓存](https://juejin.im/post/5c4044cd51882524f23032eb?utm_source=gold_browser_extension)
+
+## TCP三次握手和四次挥手
+
+[link](https://mp.weixin.qq.com/s/pSrKbVryn71kDVIXUtpXMA)

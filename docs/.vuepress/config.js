@@ -13,7 +13,18 @@ module.exports = {
         //     text: 'javascript',
         //     link: '/'
         // }],
-        sidebar: ['/', '/javascript/', '/html/', '/style/', '/http/', '/react/', '/vue/']
+        sidebar: ['/',{
+            title: 'Javascript',
+            children: [
+                '/javascript/',
+            ]
+        }, '/html/', '/style/', {
+            title: 'React',
+            children: [
+                '/react/'
+            ]
+        }, '/http/', '/vue/'],
+        sidebarDepth: 2,
     }
     // themeConfig: {
     //     // 添加导航栏

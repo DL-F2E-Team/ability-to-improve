@@ -15,19 +15,33 @@ categories:
 ## ECMAscript
 
 ### ES5
+
+* `javascript`是弱类型语言。<br/>
+基本数据类型 - （数字、字符串、Boolean、undefined、null）、ES6新增（symbol）。<br/>
+引用数据类型 - 引用数据类型 object（对象包括【function、array】）。<br/>
+原生函数 - String、Number、Boolean、Array、Object、Function、RegExp、Date、Error、Symbol
+
+* `typeof` <br/>
+typeof null => object <br/>
+判断null：(!a && typeof a === 'object')
+
+* undefined 和 is not defined 是两回事，前者已声明未赋值，后者未声明。
+
+* ECMAScript、文档对象模型（DOM）、游览器对象模型（BOM）
+
+* 稀疏数组
+
+* `void`
+
+* 获取封装对象的值：`valueOf`
+
+* Date.now() === (new Date()).getTime()
+
+* throw new Error ('')
+
+* 隐式强制类型转换(valueOf()，toString())，显式强制类转换：假值 - undefined null false +0 -0 NaN '' <br/>
+ +一元运算符能将字符串快速转换为数字，并且将日期转换为时间戳
 ```
-1. 弱类型语言 - 基本数据类型（数字、字符串、Boolean、undefined、null）、ES6新增（symbol）、引用数据类型 object（对象包括【function、array】）
-2. typeof （null => ‘object’）判断null (!a && typeof a === ‘object')
-3. undefined 和 is not defined 是两回事，前者已声明未赋值，后者未声明
-4. ECMAScript、文档对象模型（DOM）、游览器对象模型（BOM）
-5. 稀疏数组
-6. void
-7. 原生函数：String、Number、Boolean、Array、Object、Function、RegExp、Date、Error、Symbol
-8. 获取封装对象的值：valueOf
-9. Date.now() === (new Date()).getTime()
-10. throw new Error ('')
-11. 隐式强制类型转换(valueOf()，toString())，显式强制类转换：假值 - undefined null false +0 -0 NaN “"
-12. +一元运算符能将字符串快速转换为数字，并且将日期转换为时间戳
 13. +、~~、!!的妙用、||、&&的使用简写、==和===的区别
 14. []+{} === [object Object] {}+[] === 0 
 15. 运算符优先级 && > || > (? : 【右关联】)      =【右关联】 > ,
@@ -64,11 +78,14 @@ categories:
 ```
 
 ### ES6
+* `let`、`const`
+
+* 箭头函数 `() => {}`
+
+* `class`、`class <name> extend <parent>`
+
+* yield
 ```
-1. let、const
-2.  () => {}
-3.  class、class <name> extend <parent>
-4. yield
 5. 对象初始化
 6. 简写方法名 const object = {functionName () {}}
 7.  装饰器写法（修饰器decorator => ES6）（@connet）
@@ -184,6 +201,8 @@ categories:
 9. 自定义指令 - directive（bind、inserted、update、componentUpdated、unbind）
 10. v-for循环分组实现（template）
 ```
+* [Vue服务端渲染指南](https://ssr.vuejs.org/zh/)
+* [Nuxt.js](https://zh.nuxtjs.org/)
 
 ### Vue-router
 ```
@@ -198,46 +217,11 @@ categories:
 4. module
 ```
 
-## React
-
-### React
-```
-1. jsx
-2. ReactDOM.render()
-3. 组件（createClass，Component，SFC）、元素、实例
-4. state、props
-5.  时间处理（bind(this)） => bind、apply、call
-6.  高阶组件（HOC）
-7.  纯组件（SFC、函数式无状态组件
-8. 纯函数
-9. 受控组件、非受控组件
-10. 生命周期：constructor => componentWillMount => render => componentDidMount
-11. propTypes
-12. ref
-13. 异步处理redux：redux-chunk、redux-saga
-14. context
-15. getDerivedStateFromProps，getSnapshotBeforeUpdate
-
-@version 16.4
-1. 增加Pointer Events
-
-@version 16.6
-1. React.memo(【函数组件】) ~ React.PureComponent   【memoization => 缓存】
-2. React.lazy(() => import【组件】)
-3. static contextType
-4. static getDerivedStateFromError()
-5.  Suspense组件【悬念组件？】
-6. 废弃 React.StrictMode
-```
-
-### dva
-```
-1. redux-saga
-```
-
-## 其他
-### 网络协议
+## 网络协议
 ```
 1. HTTP1.1和HTTP1.0
-2. 强缓存、弱缓存（协商缓存）
 ```
+* [强缓存、弱缓存（协商缓存）](http/#游览器缓存机制（强缓存，弱缓存）)
+
+## 其他
+* [egg.js](https://eggjs.org/zh-cn/)
