@@ -1,14 +1,14 @@
-# React
-
-## React
+# [React](https://zh-hans.reactjs.org/)
 
 * jsx
 
 * `ReactDOM.render()`
 
-* 组件（createClass，Component，SFC）、元素、实例
+* `React.Fragments`
 
-* state、props
+* 组件（createReactClass，Component，SFC）、元素、实例
+
+* createReactClass => mixins
 
 * 时间处理（bind(this)） => bind、apply、call
 
@@ -20,37 +20,74 @@
 
 * 受控组件、非受控组件
 
-* 生命周期：constructor => componentWillMount => render => componentDidMount
-
 * propTypes
-
-* ref
 
 * 异步处理redux：redux-chunk、redux-saga
 
-* context
+## `state`、`props`、`setState`
+[你真的理解setState吗？](https://zhuanlan.zhihu.com/p/39512941)
 
-* getDerivedStateFromProps，getSnapshotBeforeUpdate
+## 生命周期
+* ~~componentWillMount(nextProps, nextState)~~
 
-## @v16.4
-* 增加Pointer Events
+无法保证在 componentWillUnmount 中取消掉相应的事件订阅，或者导致多次重复获取异步数据等问题
 
-## @v16.6
-* React.memo(【函数组件】) ~ React.PureComponent   【memoization => 缓存】
-* React.lazy(() => import【组件】)
-* static contextType
-* static getDerivedStateFromError()
+* `render`
+* `componentDidMount`
+
+* ~~componentWillReceiveProps(nextProps)~~
+* ~~componentWillUpdate(nextProps, nextState)~~
+
+ re-render 问题，并且对 DOM 的更新操作也可能导致重新渲染
+
+* `shouldComponentUpdate`
+* `componentDidUpdate`
+* `componentWillunMount`
+
+新生命周期
+* `getDerivedStateFromProps`
+
+`getDerivedStateFromProps(nextProps, prevState)`
+
+* `getSnapshotBeforeUpdate`
+
+`getSnapshotBeforeUpdate(prevProps, prevState)`
+
+* `componentDidCatch`
+
+`componentDidCatch(error, info)`
+
+![lifecycle](./images/lifecycle.jpg)
+
+## `ref`
+* `createRef`
+* `forwardRef`
+
+## `context`
+* `React.createContext`
+* `Context.Provider`
+* `Class.contextType`
+* `Context.Consumer`
+
+## @16.4
+* 增加 `Pointer Events`
+
+## @16.6
+* `React.memo(【函数组件】)` ~ React.PureComponent   【memoization => 缓存】
+* `React.lazy(() => import【组件】)`
+* `static contextType`
+* `static getDerivedStateFromError()`
 * Suspense组件【悬念组件？】
-* 废弃 React.StrictMode
+* 废弃 `React.StrictMode`
 
-## @v16.8
-### `Hook`
+## @16.8
+### `Hooks`
 
 只能在函数最外层调用 Hook。不要在循环、条件判断或者子函数中调用。<br/>
 只能在 React 的函数组件中调用 Hook。不要在其他 JavaScript 函数中调用。（或者自定义的 Hook 中。）
 
-* [https://zh-hans.reactjs.org/docs/hooks-intro.html](https://zh-hans.reactjs.org/docs/hooks-intro.html)
-* [https://github.com/brickspert/blog/issues/26](https://github.com/brickspert/blog/issues/26)
+* [React Hooks](https://zh-hans.reactjs.org/docs/hooks-intro.html)
+* [React Hooks 原理](https://github.com/brickspert/blog/issues/26)
 
 @Api
 * `useState`
