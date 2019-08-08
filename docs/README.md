@@ -217,11 +217,5 @@ typeof null => object <br/>
 4. module
 ```
 
-## 网络协议
-```
-1. HTTP1.1和HTTP1.0
-```
-* [强缓存、弱缓存（协商缓存）](http/#游览器缓存机制（强缓存，弱缓存）)
-
 ## 其他
 * [egg.js](https://eggjs.org/zh-cn/)

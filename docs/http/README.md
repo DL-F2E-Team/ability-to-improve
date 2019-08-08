@@ -2,8 +2,23 @@
 
 <TOC/>
 
-## 游览器缓存机制（强缓存，弱缓存）
+## TODO LISTS
+* http报文结构
+* 常用头部
+* http2.0 / https
+* 跨域
+* 安全
+* dns查询
+* tcp/ip协议
+* 五层因特网协议栈
+* cookie 与 localstorage sessionstorage
+* 游览器回流 重绘 渲染
 
+## 游览器特性
+游览器是多进程的，游览器内核是多线程的，每次打开一个页签输入 `URL` 就相当于打开了一个线程。
+游览器会自动的将多个空白页面放入一个线程中，以便提升性能。
+
+## 游览器缓存机制
 ### 强缓存
 ```
 > General
@@ -95,10 +110,13 @@ Accept-Ranges: bytes
 * Etag：资源的内容标识。（不唯一，通常为文件的md5或者一段hash值，只要保证写入和验证时的方法一致即可）
 * If-None-Match： 客户端保留的资源内容标识。
 
-### 外链知识
-
 [掘金 - 从前端角度理解缓存](https://juejin.im/post/5c4044cd51882524f23032eb?utm_source=gold_browser_extension)
 
 ## TCP三次握手和四次挥手
+[跟着动画学习TCP三次握手和四次挥手](https://mp.weixin.qq.com/s/pSrKbVryn71kDVIXUtpXMA)
 
-[link](https://mp.weixin.qq.com/s/pSrKbVryn71kDVIXUtpXMA)
+## 何为`dns-prefetch`优化？
+[dns-prefetch](https://lijiahao8898.github.io/2017/08/28/dns-prefetch)
+
+## 资料
+[从浏览器多进程到JS单线程，JS运行机制最全面的一次梳理](https://segmentfault.com/a/1190000012925872)

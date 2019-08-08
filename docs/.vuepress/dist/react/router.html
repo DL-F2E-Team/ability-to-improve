@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Router | Improve yourself</title>
+    <meta name="description" content="Not just playing around">
+    
+    
+    <link rel="preload" href="/ability-to-improve/assets/css/0.styles.192826cb.css" as="style"><link rel="preload" href="/ability-to-improve/assets/js/app.0b1aaf6d.js" as="script"><link rel="preload" href="/ability-to-improve/assets/js/2.d5242d75.js" as="script"><link rel="preload" href="/ability-to-improve/assets/js/12.10dfc636.js" as="script"><link rel="prefetch" href="/ability-to-improve/assets/js/10.894edf36.js"><link rel="prefetch" href="/ability-to-improve/assets/js/11.6799cd81.js"><link rel="prefetch" href="/ability-to-improve/assets/js/13.57d3526f.js"><link rel="prefetch" href="/ability-to-improve/assets/js/14.3c95c71c.js"><link rel="prefetch" href="/ability-to-improve/assets/js/3.183d31f7.js"><link rel="prefetch" href="/ability-to-improve/assets/js/4.fa7ccf20.js"><link rel="prefetch" href="/ability-to-improve/assets/js/5.2bab03d5.js"><link rel="prefetch" href="/ability-to-improve/assets/js/6.c8664137.js"><link rel="prefetch" href="/ability-to-improve/assets/js/7.ab375b5b.js"><link rel="prefetch" href="/ability-to-improve/assets/js/8.218766b8.js"><link rel="prefetch" href="/ability-to-improve/assets/js/9.8a5791a0.js">
+    <link rel="stylesheet" href="/ability-to-improve/assets/css/0.styles.192826cb.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/ability-to-improve/" class="home-link router-link-active"><!----> <span class="site-name">Improve yourself</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <ul class="sidebar-links"><li><a href="/ability-to-improve/" class="sidebar-link">Hello F2E !</a></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Javascript</span> <span class="arrow right"></span></p> <!----></section></li><li><a href="/ability-to-improve/html/" class="sidebar-link">HTML</a></li><li><a href="/ability-to-improve/style/" class="sidebar-link">Style</a></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>React</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/ability-to-improve/react/" class="sidebar-link">React</a></li><li><a href="/ability-to-improve/react/router.html" class="active sidebar-link">Router</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/ability-to-improve/react/router.html#history" class="sidebar-link">history</a></li></ul></li></ul></section></li><li><a href="/ability-to-improve/http/" class="sidebar-link">HTTP</a></li><li><a href="/ability-to-improve/vue/" class="sidebar-link">Vue</a></li></ul> </aside> <main class="page"> <div class="content default"><h1 id="router"><a href="#router" aria-hidden="true" class="header-anchor">#</a> Router</h1> <h2 id="history"><a href="#history" aria-hidden="true" class="header-anchor">#</a> <code>history</code></h2> <div class="language-jsx line-numbers-mode"><pre class="language-jsx"><code><span class="token keyword">import</span> createHistory <span class="token keyword">from</span> <span class="token string">&quot;history/createBrowserHistory&quot;</span>
+
+<span class="token keyword">const</span> history <span class="token operator">=</span> <span class="token function">createHistory</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment">// Get the current location.</span>
+<span class="token keyword">const</span> location <span class="token operator">=</span> history<span class="token punctuation">.</span>location
+
+<span class="token comment">// Listen for changes to the current location.</span>
+<span class="token keyword">const</span> unlisten <span class="token operator">=</span> history<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">location<span class="token punctuation">,</span> action</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">// location is an object like window.location</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>action<span class="token punctuation">,</span> location<span class="token punctuation">.</span>pathname<span class="token punctuation">,</span> location<span class="token punctuation">.</span>state<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment">// Use push, replace, and go to navigate around.</span>
+history<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">&quot;/home&quot;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> some<span class="token punctuation">:</span> <span class="token string">&quot;state&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment">// To stop listening, call the function returned from listen().</span>
+<span class="token function">unlisten</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br></div></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/ability-to-improve/react/" class="prev router-link-active">
+          React
+        </a></span> <span class="next"><a href="/ability-to-improve/http/">
+          HTTP
+        </a>
+        →
+      </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/ability-to-improve/assets/js/app.0b1aaf6d.js" defer></script><script src="/ability-to-improve/assets/js/2.d5242d75.js" defer></script><script src="/ability-to-improve/assets/js/12.10dfc636.js" defer></script>
+  </body>
+</html>

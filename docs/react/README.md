@@ -1,59 +1,49 @@
 # [React](https://zh-hans.reactjs.org/)
 
 * jsx
-
 * `ReactDOM.render()`
-
 * `React.Fragments`
-
 * 组件（createReactClass，Component，SFC）、元素、实例
-
 * createReactClass => mixins
-
 * 时间处理（bind(this)） => bind、apply、call
-
-*  高阶组件（HOC）
-
+* React.cloneElement(element, [props], [...children])
 *  纯组件（SFC、函数式无状态组件
-
 * 纯函数
-
 * 受控组件、非受控组件
-
 * propTypes
-
 * 异步处理redux：redux-chunk、redux-saga
 
-## `state`、`props`、`setState`
+<TOC/>
+
+## `state` `props` `setState`
+`this.props.children` 表示组件下面所有的子节点
+当没有的时候显示 `undefined` 当有一个的时候显示为类型 `object` 当有多个的时候显示为数组 `array`。
+`React.Children.map` 来遍历子节点，不用担心数据类型
+
 [你真的理解setState吗？](https://zhuanlan.zhihu.com/p/39512941)
 
 ## 生命周期
-* ~~componentWillMount(nextProps, nextState)~~
+#### ~~`componentWillMount(nextProps, nextState)`~~
+> 无法保证在 `componentWillUnmount` 中取消掉相应的事件订阅，或者导致多次重复获取异步数据等问题
 
-无法保证在 componentWillUnmount 中取消掉相应的事件订阅，或者导致多次重复获取异步数据等问题
+#### `render`
+#### `componentDidMount`
+#### ~~`componentWillReceiveProps(nextProps)`~~
+#### ~~`componentWillUpdate(nextProps, nextState)`~~
+> `re-render` 问题，并且对 `DOM` 的更新操作也可能导致重新渲染
 
-* `render`
-* `componentDidMount`
+#### `shouldComponentUpdate`
+#### `componentDidUpdate`
+#### `componentWillunMount`
 
-* ~~componentWillReceiveProps(nextProps)~~
-* ~~componentWillUpdate(nextProps, nextState)~~
-
- re-render 问题，并且对 DOM 的更新操作也可能导致重新渲染
-
-* `shouldComponentUpdate`
-* `componentDidUpdate`
-* `componentWillunMount`
-
-新生命周期
-* `getDerivedStateFromProps`
-
+### 新生命周期
+#### `getDerivedStateFromProps`
 `getDerivedStateFromProps(nextProps, prevState)`
 
-* `getSnapshotBeforeUpdate`
-
+#### `getSnapshotBeforeUpdate`
 `getSnapshotBeforeUpdate(prevProps, prevState)`
 
-* `componentDidCatch`
+#### `componentDidCatch`
 
 `componentDidCatch(error, info)`
 
@@ -68,6 +58,36 @@
 * `Context.Provider`
 * `Class.contextType`
 * `Context.Consumer`
+
+##  高阶组件（HOC）
+### 代理方式的高阶组件
+作用：
+* 操纵props
+* 访问ref
+* 抽取状态
+* 包装组件
+```jsx harmony
+export default () => WrapperComponent => class A extends Component {
+    render () {
+        const {...otherProps} = this.props;
+        return <WrapperComponent {...otherProps}></WrapperComponent>
+    }
+}
+```
+
+### 继承方式的高阶组件
+作用：
+* 操纵props
+* 操作生命周期函数
+```jsx harmony
+export default () => WrapperComponent => class A extends WrapperComponent {
+    render () {
+        const {user, ...otherProps} = this.props;
+        this.props = otherProps;
+        return super.render()
+    }
+}
+```
 
 ## @16.4
 * 增加 `Pointer Events`
@@ -89,7 +109,7 @@
 * [React Hooks](https://zh-hans.reactjs.org/docs/hooks-intro.html)
 * [React Hooks 原理](https://github.com/brickspert/blog/issues/26)
 
-@Api
+#### Hooks Api
 * `useState`
 ```jsx
 import React, { useState } from 'react';

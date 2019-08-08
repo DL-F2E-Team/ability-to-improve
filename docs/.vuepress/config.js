@@ -1,5 +1,5 @@
 module.exports = {
-    title: 'Improve yourself',
+    title: 'F2E',
     description: 'Not just playing around',
     base: '/ability-to-improve/',
     markdown: {
@@ -9,36 +9,36 @@ module.exports = {
         },
     },
     themeConfig: {
-        // nav: [{
-        //     text: 'javascript',
-        //     link: '/'
-        // }],
-        sidebar: ['/',{
+        nav: [
+            {text: 'blog', link: 'https://lijiahao8898.github.io/'},
+            {
+                text: 'github',
+                // 这里是下拉列表展现形式。
+                items: [
+                    {text: 'lijiahao8898', link: 'https://github.com/lijiahao8898'},
+                ]
+            }
+        ],
+        sidebar: ['/', {
             title: 'Javascript',
             children: [
                 '/javascript/',
+                '/javascript/question.md'
             ]
         }, '/html/', '/style/', {
             title: 'React',
             children: [
-                '/react/'
+                '/react/',
+                '/react/router.md',
+                '/react/dva.md'
             ]
-        }, '/http/', '/vue/'],
-        sidebarDepth: 2,
+        }, '/vue/', {
+            title: '游览器宿主',
+            children: [
+                '/http/',
+                '/http/BOM.md'
+            ]
+        }],
+        sidebarDepth: 0,
     }
-    // themeConfig: {
-    //     // 添加导航栏
-    //     nav: [
-    //         { text: 'vue', link: '/' },
-    //         { text: 'css', link: '/blog/' },
-    //         { text: 'js', link: '/zhihu/' },
-    //         {
-    //             text: 'github',
-    //             // 这里是下拉列表展现形式。
-    //             items: [
-    //                 { text: 'focus-outside', link: 'https://github.com/TaoXuSheng/focus-outside' },
-    //                 { text: 'stylus-converter', link: 'https://github.com/TaoXuSheng/stylus-converter' },
-    //             ]
-    //         }
-    //     ],
 }

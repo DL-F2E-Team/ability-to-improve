@@ -1,29 +1,21 @@
-# hello-world
+# Hello world
 
-## Project setup
+持续学习性项目，知识整理成册，便于巩固复习面试
+
+### how to use ?
 ```
+git clone this project
+
 npm install
+
+npm start or npm run docs:dev
 ```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+最后祝你学有所成，在今后的道路上顺风顺水。
 
-### Compiles and minifies for production
-```
-npm run build
-```
+生活本不易，加油！
 
-### Run your tests
 ```
-npm run test
+ You cannot improve your past, but you can improve your future.
+ once time is wasted, life is wasted.
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
