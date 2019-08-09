@@ -15,12 +15,12 @@
 
 <TOC/>
 
-## `state` `props` `setState`
+## `state` `props` `props.children` `setState` 
+[你真的理解setState吗？](https://zhuanlan.zhihu.com/p/39512941)
+
 `this.props.children` 表示组件下面所有的子节点
 当没有的时候显示 `undefined` 当有一个的时候显示为类型 `object` 当有多个的时候显示为数组 `array`。
 `React.Children.map` 来遍历子节点，不用担心数据类型
-
-[你真的理解setState吗？](https://zhuanlan.zhihu.com/p/39512941)
 
 ## 生命周期
 #### ~~`componentWillMount(nextProps, nextState)`~~
@@ -153,6 +153,10 @@ function Example() {
   );
 }
 ```
+
+* `useContext`
+* `useReducer`
+
 * 自定义 `Hook`
 
 * 额外的 `Hook`

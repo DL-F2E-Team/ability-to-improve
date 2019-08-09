@@ -3,14 +3,9 @@
 <TOC/>
 
 ## TODO LISTS
-* http报文结构
-* 常用头部
-* http2.0 / https
 * 跨域
 * 安全
 * dns查询
-* tcp/ip协议
-* 五层因特网协议栈
 * cookie 与 localstorage sessionstorage
 * 游览器回流 重绘 渲染
 
@@ -18,7 +13,53 @@
 游览器是多进程的，游览器内核是多线程的，每次打开一个页签输入 `URL` 就相当于打开了一个线程。
 游览器会自动的将多个空白页面放入一个线程中，以便提升性能。
 
-## 游览器缓存机制
+## http报文结构
+
+### 常见的请求头
+* `Accept`: 接收类型，表示浏览器支持的MIME类型（对标服务端返回的Content-Type）
+* `Accept-Encoding`：浏览器支持的压缩类型,如gzip等,超出类型不能接收
+* `Content-Type`：客户端发送出去实体内容的类型
+* `Cache-Control`: 指定请求和响应遵循的缓存机制，如no-cache
+* `If-Modified-Since`：对应服务端的Last-Modified，用来匹配看文件是否变动，只能精确到1s之内，http1.0中
+* `Expires`：缓存控制，在这个时间内不会请求，直接使用缓存，http1.0，而且是服务端时间
+* `Max-age`：代表资源在本地缓存多少秒，有效时间内不会请求，而是使用缓存，http1.1中
+* `If-None-Match`：对应服务端的ETag，用来匹配文件内容是否改变（非常精确），http1.1中
+* `Cookie`: 有cookie并且同域访问时会自动带上
+* `Connection`: 当浏览器与服务器通信时对于长连接如何进行处理,如keep-alive
+* `Host`：请求的服务器URL
+* `Origin`：最初的请求是从哪里发起的（只会精确到端口）,Origin比Referer更尊重隐私
+* `Referer`：该页面的来源URL(适用于所有类型的请求，会精确到详细页面地址，csrf拦截常用到这个字段)
+* `User-Agent`：用户客户端的一些必要信息，如UA头部等
+
+### 常见的响应头
+* `Access-Control-Allow-Headers`: 服务器端允许的请求Headers
+* `Access-Control-Allow-Methods`: 服务器端允许的请求方法
+* `Access-Control-Allow-Origin`: 服务器端允许的请求Origin头部（譬如为*）
+* `Content-Type`：服务端返回的实体内容的类型
+* `Date`：数据从服务器发送的时间
+* `Cache-Control`：告诉浏览器或其他客户，什么环境可以安全的缓存文档
+* `Last-Modified`：请求资源的最后修改时间
+* `Expires`：应该在什么时候认为文档已经过期,从而不再缓存它
+* `Max-age`：客户端的本地资源应该缓存多少秒，开启了Cache-Control后有效
+* `ETag`：请求变量的实体标签的当前值
+* `Set-Cookie`：设置和页面关联的cookie，服务器通过这个头部把cookie传给客户端
+* `Keep-Alive`：如果客户端有keep-alive，服务端也会有响应（如timeout=38）
+* `Server`：服务器的一些相关信息
+
+## http1.0 http1.1 http2.0 / https
+`http1.0` 默认使用短链接
+`http1.1` 默认使用长连接
+
+HTTP1.0定义了三种请求方法： GET, POST 和 HEAD方法。
+以及几种Additional Request Methods：PUT、DELETE、LINK、UNLINK
+
+HTTP1.1定义了八种请求方法：GET、POST、HEAD、OPTIONS, PUT, DELETE, TRACE 和 CONNECT 方法。
+
+http1.1中，每请求一个资源，都是需要开启一个tcp/ip连接的，所以对应的结果是，每一个资源对应一个tcp/ip请求，由于tcp/ip本身有并发数限制，所以当资源一多，速度就显著慢下来
+
+http2.0中，一个tcp/ip请求可以请求多个资源，也就是说，只要一次tcp/ip请求，就可以请求若干个资源，分割成更小的帧请求，速度明显提升。
+ 
+## 游览器缓存机制（强缓存from cache、协商缓存304）
 ### 强缓存
 ```
 > General
@@ -117,6 +158,20 @@ Accept-Ranges: bytes
 
 ## 何为`dns-prefetch`优化？
 [dns-prefetch](https://lijiahao8898.github.io/2017/08/28/dns-prefetch)
+
+## 五层因特网协议栈
+从应用层的发送http请求，到传输层通过三次握手建立tcp/ip连接，再到网络层的ip寻址，再到数据链路层的封装成帧，最后到物理层的利用物理介质传输。
+1. 应用层(dns,http) DNS解析成IP并发送http请求
+2. 传输层(tcp,udp) 建立tcp连接（三次握手）
+3. 网络层(IP,ARP) IP寻址
+4. 数据链路层(PPP) 封装成帧
+5. 物理层(利用物理介质传输比特流) 物理传输（然后传输的时候通过双绞线，电磁波等各种介质）
+
+OSI七层框架：`物理层`、`数据链路层`、`网络层`、`传输层`、`会话层`、`表示层`、`应用层`
+
+表示层：主要处理两个通信系统中交换信息的表示方式，包括数据格式交换，数据加密与解密，数据压缩与终端类型转换等
+
+会话层：它具体管理不同用户和进程之间的对话，如控制登陆和注销过程
 
 ## 资料
 [从浏览器多进程到JS单线程，JS运行机制最全面的一次梳理](https://segmentfault.com/a/1190000012925872)
