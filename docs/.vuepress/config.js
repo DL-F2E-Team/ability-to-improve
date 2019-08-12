@@ -38,7 +38,7 @@ module.exports = {
                 '/http/',
                 '/http/BOM.md'
             ]
-        }, '/blog/'],
+        }, '/blog/', '/tool/'],
         sidebarDepth: 0,
     }
 }
