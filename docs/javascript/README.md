@@ -30,18 +30,25 @@ typeof `null` => `object` <br/>
 * 隐式强制类型转换(`valueOf()`，`toString()`) <br/>
   显式强制类转换：假值 - `undefined` `null` `false` `+0` `-0` `NaN` `''` <br/>
   `+`一元运算符能将字符串快速转换为数字，并且将日期转换为时间戳
+
+* +、~~、!!的妙用、||、&&的使用简写、==和===的区别
   
+* `[]+{} === [object Object]`  `{}+[] === 0 `
+  
+* 运算符优先级 `&&` > `||` > `(? : 【右关联】)` `=【右关联】` >  `,`
+
+* `JSON.stringify()` 无法处理：`undefined`，`function`，`symbol`。该方法可以接受第二个参数JSON.stringify(a, {b,c}, num)
+  
+* 语句（声明语句）、表达式（赋值表达式）。表达式语句（b）
+
+* `try…catch…finally`
+
+* HTML元素id也会创建全局变量
+  
+* 变量、（变量声明、变量赋值）=> 变量的初始化
+
+* `bind`、`call`、`apply`  
   ```
-  13. +、~~、!!的妙用、||、&&的使用简写、==和===的区别
-  14. []+{} === [object Object] {}+[] === 0 
-  15. 运算符优先级 && > || > (? : 【右关联】)      =【右关联】 > ,
-  16. JSON.stringify() 无法处理：undefined，function，symbol。该方法可以接受第二个参数JSON.stringify(a, {b,c}, num)
-  17.  语句（声明语句）、表达式（赋值表达式）。表达式语句（b）
-  18. try…catch…finally
-  19. HTML元素id也会创建全局变量
-  20. 变量、（变量声明、变量赋值）=> 变量的初始化
-  21. bind、call、apply
-  22. event loop，任务栈，宏任务，微任务（js线程）
   23. 事件捕获，事件目标，事件冒泡，事件代理~事件委托（叫法不同或者说主体不同）
   24. 类，类的继承，super
   25.  原型，继承
@@ -49,7 +56,6 @@ typeof `null` => `object` <br/>
   27. 红黑树算法，二叉树算法
   28. bind，call，apply
   29. 闭包，清内存，赋值为null
-  30. 网络强缓存，弱缓存（协商缓存）
   31. 函数声明 、函数表达式（声明提升）
   32.  高阶函数、纯函数、函数柯里化
   33. 面向对象编程、面向函数编程
@@ -66,6 +72,35 @@ typeof `null` => `object` <br/>
   44. 使用单页应用将文件上传到服务器的有哪些方法(XMLHttpRequest2（streaming），fetch（non-streaming），File API)
   45. MVC、MVVM
   ```
+  
+### 执行上下文
+[JavaScript系列之执行上下文和执行栈 - 知乎](https://zhuanlan.zhihu.com/p/68799915)
+
+### 闭包
+1. 可以访问其他函数内变量的函数，叫做闭包。
+2. 闭包可以用来保存一个需要持久保存的变量，可以模拟命名空间。
+3. 闭包在IE种会造成内存泄露（IE BUG）
+```js
+    function foo () {
+        var ex = 1;
+        function bar () {
+            ex++
+            return ex
+        }
+        return bar
+}
+var func = foo()
+func()
+```
+
+[「每日一题」JS 中的闭包是什么？- 知乎](https://zhuanlan.zhihu.com/p/22486908)
+
+### Event Loop，任务栈，宏任务，微任务（js线程）, 线程与进程
+![Event Loop](./images/eventloop.jpg)
+
+![宏任务和微任务](./images/task.jpg)
+
+[如何解释Event Loop面试官才满意？- 知乎](https://zhuanlan.zhihu.com/p/72507900)
 
 ### 原型链
 ![solar](./images/1.jpg)
@@ -239,7 +274,6 @@ class myClass extends myClassParents {
 * 实参 形参
 * 函数
 * 变量提升
-* 执行上下文
 * 回收机制
 * 作用域链
 * VO AO

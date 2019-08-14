@@ -30,6 +30,7 @@ module.exports = {
             children: [
                 '/react/',
                 '/react/router.md',
+                '/react/redux.md',
                 '/react/dva.md'
             ]
         }, '/vue/', {

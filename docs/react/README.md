@@ -1,50 +1,40 @@
 # [React](https://zh-hans.reactjs.org/)
 
-* jsx
-* `ReactDOM.render()`
-* `React.Fragments`
-* 组件（createReactClass，Component，SFC）、元素、实例
-* createReactClass => mixins
-* 时间处理（bind(this)） => bind、apply、call
-* React.cloneElement(element, [props], [...children])
-*  纯组件（SFC、函数式无状态组件
-* 纯函数
-* 受控组件、非受控组件
-* propTypes
-* 异步处理redux：redux-chunk、redux-saga
-
 <TOC/>
 
-## `state` `props` `props.children` `setState` 
+## `state`和`setState` 
 [你真的理解setState吗？](https://zhuanlan.zhihu.com/p/39512941)
 
-`this.props.children` 表示组件下面所有的子节点
-当没有的时候显示 `undefined` 当有一个的时候显示为类型 `object` 当有多个的时候显示为数组 `array`。
-`React.Children.map` 来遍历子节点，不用担心数据类型
+## `props`和`props.children`
+`this.props.children` 表示组件下面所有的子节点。 <br/>
+当没有的时候显示 `undefined` 当有一个的时候显示为类型 `object` 当有多个的时候显示为数组 `array`。<br/>
+`React.Children.map` 来遍历子节点，不用担心数据类型。
 
 ## 生命周期
-#### ~~`componentWillMount(nextProps, nextState)`~~
-> 无法保证在 `componentWillUnmount` 中取消掉相应的事件订阅，或者导致多次重复获取异步数据等问题
+### 原生命周期
+* ~~`componentWillMount(nextProps, nextState)`~~
+无法保证在 `componentWillUnmount` 中取消掉相应的事件订阅，或者导致多次重复获取异步数据等问题
 
-#### `render`
-#### `componentDidMount`
-#### ~~`componentWillReceiveProps(nextProps)`~~
-#### ~~`componentWillUpdate(nextProps, nextState)`~~
-> `re-render` 问题，并且对 `DOM` 的更新操作也可能导致重新渲染
+* `render`
+* `componentDidMount`
+* ~~`componentWillReceiveProps(nextProps)`~~
+* ~~`componentWillUpdate(nextProps, nextState)`~~
+`re-render` 问题，并且对 `DOM` 的更新操作也可能导致重新渲染
 
-#### `shouldComponentUpdate`
-#### `componentDidUpdate`
-#### `componentWillunMount`
+* `shouldComponentUpdate`
+* `componentDidUpdate`
+* `componentWillunMount`
+
+![lifecycle](./images/lifecycle_old.jpg)
 
 ### 新生命周期
-#### `getDerivedStateFromProps`
+* `getDerivedStateFromProps`
 `getDerivedStateFromProps(nextProps, prevState)`
 
-#### `getSnapshotBeforeUpdate`
+* `getSnapshotBeforeUpdate`
 `getSnapshotBeforeUpdate(prevProps, prevState)`
 
-#### `componentDidCatch`
-
+* `componentDidCatch`
 `componentDidCatch(error, info)`
 
 ![lifecycle](./images/lifecycle.jpg)
@@ -93,8 +83,13 @@ export default () => WrapperComponent => class A extends WrapperComponent {
 * 增加 `Pointer Events`
 
 ## @16.6
-* `React.memo(【函数组件】)` ~ React.PureComponent   【memoization => 缓存】
-* `React.lazy(() => import【组件】)`
+### `React.memo`
+`React.memo(【函数组件】)` ~ React.PureComponent   【memoization => 缓存】
+
+### `React.lazy`
+`React.lazy(() => import【组件】)`
+
+### other
 * `static contextType`
 * `static getDerivedStateFromError()`
 * Suspense组件【悬念组件？】
@@ -161,7 +156,17 @@ function Example() {
 
 * 额外的 `Hook`
 
-## dva
-```
-1. redux-saga
-```
+## todo
+
+* jsx
+* `ReactDOM.render()`
+* `React.Fragments`
+* 组件（createReactClass，Component，SFC）、元素、实例
+* createReactClass => mixins
+* 时间处理（bind(this)） => bind、apply、call
+* React.cloneElement(element, [props], [...children])
+*  纯组件（SFC、函数式无状态组件
+* 纯函数
+* 受控组件、非受控组件
+* propTypes
+* 异步处理redux：redux-chunk、redux-saga
