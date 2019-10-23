@@ -9,11 +9,30 @@
 * cookie 与 localstorage sessionstorage
 * 游览器回流 重绘 渲染
 
-## 游览器特性
+## :bookmark: 游览器特性
 游览器是多进程的，游览器内核是多线程的，每次打开一个页签输入 `URL` 就相当于打开了一个线程。
 游览器会自动的将多个空白页面放入一个线程中，以便提升性能。
 
-## http报文结构
+[从浏览器多进程到JS单线程，JS运行机制最全面的一次梳理](https://segmentfault.com/a/1190000012925872)
+
+## :bookmark: HTTP1.0、HTTP1.1、HTTP2.0、HTTPS
+
+### HTTP1.0
+`HTTP1.0` 默认使用**短链接**
+
+`HTTP1.0` 定义了**三**种请求方法： `GET`, `POST` 和 `HEAD` 方法。以及几种Additional Request Methods：`PUT`、`DELETE`、`LINK`、`UNLINK`
+
+### HTTP1.1
+`HTTP1.1` 默认使用**长连接**
+
+`HTTP1.1` 定义了**八**种请求方法：`GET`、`POST`、`HEAD`、`OPTIONS`, `PUT`, `DELETE`, `TRACE` 和 `CONNECT` 方法。
+
+`HTTP1.1` 中，每请求一个资源，都是需要开启一个 [tcp/ip](/http/#tcp三次握手和四次挥手) 连接的，所以对应的结果是，每一个资源对应一个 [tcp/ip](/http/#tcp三次握手和四次挥手) 请求，由于 [tcp/ip](/http/#tcp三次握手和四次挥手) 本身有并发数限制，所以当资源一多，速度就显著慢下来
+
+### HTTP2.0
+`HTTP2.0` 中，一个 [tcp/ip](/http/#tcp三次握手和四次挥手) 请求可以请求多个资源，也就是说，只要一次 [tcp/ip](/http/#tcp三次握手和四次挥手) 请求，就可以请求若干个资源，分割成更小的帧请求，速度明显提升。
+
+## :bookmark: HTTP报文结构
 
 ### 常见的请求头
 * `Accept`: 接收类型，表示浏览器支持的MIME类型（对标服务端返回的Content-Type）
@@ -46,21 +65,8 @@
 * `Keep-Alive`：如果客户端有keep-alive，服务端也会有响应（如timeout=38）
 * `Server`：服务器的一些相关信息
 
-## http1.0 http1.1 http2.0 / https
-`http1.0` 默认使用短链接
-`http1.1` 默认使用长连接
-
-HTTP1.0定义了三种请求方法： GET, POST 和 HEAD方法。
-以及几种Additional Request Methods：PUT、DELETE、LINK、UNLINK
-
-HTTP1.1定义了八种请求方法：GET、POST、HEAD、OPTIONS, PUT, DELETE, TRACE 和 CONNECT 方法。
-
-http1.1中，每请求一个资源，都是需要开启一个tcp/ip连接的，所以对应的结果是，每一个资源对应一个tcp/ip请求，由于tcp/ip本身有并发数限制，所以当资源一多，速度就显著慢下来
-
-http2.0中，一个tcp/ip请求可以请求多个资源，也就是说，只要一次tcp/ip请求，就可以请求若干个资源，分割成更小的帧请求，速度明显提升。
- 
-## 游览器缓存机制（强缓存from cache、协商缓存304）
-### 强缓存
+## :bookmark: 游览器缓存机制
+### 强缓存 - from cache
 ```
 > General
 Request URL:http://yangdongxi.seller.mockuai.com/bossmanager/wap/domain/get.do
@@ -95,27 +101,25 @@ X-Requested-With:XMLHttpRequest
 ```
 #### 缓存控制头 - Cache-Control
 
-表一：
-
-| Cache-directive   | 说明                |
-|:----------------- |:-------------------|
-| public            | 所有内容都将被缓存    |
-| private           | 内容只缓存到私有缓存中 |
-| no-cache          | 所有内容都不会被缓存   |
-| no-store          | 所有内容都不会被缓存到缓存或 Internet 临时文件中 |
+| Cache-directive                      | 说明                |
+|:-------------------------------------|:-------------------|
+| public                               | 所有内容都将被缓存    |
+| private                              | 内容只缓存到私有缓存中 |
+| no-cache                             | 所有内容都不会被缓存   |
+| no-store                             | 所有内容都不会被缓存到缓存或 Internet 临时文件中 |
 | must-revalidation/proxy-revalidation | 如果缓存的内容失效，请求必须发送到服务器/代理以进行重新验证      |
-| max-age=xxx (xxx is numeric) | 缓存的内容将在 xxx 秒后失效, 这个选项只在HTTP 1.1可用, 并如果和Last-Modified一起使用时, 优先级较高 |
+| max-age=xxx (xxx is numeric)         | 缓存的内容将在 xxx 秒后失效, 这个选项只在HTTP 1.1可用, 并如果和Last-Modified一起使用时, 优先级较高 |
 
 如果 `cache-control` 有 `max-age/s-maxage` 则过期时间等于 `date + max-age/s-maxage`。如果没有则用 `expires` 作为过期时间。
 
 #### 过期头 - Expires
-Http1.0 中的标准，表明过期时间，注意此处的时间都是指的是服务器的时间。
+HTTP1.0中的标准，表明过期时间，注意此处的时间都是指的是服务器的时间。
 
 譬如：`Expires: Thu, 04 Jan 2018 03:15:58 GMT`。
 
 存在的问题：服务器时间与客户端时间的不一致，就会导致缓存跟期待效果出现偏差。
 
-### 弱缓存（协商缓存）
+### 弱缓存（协商缓存）- 304
 ```
 HTTP/1.1 200 OK
 Date: Thu, 04 Jan 2018 03:10:58 GMT
@@ -146,10 +150,12 @@ Accept-Ranges: bytes
 浏览器会向服务器发送请求，同时如果上一次的缓存中有 `Last-modified` 和 `Etag` 字段，
 浏览器将在 `request header` 中加入 `If-Modified-Since`（对应于 `Last-modified` ）， 和 `If-None-Match`（对应于 `Etag` ）。
 
-* Last-modified: 表明请求的资源上次的修改时间。
-* If-Modified-Since：客户端保留的资源上次的修改时间。
-* Etag：资源的内容标识。（不唯一，通常为文件的md5或者一段hash值，只要保证写入和验证时的方法一致即可）
-* If-None-Match： 客户端保留的资源内容标识。
+| Cache-directive                      | 说明                |
+|:-------------------------------------|:-------------------|
+| Last-modified:                       | 表明请求的资源上次的修改时间    |
+| If-Modified-Since                    | 客户端保留的资源上次的修改时间 |
+| Etag                                 | 资源的内容标识。<br/> 不唯一，通常为文件的md5或者一段hash值，只要保证写入和验证时的方法一致即可|
+| If-None-Match                        | 客户端保留的资源内容标识 |
 
 [掘金 - 从前端角度理解缓存](https://juejin.im/post/5c4044cd51882524f23032eb?utm_source=gold_browser_extension)
 
@@ -173,5 +179,10 @@ OSI七层框架：`物理层`、`数据链路层`、`网络层`、`传输层`、
 
 会话层：它具体管理不同用户和进程之间的对话，如控制登陆和注销过程
 
-## 资料
-[从浏览器多进程到JS单线程，JS运行机制最全面的一次梳理](https://segmentfault.com/a/1190000012925872)
+## CDN的好处
+
+* 增加并发请求
+* 缓存文件
+* 高效率，更低的网络延迟，更小的丢包率
+* 使用数据分析（一般情况下CDN提供商（如百度云加速）都会提供数据统计功能，可以了解更多关于用户访问自己网站的情况，可以根据统计数据对自己的站点适时适当的做出些许调整。）
+* 防止网站被攻击
