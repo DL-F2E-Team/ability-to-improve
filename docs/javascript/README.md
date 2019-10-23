@@ -77,7 +77,7 @@ typeof `null` => `object` <br/>
 [JavaScript系列之执行上下文和执行栈 - 知乎](https://zhuanlan.zhihu.com/p/68799915)
 
 ### 闭包
-1. 可以访问其他函数内变量的函数，叫做闭包。
+1. 可以访问其他函数内变量的函数，叫做闭包。或者说在一个函数内部可访问该函数内部局部变量的函数，作用就是让函数外部可以访问函数内部局部变量。
 2. 闭包可以用来保存一个需要持久保存的变量，可以模拟命名空间。
 3. 闭包在IE种会造成内存泄露（IE BUG）
 ```js
@@ -92,8 +92,12 @@ typeof `null` => `object` <br/>
 var func = foo()
 func()
 ```
-
 [「每日一题」JS 中的闭包是什么？- 知乎](https://zhuanlan.zhihu.com/p/22486908)
+
+### 作用域和作用域链
+![Scope](./images/scope.jpeg)
+
+[js基础：作用域及作用域链](https://baijiahao.baidu.com/s?id=1627502571462484522&wfr=spider&for=pc)
 
 ### Event Loop，任务栈，宏任务，微任务（js线程）, 线程与进程
 ![Event Loop](./images/eventloop.jpg)
@@ -275,5 +279,4 @@ class myClass extends myClassParents {
 * 函数
 * 变量提升
 * 回收机制
-* 作用域链
 * VO AO

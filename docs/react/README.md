@@ -29,12 +29,38 @@
 
 ### 新生命周期
 * `getDerivedStateFromProps`
+
 `getDerivedStateFromProps(nextProps, prevState)`
 
+```jsx harmony
+class ColorPicker extends React.Component {
+    state = {
+        color: '#000000',
+        prevPropColor: ''
+    }
+    static getDerivedStateFromProps (props, state) {
+        if (props.color !== state.prevPropColor) {
+            return {
+                color: props.color
+                prevPropColor: props.color
+            }
+        }
+        return null
+    }
+    ... // 选择颜色方法
+    render () {
+        .... // 显示颜色和选择颜色操作
+    }
+}
+```
+[React 中 getDerivedStateFromProps 的用法和反模式](https://juejin.im/post/5c3ad49be51d45521053fde0)
+
 * `getSnapshotBeforeUpdate`
+
 `getSnapshotBeforeUpdate(prevProps, prevState)`
 
 * `componentDidCatch`
+
 `componentDidCatch(error, info)`
 
 ![lifecycle](./images/lifecycle.jpg)
