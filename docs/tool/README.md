@@ -2,6 +2,17 @@
 
 <TOC/>
 
+## :bookmark: webpack
+
+* Entry：指定webpack开始构建的入口模块，从该模块开始构建并计算出直接或间接依赖的模块或者库
+* Output：告诉webpack如何命名输出的文件以及输出的目录
+* Loaders：由于webpack只能处理javascript，所以我们需要对一些非js文件处理成webpack能够处理的模块，比如sass文件
+* Plugins：Loaders将各类型的文件处理成webpack能够处理的模块，plugins有着很强的能力。插件的范围包括，从打包优化和压缩，一直到重新定义环境中的变量。但也是最复杂的一个。比如对js文件进行压缩优化的UglifyJsPlugin插件
+* Chunk：coding split的产物，我们可以对一些代码打包成一个单独的chunk，比如某些公共模块，去重，更好的利用缓存。或者按需加载某些功能模块，优化加载时间。在webpack3及以前我们都利用CommonsChunkPlugin将一些公共代码分割成一个chunk，实现单独加载。在webpack4 中CommonsChunkPlugin被废弃，使用SplitChunksPlugin
+
+[掘金 - webpack详解](https://juejin.im/post/5aa3d2056fb9a028c36868aa)
+[简书 - webpack打包原理解析](https://www.jianshu.com/p/b8d6ac3041e3)
+
 ## emoji
 
 | emoji             | emoji 代码  | commit 说明     |
