@@ -40,6 +40,6 @@ module.exports = {
                 '/http/BOM.md'
             ]
         }, '/blog/', '/tool/'],
-        sidebarDepth: 0,
+        sidebarDepth: 1,
     }
 }
