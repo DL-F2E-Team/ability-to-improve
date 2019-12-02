@@ -1,8 +1,8 @@
 # JavaScript(ECMAscript)
 
-<TOC />
+<!--<TOC />-->
 
-### ES5
+## :bookmark: ES5基础
 
 * `javascript`是弱类型语言。<br/>
 基本数据类型 - （数字、字符串、Boolean、undefined、null）、ES6新增（symbol）。<br/>
@@ -73,10 +73,10 @@ typeof `null` => `object` <br/>
   45. MVC、MVVM
   ```
   
-### 执行上下文
+## :bookmark: 执行上下文
 [JavaScript系列之执行上下文和执行栈 - 知乎](https://zhuanlan.zhihu.com/p/68799915)
 
-### 闭包
+## :bookmark: 闭包
 1. 可以访问其他函数内变量的函数，叫做闭包。或者说在一个函数内部可访问该函数内部局部变量的函数，作用就是让函数外部可以访问函数内部局部变量。
 2. 闭包可以用来保存一个需要持久保存的变量，可以模拟命名空间。
 3. 闭包在IE种会造成内存泄露（IE BUG）
@@ -94,22 +94,22 @@ func()
 ```
 [「每日一题」JS 中的闭包是什么？- 知乎](https://zhuanlan.zhihu.com/p/22486908)
 
-### 作用域和作用域链
+## :bookmark: 作用域和作用域链
 ![Scope](./images/scope.jpeg)
 
 [js基础：作用域及作用域链](https://baijiahao.baidu.com/s?id=1627502571462484522&wfr=spider&for=pc)
 
-### Event Loop，任务栈，宏任务，微任务（js线程）, 线程与进程
+## :bookmark: Event Loop，任务栈，宏任务，微任务（js线程）, 线程与进程
 ![Event Loop](./images/eventloop.jpg)
 
 ![宏任务和微任务](./images/task.jpg)
 
 [如何解释Event Loop面试官才满意？- 知乎](https://zhuanlan.zhihu.com/p/72507900)
 
-### 原型链
+### :bookmark: 原型链
 ![solar](./images/1.jpg)
 
-### class
+## :bookmark: Class
 
 class super static 继承
 ```jsx harmony
@@ -134,7 +134,7 @@ class myClass extends myClassParents {
 }
 ```
 
-### ES6
+## ES6
 * `let`、`const`
 
 * 箭头函数 `() => {}`
@@ -157,17 +157,6 @@ class myClass extends myClassParents {
 2. Object.create()
 3.  Object.assign()
 4.  Object.defineProperty(obj, key, props)
-```
-
-### Array
-```
-1. Array.from()
-2. Array.prototype.includes()
-3. Array.prototype.map()
-4. Array.prototype.filter()
-5. Array.prototype.every()、Array.prototype.some()
-6. Array.prototype.reduce()
-7. Array.prototype.slice()
 ```
 
 ### Number

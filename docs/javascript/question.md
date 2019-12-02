@@ -1,9 +1,6 @@
 # 问题
 
-<TOC/>
-
-## :bookmark: 什么是闭包
-答案：[查看](/javascript/#闭包)
+<!--<TOC/>-->
 
 ## :bookmark: 求以下输出结果
 

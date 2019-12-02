@@ -23,6 +23,7 @@ module.exports = {
             title: 'Javascript',
             children: [
                 '/javascript/',
+                '/javascript/highQuestion.md',
                 '/javascript/question.md'
             ]
         }, '/html/', '/style/', {
