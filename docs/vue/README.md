@@ -291,6 +291,8 @@ goAnchor(selector, index) {
 * `.once` 只执行一次
 * `.passive` 滚动行为立即触发
 
+## 内置组件 component<is>
+
 # Vuex
 
 ## 多人同时使用`Vuex`怎么防止数据污染

@@ -119,30 +119,6 @@ var a = document.getElementByName('abc');
 a.getAttribute('abc');
 ```
 
-## 什么是MVVM，简单解释下
-
-## 实现数组去重
-
-## 实现浅复制和深复制
-
-```js
-var cloneObj = function(obj){
-    var str, newobj = obj.constructor === Array ? [] : {};
-    if(typeof obj !== 'object'){
-        return;
-    } else if(window.JSON){
-        str = JSON.stringify(obj), //系列化对象
-        newobj = JSON.parse(str); //还原
-    } else {
-        for(var i in obj){
-            newobj[i] = typeof obj[i] === 'object' ?
-            cloneObj(obj[i]) : obj[i];
-        }
-    }
-    return newobj;
-};
-```
-
 ## 实现菲波那切数列
 
 ## 知道哪些排序的方法？实现思路
@@ -167,17 +143,7 @@ window.jQuery = window.$ = jQuery
 
 ![solar](./images/1.jpg)
 
-## :bookmark: 宏任务和微任务
-
-### 宏任务
-
-宏任务：当前调用栈执行的任务。事件放在`callback queue`中，由事件触发线程维护
-
-### 微任务
-
-微任务：宏任务执行完，在下一个宏任务执行之前执行的任务。事件放在微任务队列，有 `javascript` 引擎线程维护
-
-## :bookmark: 继承的几种方式
+## 继承的几种方式
 
 1. `借用构造函数继承` 使用call和apply方法，将父对象的构造函数绑定在子对象上
 2. `原型继承`，将子对象的prototype指向父对象的一个实例

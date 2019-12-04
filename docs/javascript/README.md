@@ -1,21 +1,20 @@
 # JavaScript(ECMAscript)
 
-<!--<TOC />-->
+## ES5基础
 
-## :bookmark: ES5基础
-
-* `javascript`是弱类型语言。<br/>
-基本数据类型 - （数字、字符串、Boolean、undefined、null）、ES6新增（symbol）。<br/>
-引用数据类型 - 引用数据类型 object（对象包括【function、array】）。<br/>
-原生函数 - String、Number、Boolean、Array、Object、Function、RegExp、Date、Error、Symbol
-
-* `typeof` <br/>
-typeof `null` => `object` <br/>
-判断 null：`(!a && typeof a === 'object')`
+* `javascript`是弱类型语言<br/>
+  - `基本数据类型`：【数字、字符串、Boolean、undefined、null】、ES6新增【symbol】<br/>
+  - `引用数据类型`：Object对象包括【function、array】<br/>
+  - `原生函数`：String、Number、Boolean、Array、Object、Function、RegExp、Date、Error、Symbol
+* `typeof`
+  ```
+  typeof null => object
+  ```
+  - 判断 null：`(!a && typeof a === 'object')`
 
 * `undefined` 和 `is not defined` 是两回事，前者已声明未赋值，后者未声明。
 
-* ECMAScript、文档对象模型（DOM）、游览器对象模型（BOM）
+* 广义的JavaScript是指：`ECMAScript`、`文档对象模型【DOM】`、`游览器对象模型【BOM】`
 
 * 稀疏数组
 
@@ -27,9 +26,10 @@ typeof `null` => `object` <br/>
 
 * throw new Error ('')
 
-* 隐式强制类型转换(`valueOf()`，`toString()`) <br/>
-  显式强制类转换：假值 - `undefined` `null` `false` `+0` `-0` `NaN` `''` <br/>
-  `+`一元运算符能将字符串快速转换为数字，并且将日期转换为时间戳
+* 类型转换
+  - 隐式强制类型转换(`valueOf()`，`toString()`)
+  - 显式强制类转换：假值 - `undefined` `null` `false` `+0` `-0` `NaN` `''`
+  - `+`一元运算符能将字符串快速转换为数字，并且将日期转换为时间戳
 
 * +、~~、!!的妙用、||、&&的使用简写、==和===的区别
   
@@ -37,7 +37,9 @@ typeof `null` => `object` <br/>
   
 * 运算符优先级 `&&` > `||` > `(? : 【右关联】)` `=【右关联】` >  `,`
 
-* `JSON.stringify()` 无法处理：`undefined`，`function`，`symbol`。该方法可以接受第二个参数JSON.stringify(a, {b,c}, num)
+* `JSON.stringify()` 
+  - 无法处理：`undefined`，`function`，`symbol`。
+  - 该方法可以接受第二个参数JSON.stringify(a, {b,c}, num)
   
 * 语句（声明语句）、表达式（赋值表达式）。表达式语句（b）
 
@@ -47,15 +49,13 @@ typeof `null` => `object` <br/>
   
 * 变量、（变量声明、变量赋值）=> 变量的初始化
 
-* `bind`、`call`、`apply`  
+* 清内存，赋值为null
+
   ```
-  23. 事件捕获，事件目标，事件冒泡，事件代理~事件委托（叫法不同或者说主体不同）
   24. 类，类的继承，super
   25.  原型，继承
   26.  session，cookie，sessionStorage，localStroage
   27. 红黑树算法，二叉树算法
-  28. bind，call，apply
-  29. 闭包，清内存，赋值为null
   31. 函数声明 、函数表达式（声明提升）
   32.  高阶函数、纯函数、函数柯里化
   33. 面向对象编程、面向函数编程
@@ -64,19 +64,38 @@ typeof `null` => `object` <br/>
   36.  AMD/CMD、commonjs
   37. 匿名函数
   38. 隐式换算
-  39. 4种函数调用模式（this）有四种模式，函数调用，方法调用，.call() 和 .apply()。
   40. JavaScript 中的迭代器（iterators）和迭代（iterables）是什么？ 你知道什么是内置迭代器吗？
   41. JSON.parse(JSON.stringify(Obejct))的注意点
   42. 单向数据流和双向数据绑定
   43. httpXMLrequest、fetch、axios、ajax
   44. 使用单页应用将文件上传到服务器的有哪些方法(XMLHttpRequest2（streaming），fetch（non-streaming），File API)
-  45. MVC、MVVM
   ```
-  
-## :bookmark: 执行上下文
+## 执行上下文
 [JavaScript系列之执行上下文和执行栈 - 知乎](https://zhuanlan.zhihu.com/p/68799915)
 
-## :bookmark: 闭包
+## this
+* 一般函数
+  - 匿名函数调用或者全局函数调用，`this`指向Window、Global
+* 构造函数
+  - 构造函数调用，`this`指向这个新生成的对象  
+* 对象方法
+  - 对象方法调用，`this`指向当前对象
+* .call()、.apply()和.bind() 
+  - 显示绑定，`this`指向绑定的值
+* 箭头函数
+  - 箭头函数中始终会捕捉其“定义时”所在上下文的`this`值，作为自己的`this`.
+
+## `bind`、`call`和`apply`区别
+三者都是用来改变this指向的
+
+`bind`是返回一个新的可执行的函数，第一个参数是要指向的对象，第二个参数是绑定时候参数的顺序以及新可执行函数的参数作为原函数的参数来调用原函数。
+  
+`call`和`apply`都是执行函数，第一个参数是需要指向的对象，第二参数不同，call需要把参数按顺序依次传递，apply则是把参数放在数组里。
+  
+如果 call和apply的第一个参数是null或者undefined，那么this的指向就是全局变量，在游览器里面就是windows。
+  
+
+## 闭包
 1. 可以访问其他函数内变量的函数，叫做闭包。或者说在一个函数内部可访问该函数内部局部变量的函数，作用就是让函数外部可以访问函数内部局部变量。
 2. 闭包可以用来保存一个需要持久保存的变量，可以模拟命名空间。
 3. 闭包在IE种会造成内存泄露（IE BUG）
@@ -94,22 +113,45 @@ func()
 ```
 [「每日一题」JS 中的闭包是什么？- 知乎](https://zhuanlan.zhihu.com/p/22486908)
 
-## :bookmark: 作用域和作用域链
+## 作用域和作用域链
 ![Scope](./images/scope.jpeg)
 
 [js基础：作用域及作用域链](https://baijiahao.baidu.com/s?id=1627502571462484522&wfr=spider&for=pc)
 
-## :bookmark: Event Loop，任务栈，宏任务，微任务（js线程）, 线程与进程
+## Event Loop
+`Event Loop`主要指的是**任务栈**，**宏任务**与**微任务**（JS线程），**同步任务**与**异步任务**， **线程**与**进程**。
+
+### 进程和线程的区别，js单线程带来的好处？
+**进程**就是执行中的一个程序，是操作资源分配的最小单位。**线程**是进程中执行的一个任务，是程序执行的最小单位。**一个进程由多个线程组成**。进程间相互独立，一个进程下的多个线程共享资源
+打开一个不同地址的游览器tab就是一个进程，里面由渲染线程，JS引擎线程，HTTP请求线程。
+
+### 什么是执行栈（任务栈）？
+一个存储函数调用的栈结构，遵循先进后出的原则，后执行的函数会先弹出栈
+
+### Event Loop？
 ![Event Loop](./images/eventloop.jpg)
+1. 首先全局上下文进入函数调用栈，执行同步代码
+2. 执行完同步代码后，查询任务队列里是否由异步代码需要执行
+3. 执行所有微任务，微任务执行完毕后
+4. 循环再次从宏任务开始，从任务队列中拿出一个执行，一直循环下去
+
+### 宏任务和微任务
+
+#### 宏任务
+宏任务：当前调用栈执行的任务（主代码快【同步任务】，定时器等等【异步任务】）。事件放在`callback queue`中，由事件触发线程维护。包括script ， setTimeout ，setInterval ，setImmediate ，I/O ，UI rendering
+
+#### 微任务
+微任务：宏任务执行完，在下一个宏任务执行之前执行的任务（可以理解为回调事件，promise.then，proness.nextTick等等）。事件放在微任务队列，有 `javascript` 引擎线程维护。
+包括process.nextTick ，promise ，MutationObserver
 
 ![宏任务和微任务](./images/task.jpg)
 
 [如何解释Event Loop面试官才满意？- 知乎](https://zhuanlan.zhihu.com/p/72507900)
 
-### :bookmark: 原型链
+## 原型与原型链
 ![solar](./images/1.jpg)
 
-## :bookmark: Class
+## Class
 
 class super static 继承
 ```jsx harmony
@@ -189,82 +231,7 @@ class myClass extends myClassParents {
 7.  appendChild
 ```
 
-## STYLE
-### CSS
-```
-1. 两列自适应
-2. 边距塌陷
-3.  BFC
-4.  伪元素，伪类
-5.  css - mask镂空
-6. clip-path裁剪
-7. 自定义css属性
-8.  :empty
-9.  position: [relative, absolute, fixed, static, inherit, sticky]
-10. 重绘和重排
-11. CSS Flex / CSS Grid（网格）布局
-```
-
-### Less
-```
-1.  变量 - @
-2. 混合 - <name>()
-3.  函数
-4.  @import
-```
-
-### Sass
-```
-1.  变量 - $
-2. 插值 - #{}
-3.  @import 和 _
-4.  font的合并处理
-5.  @extend
-6. 占位选择器 - %
-7. !optional标记
-8.  @at-root
-9.  @debug、@warn、@error
-10. 函数 - if()
-11. 指令 - @if、 @else if、@else
-12. 指令 - @for $var from <start> through <end> 、@for $var from <start> to <end>
-13. 指令 - @each $var in <list or map>
-14. 指令 - @while
-15. @mixin <name>($var1, $var2) @include @content
-16.  @function
-```
-
-## Vue
-### Vue
-```
-1. props，$emit，ref，$parent，$children
-2. slot，slot-scope
-3. 无渲染组件 - 组件负责行为，调用方负责表现
-4. extend
-5. 内置组件 component<is>
-6. provide / inject - 跨组件访问
-7. 为什么vue data 是一个函数
-8. 指令: v-cloak v-pre v-once
-9. 自定义指令 - directive（bind、inserted、update、componentUpdated、unbind）
-10. v-for循环分组实现（template）
-```
-* [Vue服务端渲染指南](https://ssr.vuejs.org/zh/)
-* [Nuxt.js](https://zh.nuxtjs.org/)
-
-### Vue-router
-```
-1. scrollBehavior
-```
-
-### Vuex
-```
-1. state
-2. action -> dispatch mutation
-3. mutation -> commit（只在这里进行数据修改）
-4. module
-```
-
 ### TODO
-* 实参 形参
 * 函数
 * 变量提升
 * 回收机制

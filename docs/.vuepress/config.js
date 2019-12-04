@@ -26,7 +26,14 @@ module.exports = {
                 '/javascript/highQuestion.md',
                 '/javascript/question.md'
             ]
-        }, '/html/', '/style/', {
+        }, '/html/', {
+            title: 'css层叠样式表',
+            children: [
+                '/style/',
+                '/style/SASS.md',
+                '/style/LESS.md'
+            ]
+        }, {
             title: 'React',
             children: [
                 '/react/',

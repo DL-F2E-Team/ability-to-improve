@@ -1,12 +1,12 @@
 # 高频问题
 
-## :bookmark: Array的内建方法
+## Array的内建方法
 
-### Array Function
-* `Array.from()`： 方法从一个类似数组或可迭代对象创建一个新的，浅拷贝的数组实例。
-* `Array.isArray()`：用于确定传递的值是否是一个`Array`。
+### Array
+* `from()`： 方法从一个类似数组或可迭代对象创建一个新的，浅拷贝的数组实例。
+* `isArray()`：用于确定传递的值是否是一个`Array`。
 
-### Array.prototype Function
+### Array.prototype
 * 修改原数组
   * `pop()`：**删除最后一个**元素，并返回该元素。更改数组长度。
   * `push()`：将**一个或多个元素**添加到数组的**末尾**，并返回该数组的新长度。
@@ -40,7 +40,7 @@
 ### Doc
 [Array - MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array)
 
-## :bookmark: 数组去重
+## 数组去重
 1. indexOf
 ```js
 var arr = ['12','32','89','12','12','78','12','32'];
@@ -130,4 +130,321 @@ function unique(a) {
 }
 arr = unique(arr);
 ```
+
+## `XSS`跨站脚本攻击
+`XSS`跨站脚本攻击通过网页漏洞来执行恶意的`Javascript`代码。
+
+### 存储型`XSS`攻击
+利用漏洞提交恶意`JavaScript`代码，比如在input, textarea等所有可能输入文本信息的区域，输入javascript恶意代码等
+提交后信息会存在服务器中，当用户再次打开网站请求到相应的数据，打开页面，恶意脚本就会将用户的 Cookie 信息等数据上传到黑客服务器。
+
+### 反射型 XSS 攻击
+QQ邮件等发送过来的恶意链接。
+
+### 基于`DOM`的`XSS`攻击
+基于 DOM 的 XSS 攻击是不牵涉到页面 Web 服务器的。它的特点是在 Web 资源传输过程或者在用户使用页面的过程中修改 Web 页面的数据。
+比如利用工具(如Burpsuite)扫描目标网站所有的网页并自动测试写好的注入脚本等。
+
+### XSS预防
+
+1. 将cookie等敏感信息设置为httponly，禁止Javascript通过document.cookie获得
+2. 对所有的输入做严格的校验尤其是在服务器端，过滤掉任何不合法的输入，比如手机号必须是数字，通常可以采用正则表达式.
+3. 净化和过滤掉不必要的html标签，比如：iframe, alt,script ;净化和过滤掉不必要的Javascript的事件标签，比如：onclick, onfocus等
+4. 转义单引号，双引号，尖括号等特殊字符，可以采用htmlencode编码 或者过滤掉这些特殊字符
+5. CSP,CSP 全称为 Content Security Policy，即内容安全策略。主要以白名单的形式配置可信任的内容来源，在网页中，能够使白名单中的内容正常执行（包含 JS，CSS，Image 等等），而非白名单的内容无法正常执行，从而减少跨站脚本攻击（XSS），当然，也能够减少运营商劫持的内容注入攻击。
+   
+配置方式： 
+```
+//1、meta
+<meta http-equiv="Content-Security-Policy" content="script-src 'self'">
+
+//2、Http 头部
+Content-Security-Policy:
+script-src 'unsafe-inline' 'unsafe-eval' 'self' *.54php.cn *.yunetidc.com *.baidu.com *.cnzz.com *.duoshuo.com *.jiathis.com;report-uri /error/csp
+```
+
+## `CSRF`跨站请求伪造
+`CSRF`跨站请求伪造（Cross-site request forgery）引诱用户打开黑客的网站，在黑客的网站中，利用用户的登录状态发起的跨站请求。
+
+发生`CSRF`的必要条件：
+1. 目标站点一定要有 CSRF 漏洞；
+2. 用户要登录过目标站点，并且在浏览器上保持有该站点的登录状态；
+3. 需要用户打开一个第三方站点，如黑客的站点等。
+
+### CSRF预防
+
+1. 充分利用好 Cookie 的 SameSite 属性。
+```
+set-cookie: 1P_JAR=2019-10-20-06; expires=Tue, 19-Nov-2019 06:36:21 GMT; path=/; domain=.google.com; SameSite=none
+```
+
+2. 验证请求的来源站点
+验证HTTP请求头中的`Origin`和`Referer`。
+```
+Accept: */*
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+Cache-Control: no-cache
+Connection: keep-alive
+Host: comment-wrapper-ms.juejin.im
+Origin: https://juejin.im
+Pragma: no-cache
+Referer: https://juejin.im/post/5dca1b376fb9a04a9f11c82e
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-site
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36
+X-Juejin-Client: 1574834410506
+X-Juejin-Src: web
+X-Juejin-Token: eyJhY2Nlc3NfdG9rZW4iOiJXOXduNFBaT1RpdGhrRzdaIiwicmVmcmVzaF90b2tlbiI6ImwwVjVJcERlV3BrOGVpc0wiLCJ0b2tlbl90eXBlIjoibWFjIiwiZXhwaXJlX2luIjoyNTkyMDAwfQ==
+X-Juejin-Uid: 59c9cedbf265da06690875a6
+```
+3. 在请求地址中添加token并验证
+token前可以增加约定好的随机的字符串
+
+## `浅拷贝`和`深拷贝` 
+`浅拷贝`是拷贝一层，深层次的对象级别就拷贝引用。
+
+浅拷贝的方法：
+1. =（如果是基本数据类型，直接赋值。如果是引用类型，就拷贝引用。）
+2. 遍历一层
+
+```js
+var obj = { a:1, arr: [2,3] };
+var shallowObj = shallowCopy(obj);
+
+function shallowCopy(src) {
+  var dst = {};
+  for (var prop in src) {
+    if (src.hasOwnProperty(prop)) {
+      dst[prop] = src[prop];
+    }
+  }
+  return dst;
+}
+
+// object.assign
+var x = {
+  a: 1,
+  b: { f: { g: 1 } },
+  c: [ 1, 2, 3 ]
+};
+var y = Object.assign({}, x);
+console.log(y.b.f === x.b.f);     // true
+```
+
+`深拷贝`是拷贝多层，每一级别的数据都会拷贝出来。
+
+深拷贝的方法：
+1. JSON.parse(JSON.stringify())
+2. 递归遍历
+3. jQuery的extend
+4. lodash.cloneDeep()
+5. Oject.create() `mdn`上说不是
+
+`Object.assign()` 如果对象的数据为基本数据类型，则为深拷贝。如果对象是引用类型，则为浅拷贝。(也可以理解为深拷贝第一层，后面的浅拷贝) 
+
+```js
+var cloneObj = function(obj){
+    var str, newobj = obj.constructor === Array ? [] : {};
+    if(typeof obj !== 'object'){
+        return;
+    } else if(window.JSON){
+        str = JSON.stringify(obj); // 系列化对象
+        newobj = JSON.parse(str);  // 还原
+    } else {
+        for(var i in obj){
+            newobj[i] = typeof obj[i] === 'object' ?
+            cloneObj(obj[i]) : obj[i];
+        }
+    }
+    return newobj;
+};
+```
+```js
+// 深拷贝
+var copy = JSON.parse(JSON.stringify(person))
+
+function deepCopy(obj) {
+  var result = Array.isArray(obj) ? [] : {};
+  for (var key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      if (typeof obj[key] === 'object' && obj[key]!==null) {
+        result[key] = deepCopy(obj[key]);   //递归复制
+      } else {
+        result[key] = obj[key];
+      }
+    }
+  }
+  return result;
+}
+```
+
+## `防抖`和`节流`
+
+### 防抖
+`防抖（debounce）`高频事件触发，是指在N秒内事件只执行一次，如果N秒内执行事件，会重新计算时间。
+
+思路: 每次触发事件时都取消之前的延时调用方法。
+
+防抖应用场景
+* 每次 resize/scroll 触发统计事件
+* 文本输入的验证（连续输入文字后发送 AJAX 请求进行验证，验证一次就好）
+
+非立即执行版本
+```js
+function debounce(func, wait) {
+    let timeout;
+    return function () {
+        let context = this;
+        let args = arguments;
+
+        if (timeout) clearTimeout(timeout);
+        
+        timeout = setTimeout(() => {
+            func.apply(context, args)
+        }, wait);
+    }
+}
+```
+
+立即执行版本
+```js
+function debounce(func,wait) {
+    let timeout;
+    return function () {
+        let context = this;
+        let args = arguments;
+
+        if (timeout) clearTimeout(timeout);
+
+        let callNow = !timeout;
+        timeout = setTimeout(() => {
+            timeout = null;
+        }, wait)
+
+        if (callNow) func.apply(context, args)
+    }
+}
+```
+
+防抖函数
+```js
+/**
+ * @desc 函数防抖
+ * @param func 函数
+ * @param wait 延迟执行毫秒数
+ * @param immediate true 表立即执行，false 表非立即执行
+ */
+function debounce(func,wait,immediate) {
+    let timeout;
+
+    return function () {
+        let context = this;
+        let args = arguments;
+
+        if (timeout) clearTimeout(timeout);
+        if (immediate) {
+            var callNow = !timeout;
+            timeout = setTimeout(() => {
+                timeout = null;
+            }, wait)
+            if (callNow) func.apply(context, args)
+        }
+        else {
+            timeout = setTimeout(function(){
+                func.apply(context, args)
+            }, wait);
+        }
+    }
+}
+```
+
+### 节流
+`节流（throttle）`是指连续触发事件但是N秒内只执行一次。
+
+节流:    高频事件触发，但在 n 秒内只会执行一次，所以节流会稀释函数的执行频率。
+
+思路：每次触发事件时都判断当前是否有等待执行的延时函数。
+
+函数节流的应用场景有:
+* DOM 元素的拖拽功能实现（mousemove）
+* 射击游戏的 mousedown/keydown 事件（单位时间只能发射一颗子弹）
+* 计算鼠标移动的距离（mousemove）
+* Canvas 模拟画板功能（mousemove）
+* 搜索联想（keyup）
+* 监听滚动事件判断是否到页面底部自动加载更多：给 scroll 加了 debounce 后，只有用户停止滚动后，才会判断是否到了页面底部；如果是 throttle 的话，只要页面滚动就会间隔一段时间判断一次
+
+时间戳版
+```js
+function throttle(func, wait) {
+    let previous = 0;
+    return function() {
+        let now = Date.now();
+        let context = this;
+        let args = arguments;
+        if (now - previous > wait) {
+            func.apply(context, args);
+            previous = now;
+        }
+    }
+}
+```
+
+定时器版
+```js
+function throttle(func, wait) {
+    let timeout;
+    return function() {
+        let context = this;
+        let args = arguments;
+        if (!timeout) {
+            timeout = setTimeout(() => {
+                timeout = null;
+                func.apply(context, args)
+            }, wait)
+        }
+
+    }
+}
+```
+
+节流函数
+```js
+/**
+ * @desc 函数节流
+ * @param func 函数
+ * @param wait 延迟执行毫秒数
+ * @param type 1 表时间戳版，2 表定时器版
+ */
+function throttle(func, wait ,type) {
+    if(type===1){
+        let previous = 0;
+    }else if(type===2){
+        let timeout;
+    }
+    return function() {
+        let context = this;
+        let args = arguments;
+        if(type===1){
+            let now = Date.now();
+
+            if (now - previous > wait) {
+                func.apply(context, args);
+                previous = now;
+            }
+        }else if(type===2){
+            if (!timeout) {
+                timeout = setTimeout(() => {
+                    timeout = null;
+                    func.apply(context, args)
+                }, wait)
+            }
+        }
+    }
+}
+```
+
+## 事件捕获，事件目标，事件冒泡，事件代理~事件委托（叫法不同或者说主体不同）
+
+## 重绘和重排
 
