@@ -11,16 +11,21 @@ module.exports = {
     themeConfig: {
         lastUpdated: '最后更新时间',
         nav: [
-            {text: 'blog', link: 'https://lijiahao8898.github.io/'},
             {
+                text: 'blog',
+                link: 'https://lijiahao8898.github.io/'
+            }, {
                 text: 'github',
                 // 这里是下拉列表展现形式。
                 items: [
-                    {text: 'lijiahao8898', link: 'https://github.com/lijiahao8898'},
+                    {
+                        text: 'lijiahao8898',
+                        link: 'https://github.com/lijiahao8898'
+                    },
                 ]
             }
         ],
-        sidebarDepth: 2,
+        sidebarDepth: 1,
         sidebar: [{
             title: 'Javascript',
             children: [
@@ -29,11 +34,22 @@ module.exports = {
                 '/javascript/question.md'
             ]
         }, '/html/', {
-            title: 'css层叠样式表',
+            title: 'CSS',
             children: [
                 '/style/',
                 '/style/SASS.md',
                 '/style/LESS.md'
+            ]
+        }, {
+            title: 'BOM',
+            children: [
+                '/http/'
+            ]
+        }, {
+            title: 'Vue',
+            children: [
+                '/vue/',
+                '/vue/Vuex.md'
             ]
         }, {
             title: 'React',
@@ -43,18 +59,6 @@ module.exports = {
                 '/react/redux.md',
                 '/react/dva.md'
             ]
-        }, {
-            title: 'Vue',
-            children: [
-                '/vue/',
-                '/vue/Vuex.md'
-            ]
-        }, {
-            title: '游览器宿主',
-            children: [
-                '/http/',
-                '/http/BOM.md'
-            ]
         }, '/blog/', '/tool/'],
     }
-}
+};

@@ -129,18 +129,6 @@ a.getAttribute('abc');
 window.jQuery = window.$ = jQuery
 ```
 
-## `for in`能否把原型链循环出来
-
-能。
-
-### 如何避免？
-
-使用 `hasOwnProperty`。
-
-## 原型链
-
-![solar](./images/1.jpg)
-
 ## 继承的几种方式
 
 1. `借用构造函数继承` 使用call和apply方法，将父对象的构造函数绑定在子对象上

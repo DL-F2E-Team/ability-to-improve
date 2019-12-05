@@ -53,7 +53,7 @@
 
   ```
   24. 类，类的继承，super
-  25.  原型，继承
+  25.  继承
   26.  session，cookie，sessionStorage，localStroage
   27. 红黑树算法，二叉树算法
   31. 函数声明 、函数表达式（声明提升）
@@ -149,7 +149,152 @@ func()
 [如何解释Event Loop面试官才满意？- 知乎](https://zhuanlan.zhihu.com/p/72507900)
 
 ## 原型与原型链
+### `for in`能否把原型链循环出来
+能。
+
+#### 如何避免？
+使用 `hasOwnProperty`。
+
+### 原型链
 ![solar](./images/1.jpg)
+
+```js
+function Father () {
+    this.property = true;
+}
+
+Father.prototype.getFatherValue = function() {
+  return this.property
+}
+
+function Son() {
+    this.sonProperty = false;
+}
+
+// 继承Father
+Son.prototype = new Father(); // Son.prototype被重写，导致Son.prototype.constructor也被重写
+Son.prototype.getSonValue = function () {
+    return this.sonProperty;
+}
+
+var instance = new Son();
+alert(instance.getFatherValue())
+```
+instance实例通过原型链找到了Father原型中的getFatherValue方法.
+
+### 如何判断原型和实例的继承关系
+```js
+instance instanceof Object;
+
+Object.prototype.isPrototypeOf(instance);
+```
+
+::: warning
+问题一: 当原型链中包含引用类型值的原型时,该引用类型值会被所有实例共享;
+
+问题二: 在创建子类型(例如创建Son的实例)时,不能向超类型(例如Father)的构造函数中传递参数.
+:::
+
+### 继承
+过【某种方式】让一个对象可以访问到另一个对象中的属性和方法，我们把这种方式称之为继承
+
+### 为什么要使用继承
+有些对象会有方法(动作、行为)，而这些方法都是函数，如果把这些方法和函数都放在构造函数中声明就会导致内存的浪费
+
+```js
+function Person(){
+        this.say=function(){
+            console.log("你好")
+        }
+    }
+    var p1=new Person();
+    var p2=new Person();
+    console.log(p1.say === p2.say);   //false
+```
+
+### 原型链继承
+```js
+Person.prototype = {
+    //切记不能忘记
+    constructor:Person,
+    say:function(){
+        console.log("你好");
+    },
+    run:function(){
+        console.log("正在进行百米冲刺");
+    }
+}
+```
+
+### 经典继承【借用构造函数】
+```js
+function Father(){
+	this.colors = ["red","blue","green"];
+}
+function Son(){
+	Father.call(this);//继承了Father,且向父类型传递参数
+}
+var instance1 = new Son();
+instance1.colors.push("black");
+console.log(instance1.colors);//"red,blue,green,black"
+
+var instance2 = new Son();
+console.log(instance2.colors);//"red,blue,green" 可见引用类型值是独立的
+```
+
+### 组合继承【伪经典继承】
+```js
+function Father(name){
+	this.name = name;
+	this.colors = ["red","blue","green"];
+}
+Father.prototype.sayName = function(){
+	alert(this.name);
+};
+function Son(name,age){
+	Father.call(this,name);//继承实例属性，第一次调用Father()
+	this.age = age;
+}
+Son.prototype = new Father();//继承父类方法,第二次调用Father()
+Son.prototype.sayAge = function(){
+	alert(this.age);
+}
+var instance1 = new Son("louis",5);
+instance1.colors.push("black");
+console.log(instance1.colors);//"red,blue,green,black"
+instance1.sayName();//louis
+instance1.sayAge();//5
+
+var instance1 = new Son("zhai",10);
+console.log(instance1.colors);//"red,blue,green"
+instance1.sayName();//zhai
+instance1.sayAge();//10
+```
+
+### 原型继承
+```js
+ var o1={ say:function(){} }
+ var o2=Object.create(o1);
+```
+
+### 寄生式继承
+
+### 寄生组合式继承
+
+### new操作符干了什么
+```js
+var obj  = {};
+obj.__proto__ = F.prototype;
+F.call(obj);
+```
+
+第一行，我们创建了一个空对象obj;
+第二行，我们将这个空对象的__proto__成员指向了F函数对象prototype成员对象;
+第三行，我们将F函数对象的this指针替换成obj，然后再调用F函数.
+我们可以这么理解: 以 new 操作符调用构造函数的时候，函数内部实际上发生以下变化：
+1、创建一个空对象，并且 this 变量引用该对象，同时还继承了该函数的原型。
+2、属性和方法被加入到 this 引用的对象中。
+3、新创建的对象由 this 所引用，并且最后隐式的返回 this.
 
 ## Class
 

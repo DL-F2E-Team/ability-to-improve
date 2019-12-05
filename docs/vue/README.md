@@ -276,6 +276,28 @@ mounted () {
 Object.assign(this.$data, this.$options.data())
 ```
 
+## `Vue.observable`
+轻量级的`Vuex`，用作状态管理
+
+```js
+// store.js
+import Vue from 'vue';
+
+export let store = Vue.observable({count: 0});
+export let mutations = {
+    setCount(count) {
+        store.count = count;
+    }
+}
+```
+
+## 保留模板中的HTML注释
+```
+<template comment>
+...
+</template>
+```
+
 ## 罕见指令
 1. `v-pre`：跳过编译
 2. `v-cloak`
