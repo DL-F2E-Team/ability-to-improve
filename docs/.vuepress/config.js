@@ -9,6 +9,7 @@ module.exports = {
         },
     },
     themeConfig: {
+        lastUpdated: '最后更新时间',
         nav: [
             {text: 'blog', link: 'https://lijiahao8898.github.io/'},
             {
@@ -19,7 +20,8 @@ module.exports = {
                 ]
             }
         ],
-        sidebar: ['/', {
+        sidebarDepth: 2,
+        sidebar: [{
             title: 'Javascript',
             children: [
                 '/javascript/',
@@ -41,13 +43,18 @@ module.exports = {
                 '/react/redux.md',
                 '/react/dva.md'
             ]
-        }, '/vue/', {
+        }, {
+            title: 'Vue',
+            children: [
+                '/vue/',
+                '/vue/Vuex.md'
+            ]
+        }, {
             title: '游览器宿主',
             children: [
                 '/http/',
                 '/http/BOM.md'
             ]
         }, '/blog/', '/tool/'],
-        sidebarDepth: 1,
     }
 }

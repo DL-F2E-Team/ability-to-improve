@@ -1,4 +1,5 @@
 ---
+home: true
 layout: post
 title:  Hello F2E !
 categories:
@@ -10,12 +11,14 @@ categories:
             You cannot improve your past, but you can improve your future.
             once time is wasted, life is wasted.
 
-## 目录
+## [LET'S DO IT](./javascript)
+
+### 目录
 * [Javascript](./javascript)
 * [Vue](./vue)
+  - [Nuxt.js](https://zh.nuxtjs.org/)
   - [Vue.js技术揭秘 - ustbhuangyi.github.io](https://ustbhuangyi.github.io/vue-analysis/)
   - [Vue服务端渲染指南](https://ssr.vuejs.org/zh/)
-  - [Nuxt.js](https://zh.nuxtjs.org/)
 * [React](./react)
   * [antd](https://ant.design/docs/spec/introduce-cn)
   * [prop-types](https://github.com/facebook/prop-types)

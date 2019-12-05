@@ -1,6 +1,6 @@
 # Vuejs
 
-## :bookmark: 双向数据绑定原理
+## 双向数据绑定
 `Vuejs` 是采用`数据劫持`结合`发布者-订阅者模式`的方式，通过`Object.defineProperty()`来劫持各个属性的`setter`，`getter`，在数据变动时发布消息给订阅者，触发相应的监听回调。
 
 具体步骤：
@@ -177,7 +177,7 @@ function Watcher(vm, node, name, nodeType) {
 ```
 4. `MVVM` 作为数据绑定的入口，整合 `Observer`、`Compile` 和 `Watcher` 三者，通过Observer来监听自己的model数据变化，通过Compile来解析编译模板指令，最终利用Watcher搭起Observer和Compile之间的通信桥梁，达到数据变化 -> 视图更新；视图交互变化(input) -> 数据 model 变更的双向绑定效果。
 
-## :bookmark: 什么是`MVVM`，和`MVC`的区别
+## `MVVM`与`MVC`
 
 ### 什么是`MVVM`
 `MVVM`是`Modal-View-ViewModal`的缩写，是一种设计思想。
@@ -206,15 +206,8 @@ V代表View，负责系统向用户的展示，主要由HTML及JSP等完成；
  
 ### `MVVM`和`MVC`的区别
 区别不大，都是设计思想。MVVM中的ViewModal 替换成了Controller，MVVM 主要解决了MVC 中大量的 DOM操作使页面渲染性能降低，加载速度变慢，影响用户体验。和当 Model 频繁发生变化，开发者需要主动更新到 View。
- 
-## :bookmark: Vuejs的两个核心是什么
-1. 数据驱动[数据变动触发视图跟新]
-2. 组件系统[.vue]
 
-## :bookmark: `v-model` 实现的原理
-`v-model` 是 `v-bind:value` 和输入框 `change事件` 的语法糖.
-
-## :bookmark: 组件间数据传递的方式有哪些
+## 组件间数据传递的方式
 数据传递的方式有：
 1. `props` 和 `$emit`、`on`
 2. `vue.protetype.eventBus`
@@ -227,18 +220,35 @@ V代表View，负责系统向用户的展示，主要由HTML及JSP等完成；
 9. `sync`
 10. `observable`
 
-## :bookmark: 罕见的指令有哪些
-1. `v-pre`：跳过编译
-2. `v-cloak`
-3. `v-once`
+## 生命周期
+### 父子组件生命周期的执行顺序
+* 初始化渲染
+  - 【1】**父组件**的`beforeCreate`、`created` 、`beforeMounted`
+  - 【2】**子组件**的`beforeCreate`、`created`、`beforeMount`、`mounted`
+  - 【3】**父组件**的`mounted`
+* 子组件更新
+  - 【1】**父组件**的`beforeUpdate`
+  - 【2】**子组件**的`beforeUpdate`、`updated`
+  - 【3】**父组件**的`updated`
+* 父组件更新
+  - 【1】父组件的`beforeUpdate`
+  - 【2】父组件的`updated`
+* 销毁过程
+  - 【1】父组件的`beforeDestroy`
+  - 【2】子组件的`beforeDestroy`、`destroyed`
+  - 【3】父组件`destroyed`
 
-## :bookmark: 性能优化有哪些
-1. 使用v-pre、v-once
-2. 路由懒加载
-3. 组件懒加载
-4. Object.freeze冻结列表数据/虚拟列表-展示用户手机显示区域内的列表（长列表优化）
+### 生命周期以及触发机制
+#### `beforeCreate、created`
+`new Vue实例`之后调用`this._init()`方法，在`_init`方法里面`callHook(vm, 'beforeCreate')`和`callHook(vm, 'created')`
 
-## :bookmark: `Vuejs`如何监听子组件的生命周期
+beforeCreate => initState【data】 => created
+
+* beforeMounted
+
+[生命周期钩子](https://cn.vuejs.org/v2/api/index.html#%E9%80%89%E9%A1%B9-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E9%92%A9%E5%AD%90)
+
+### 如何监听子组件的生命周期
 ```vue
 <!-- parent.vue -->
 <children @mounted="doSomething"></children>
@@ -253,26 +263,34 @@ mounted () {
 ```vue
 <Child @hook:mounted="doSomething"/>
 ```
+ 
+## `Vuejs`的两个核心
+1. 数据驱动[数据变动触发视图跟新]
+2. 组件系统[.vue]
 
-## :bookmark: 父子组件生命周期的执行顺序
-* 初始化渲染：父 beforeCreate、created 、beforeMounted => 子 beforeCreate、Created、beforeMount、Mounted => 父 mounted
-* 子组件更新：父 beforeUpdate => 子 beforeUpdate、updated => 父 updated
-* 父组件更新：父 beforeUpdate => 父 updated
-* 销毁过程：父 beforeDestroy => 子 beforeDestroy => 子 destroyed => 父 destroyed
+## `"v-model"`的实现原理
+`v-model` 是 `v-bind:value` 和输入框 `change事件` 的语法糖.
 
-## :bookmark: 生命周期以及触发机制
+## 重置data
+```js
+Object.assign(this.$data, this.$options.data())
+```
 
-* `beforeCreate、created`：new Vue实例之后调用this._init()方法，在_init方法里面callHook(vm, 'beforeCreate')和callHook(vm, 'created')
-beforeCreate => initState【data】 => created
+## 罕见指令
+1. `v-pre`：跳过编译
+2. `v-cloak`
+3. `v-once`
 
-* beforeMounted
+## 性能优化
+1. 使用v-pre、v-once
+2. 路由懒加载
+3. 组件懒加载
+4. Object.freeze冻结列表数据/虚拟列表-展示用户手机显示区域内的列表（长列表优化）
 
-[生命周期钩子](https://cn.vuejs.org/v2/api/index.html#%E9%80%89%E9%A1%B9-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E9%92%A9%E5%AD%90)
-
-## :bookmark: 如何实现权限控制
+## 如何实现权限控制
 beforeEach和动态路由加载(addRoutes)
 
-## :bookmark: 如何实现锚点
+## 如何实现锚点
 scrollBehavior
 [滚动行为](https://router.vuejs.org/zh/guide/advanced/scroll-behavior.html)
 
@@ -283,7 +301,7 @@ goAnchor(selector, index) {
   this.$el.querySelector(selector).scrollIntoView()
 }
 ```
-#### `Vue`有哪些修饰符
+## `Vue`有哪些修饰符
 * `.stop` 阻止点击事件冒泡（event.stopPropagation）
 * `.prevent` 阻止预设行为（event.preventDefault）
 * `.capture` 与事件冒泡相反（事件捕获）
@@ -291,11 +309,7 @@ goAnchor(selector, index) {
 * `.once` 只执行一次
 * `.passive` 滚动行为立即触发
 
-## 内置组件 component<is>
+## 内置组件 component【is】
 
-# Vuex
-
-## 多人同时使用`Vuex`怎么防止数据污染
-
-## :bookmark: 相关文章
+## 相关文章
 [7个有用的vue开发技巧](https://juejin.im/post/5ce3b519f265da1bb31c0d5f)
