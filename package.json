@@ -10,7 +10,8 @@
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "deploy": "gh-pages -d docs/.vuepress/dist",
-    "deploy:build": "npm run docs:build && gh-pages -d docs/.vuepress/dist"
+    "deploy:build": "npm run docs:build && gh-pages -d docs/.vuepress/dist",
+    "set": "npm run deploy:build"
   },
   "dependencies": {
     "core-js": "^2.6.5",
@@ -25,7 +26,7 @@
     "eslint-plugin-vue": "^5.0.0",
     "gh-pages": "^2.0.1",
     "vue-template-compiler": "^2.5.21",
-    "vuepress": "^1.0.0-alpha.47"
+    "vuepress": "1.2.0"
   },
   "eslintConfig": {
     "root": true,

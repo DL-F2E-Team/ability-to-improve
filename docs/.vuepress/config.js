@@ -30,8 +30,9 @@ module.exports = {
             title: 'Javascript',
             children: [
                 '/javascript/',
+                '/javascript/klh.md',
                 '/javascript/highQuestion.md',
-                '/javascript/question.md'
+                '/javascript/question.md',
             ]
         }, '/html/', {
             title: 'CSS',
