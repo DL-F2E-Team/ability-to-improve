@@ -37,8 +37,9 @@
 * `join()` ：将一个数组（或一个类数组对象）的所有元素连接成一个字符串并返回这个字符串
 * `reduce()`：方法对数组中的每个元素执行一个由您提供的reducer函数(升序执行)，将其结果汇总为单个返回值。
 
-### Doc
+::: tip 资料库
 [Array - MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array)
+:::
 
 ## 数组去重
 1. indexOf
@@ -433,26 +434,5 @@ node.addEventListener('click',(event) =>{
 
 ### 重绘（Repainting）
 所谓重绘，就是当页面中元素样式的改变并不影响它在文档流中的位置时，例如更改了字体颜色,浏览器会将新样式赋予给元素并重新绘制的过程称。
-
-
-## 前端性能优化
-
-* 【1】减少DOM操作
-  - 最小化DOM访问次数，暂存DOM
-* 【2】采用更优的API替代消费高的API
-  - 用`querySelectorAll()`替代`getElementByXX()`.
-  - 开启动画GPU，把渲染计算交给GPU
-  - 少用HTML集合（类数组）来遍历.
-  - 用事件委托
-* 【3】减少重排
-  - 避免设置大量的style属性，因为通过设置style属性改变结点样式的话，每一次设置都会触发一次reflow，所以最好是使用class属性。
-  - 实现元素的动画，它的position属性，最好是设为absoulte或fixed，这样不会影响其他元素的布局
-  - 动画实现的速度的选择。比如实现一个动画，以1个像素为单位移动这样最平滑，但是reflow就会过于频繁，大量消耗CPU资源，如果以3个像素为单位移动则会好很多。
-  - 不要使用table布局
-* 【4】css及动画处理
-  - 少用css表达式
-  - 减少通过JavaScript代码修改元素样式，尽量使用修改class名方式操作样式或动画；
-  - 动画尽量使用在绝对定位或固定定位的元素上；
-  - 隐藏在屏幕外，或在页面滚动时，尽量停止动画；
 
 

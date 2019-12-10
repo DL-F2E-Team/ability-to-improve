@@ -10,7 +10,7 @@ footer: created by lijiahao8898
 
             You cannot improve your past, but you can improve your future.
             once time is wasted, life is wasted.
-            
+
             你不能改变你的过去，但你可以让你的未来变得更好。
             一旦时间浪费了，生命就浪费了。
 
@@ -30,12 +30,14 @@ footer: created by lijiahao8898
   * [Facebook](https://github.com/facebook)
 * 网络安全
   - [网络安全总结 - 掘金](https://juejin.im/post/5dca1b376fb9a04a9f11c82e)
-     
-<style lang="css">
-  .hero img{
-    width: 120px;
-    height: 120px;
-    border-radius: 100%;
-    box-shadow: 1px 1px 10px rgba(0,0,0,1)
+
+<style lang="scss">
+  .hero{
+  img {
+   width: 120px;
+      height: 120px;
+      border-radius: 100%;
+      box-shadow: 1px 1px 10px rgba(0,0,0,.5)
+   }
   }
 </style>

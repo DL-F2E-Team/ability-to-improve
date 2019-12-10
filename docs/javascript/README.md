@@ -1,20 +1,30 @@
 # JavaScript(ECMAscript)
 
-## ES5基础
-
-* `javascript`是弱类型语言<br/>
-  - `基本数据类型`：【数字、字符串、Boolean、undefined、null】、ES6新增【symbol】<br/>
-  - `引用数据类型`：Object对象包括【function、array】<br/>
-  - `原生函数`：String、Number、Boolean、Array、Object、Function、RegExp、Date、Error、Symbol
+## ECMAScript
+* 广义的JavaScript是指：`ECMAScript`、`文档对象模型【DOM】`、`游览器对象模型【BOM】`。
+  - `JavaScript`是**弱类型**语言。
+  - 基本数据类型：**数字**、**字符串**、**Boolean**、**undefined**、**null**、**symbol**【ES6新增】
+  - 引用数据类型：**Object**对象包括【function、array】
+  - 原生函数：String、Number、Boolean、Array、Object、Function、RegExp、Date、Error、Symbol
+  
 * `typeof`
-  ```
-  typeof null => object
-  ```
-  - 判断 null：`(!a && typeof a === 'object')`
-
+  - `typeof null = 'object'`
+  - `typeof [1] = 'object'`
+  - `typeof function = 'function'`
+  - 判断null：`(!null && typeof null === 'object')`
+  - 判断数组：
+    - Array.isArray()
+    - [] instanceof Array
+    - Object.prototype.toString.call([]) === '[object Array]'
+    - [].constructor === Array
+::: warning 注意
+typeof()是判断基本类型的。对于引用类型，除function，都返回object【null返回object】。
+:::    
+    
 * `undefined` 和 `is not defined` 是两回事，前者已声明未赋值，后者未声明。
 
-* 广义的JavaScript是指：`ECMAScript`、`文档对象模型【DOM】`、`游览器对象模型【BOM】`
+* AO作用域链的开始是当前代码执行环境的变量对象，常被称之为“活跃对象”（AO）
+* VO
 
 * 稀疏数组
 
@@ -111,7 +121,15 @@
 var func = foo()
 func()
 ```
+
+::: tip 提示
+IIFE是闭包吗？
+严格来讲IIFE并不算闭包，因为函数并没用在本身的词法作用域以外执行。
+:::
+
+::: tip 资料库 
 [「每日一题」JS 中的闭包是什么？- 知乎](https://zhuanlan.zhihu.com/p/22486908)
+:::
 
 ## 作用域和作用域链
 ![Scope](./images/scope.jpeg)
@@ -499,4 +517,26 @@ class myClass extends myClassParents {
 * 函数
 * 变量提升
 * 回收机制
-* VO AO
+
+## 常见的设计模式有哪些？
+
+1、js工厂模式
+2、js构造函数模式
+3、js原型模式
+4、构造函数+原型的js混合模式
+5、构造函数+原型的动态原型模式
+6、观察者模式
+7、发布订阅模式
+
+## setTimeout倒计时为什么会出现误差？
+setTimeout() 只是将事件插入了“任务队列”，必须等当前代码（执行栈）执行完，主线程才会去执行它指定的回调函数。要是当前代码消耗时间很长，也有可能要等很久，所以并没办法保证回调函数一定会在 setTimeout() 指定的时间执行。所以， setTimeout() 的第二个参数表示的是最少时间，并非是确切时间。
+HTML5标准规定了 setTimeout() 的第二个参数的最小值不得小于4毫秒，如果低于这个值，则默认是4毫秒。在此之前。老版本的浏览器都将最短时间设为10毫秒。另外，对于那些DOM的变动（尤其是涉及页面重新渲染的部分），通常是间隔16毫秒执行。这时使用 requestAnimationFrame() 的效果要好于 setTimeout();
+
+断点续传？
+HTTP1.1协议（RFC2616）中定义了断点续传相关的HTTP头 Range和Content-Range字段，一个最简单的断点续传实现大概如下：
+1.客户端下载一个1024K的文件，已经下载了其中512K
+2. 网络中断，客户端请求续传，因此需要在HTTP头中申明本次需要续传的片段：
+Range:bytes=512000-
+这个头通知服务端从文件的512K位置开始传输文件
+3. 服务端收到断点续传请求，从文件的512K位置开始传输，并且在HTTP头中增加：
+Content-Range:bytes 512000-/1024000
