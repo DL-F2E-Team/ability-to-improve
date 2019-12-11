@@ -27,10 +27,14 @@ module.exports = {
         ],
         sidebarDepth: 1,
         sidebar: [{
-            title: 'Javascript',
+            title: 'JavaScript',
             children: [
                 '/javascript/',
-                '/javascript/KLH.md',
+                '/javascript/Prototype.md',
+                '/javascript/Array.md',
+                '/javascript/Function.md',
+                '/javascript/HOF.md',
+                '/javascript/Curry.md',
                 '/javascript/SEO.md',
                 '/javascript/mobile.md',
                 '/javascript/highQuestion.md',

@@ -1,6 +1,6 @@
 ---
 layout: article
-title: Page - Article Header Overlay Background Fill
+title: 前端优化
 article_header:
   type: overlay
   theme: dark
@@ -10,7 +10,7 @@ article_header:
 
 # 前端优化
 
-## 前端性能优化
+## 性能优化
 
 * 减少DOM操作
   - 最小化DOM访问次数，暂存DOM

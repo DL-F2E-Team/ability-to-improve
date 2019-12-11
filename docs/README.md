@@ -3,7 +3,7 @@ home: true
 heroText: Hello F2E !
 heroImage: logo.jpg
 tagline: 温故而知新，可以为师矣
-actionText: 快速上手 →
+actionText: 快速开始 →
 actionLink: /javascript/
 footer: created by lijiahao8898
 ---
@@ -18,6 +18,7 @@ footer: created by lijiahao8898
 # 目录
 
 ## 常用网站
+
 - :fire:[JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)
 - :fire:[Can I use... Support tables for HTML5, CSS3, etc](https://caniuse.com/)
 - :fire:[知乎](https://www.zhihu.com/)
@@ -29,45 +30,44 @@ footer: created by lijiahao8898
 - [Webstorm - download](https://www.jetbrains.com/webstorm/download/download-thanks.html?platform=mac)
   
 ## JavaScript
-* core
-  - [JavaScript](./javascript)
-    - [Layui 开发使用文档 - 入门指南](https://www.layui.com/doc/)
-  - [TypeScript](https://ts.xcatliu.com/)  
-* docs  
+
+- [JavaScript](./javascript)
+  - [Layui 开发使用文档 - 入门指南](https://www.layui.com/doc/)
+- [TypeScript](https://ts.xcatliu.com/)  
+- docs  
   - [从html、css到 js，WEB前端开发在线学习视频教程 - html中文网](https://www.html.cn/)
   - [(建议精读)原生JS灵魂之问(中)，检验自己是否真的熟悉JavaScript？ - 知乎](https://zhuanlan.zhihu.com/p/90017386)
 
 ## Vuejs
-* core
-  - :fire:[Vuejs](./vue)
-    - :fire:[iView - A high quality UI Toolkit based on Vue.js](https://www.iviewui.com/)
-    - [iView Weapp - 一套高质量的微信小程序 UI 组件库](https://weapp.iviewui.com/)
-    - [Mand Mobile-面向金融场景的Vue移动端UI组件库](https://didi.github.io/mand-mobile/)
-    - [Vant Weapp - 轻量、可靠的小程序 UI 组件库](https://youzan.github.io/vant-weapp/#/intro)
-    - [Quasar框架介绍 - Quasar Framework 中文网](http://v0-16.quasarchs.com/guide/introduction-to-quasar.html)
-    - [Nuxt.js](https://zh.nuxtjs.org/)
-  - [VuePress](https://vuepress.vuejs.org/) 
-* docs
+
+- :fire:[Vuejs](./vue)
+  - :fire:[iView - A high quality UI Toolkit based on Vue.js](https://www.iviewui.com/)
+  - [iView Weapp - 一套高质量的微信小程序 UI 组件库](https://weapp.iviewui.com/)
+  - [Mand Mobile-面向金融场景的Vue移动端UI组件库](https://didi.github.io/mand-mobile/)
+  - [Vant Weapp - 轻量、可靠的小程序 UI 组件库](https://youzan.github.io/vant-weapp/#/intro)
+  - [Quasar框架介绍 - Quasar Framework 中文网](http://v0-16.quasarchs.com/guide/introduction-to-quasar.html)
+  - [Nuxt.js](https://zh.nuxtjs.org/)
+- [VuePress](https://vuepress.vuejs.org/) 
+- docs
   - :fire:[Vue.js技术揭秘 - ustbhuangyi.github.io](https://ustbhuangyi.github.io/vue-analysis/)
   - :fire:[Vue.js 组件精讲 - Aresn - 掘金小册](https://juejin.im/book/5bc844166fb9a05cd676ebca)
   - :fire:[Vue.js 源码学习笔记 - 囧克斯](https://jiongks.name/blog/vue-code-review/)
   - :fire:[阅读vue.js源码可以从哪几方面入手？ - 知乎](https://www.zhihu.com/question/36986850)
   - [Vue服务端渲染指南](https://ssr.vuejs.org/zh/)
-* 面试  
+- 面试  
   - [fe-interview/Vue.md at master · haizlin/fe-interview](https://github.com/haizlin/fe-interview/blob/master/lib/Vue.md)
 
 ## Reactjs  
-* core
-  * [React](./react)
-    - [prop-types](https://github.com/facebook/prop-types)
-    - :fire:[antd](https://ant.design/docs/spec/introduce-cn)
-      - [ant.design - 1x](https://1x.ant.design/)
-    - :fire:[DvaJS](https://dvajs.com/)
-  * [React Router](http://react-guide.github.io/react-router-cn/index.html) 
-  * [Redux](https://redux.js.org/) 
-    - [自述 · Redux](https://www.redux.org.cn/)  
-* docs    
-  * [core-decorators — @autobind自动绑定](https://github.com/jayphelps/core-decorators)
+- [React](./react)
+  - [prop-types](https://github.com/facebook/prop-types)
+  - :fire:[antd](https://ant.design/docs/spec/introduce-cn)
+    - [ant.design - 1x](https://1x.ant.design/)
+  - :fire:[DvaJS](https://dvajs.com/)
+- [React Router](http://react-guide.github.io/react-router-cn/index.html) 
+- [Redux](https://redux.js.org/) 
+  - [自述 · Redux](https://www.redux.org.cn/)  
+- docs    
+  - [core-decorators — @autobind自动绑定](https://github.com/jayphelps/core-decorators)
   - 掘金
     - [(1) 基于 React + Webpack 的音乐相册项目（上） - 掘金](https://juejin.im/post/5a7bab126fb9a0634b4d6498?utm_source=gold_browser_extension)
   - 知乎
