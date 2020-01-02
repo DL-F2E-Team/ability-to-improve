@@ -1,6 +1,6 @@
-# ECMAScript Basic
+# ECMAScript
 
-## ECMAScript
+## 基础
 * 广义的JavaScript是指：`ECMAScript`、`文档对象模型【DOM】`、`游览器对象模型【BOM】`。
   - JavaScript是**弱类型**语言。
   - 基本数据类型：**数字**、**字符串**、**Boolean**、**undefined**、**null**、**symbol**【ES6新增】
@@ -12,20 +12,6 @@
   - 中断forEach
     - 使用try catch中断，抛出异常
     - 官方推荐：使用every和some替代forEach.`every`在碰到`return false`的时候，中止循环。`some`在碰到`return true`的时候，中止循环
-  
-## typeof
-  - typeof null = 'object'
-  - typeof [1] = 'object'
-  - typeof function = 'function'
-  - 判断null：`(!null && typeof null === 'object')`
-  - 判断数组：
-    - Array.isArray()
-    - [] instanceof Array
-    - Object.prototype.toString.call([]) === '[object Array]'
-    - [].constructor === Array
-::: warning 注意
-typeof()是判断基本类型的。对于引用类型，除function，都返回object【null返回object】。
-:::
     
 * `undefined` 和 `is not defined` 是两回事，前者已声明未赋值，后者未声明。
 
@@ -71,7 +57,6 @@ typeof()是判断基本类型的。对于引用类型，除function，都返回o
   ```
   24. 类，类的继承，super
   25.  继承
-  26.  session，cookie，sessionStorage，localStroage
   27. 红黑树算法，二叉树算法
   31. 函数声明 、函数表达式（声明提升）
   32.  高阶函数、纯函数、函数柯里化
@@ -87,20 +72,22 @@ typeof()是判断基本类型的。对于引用类型，除function，都返回o
   43. httpXMLrequest、fetch、axios、ajax
   44. 使用单页应用将文件上传到服务器的有哪些方法(XMLHttpRequest2（streaming），fetch（non-streaming），File API)
   ```
+## typeof
+  - typeof null = 'object'
+  - typeof [1] = 'object'
+  - typeof function = 'function'
+  - 判断null：`(!null && typeof null === 'object')`
+  - 判断数组：
+    - Array.isArray()
+    - [] instanceof Array
+    - Object.prototype.toString.call([]) === '[object Array]'
+    - [].constructor === Array
+::: warning 注意
+typeof()是判断基本类型的。对于引用类型，除function，都返回object【null返回object】。
+:::  
+  
 ## 执行上下文
 [JavaScript系列之执行上下文和执行栈 - 知乎](https://zhuanlan.zhihu.com/p/68799915)
-
-## this
-* 一般函数
-  - 匿名函数调用或者全局函数调用，`this`指向Window、Global
-* 构造函数
-  - 构造函数调用，`this`指向这个新生成的对象  
-* 对象方法
-  - 对象方法调用，`this`指向当前对象
-* .call()、.apply()和.bind() 
-  - 显示绑定，`this`指向绑定的值
-* 箭头函数
-  - 箭头函数中始终会捕捉其“定义时”所在上下文的`this`值，作为自己的`this`.
 
 ## `bind`、`call`和`apply`区别
 三者都是用来改变this指向的

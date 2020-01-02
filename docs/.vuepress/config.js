@@ -27,12 +27,16 @@ module.exports = {
         ],
         sidebarDepth: 1,
         sidebar: [{
+            title: '目录',
+            children: ['/Catalogue.md']
+        }, {
             title: 'JavaScript',
             children: [
                 '/javascript/',
-                '/javascript/Prototype.md',
+                '/javascript/This.md',
                 '/javascript/Array.md',
                 '/javascript/Function.md',
+                '/javascript/Prototype.md',
                 '/javascript/HOF.md',
                 '/javascript/Curry.md',
                 '/javascript/SEO.md',
