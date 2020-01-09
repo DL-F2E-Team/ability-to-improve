@@ -72,19 +72,40 @@
   43. httpXMLrequest、fetch、axios、ajax
   44. 使用单页应用将文件上传到服务器的有哪些方法(XMLHttpRequest2（streaming），fetch（non-streaming），File API)
   ```
-## typeof
-  - typeof null = 'object'
-  - typeof [1] = 'object'
-  - typeof function = 'function'
-  - 判断null：`(!null && typeof null === 'object')`
-  - 判断数组：
-    - Array.isArray()
-    - [] instanceof Array
-    - Object.prototype.toString.call([]) === '[object Array]'
-    - [].constructor === Array
+## 数据类型检测
+### typeof
+```
+typeof 5            // number
+typeof '5'          // string
+typeof undefined    // undefined
+typeof false        // boolean
+typeof Symbol()     // symbol
+typeof null         // object
+typeof NaN          // number
+
+typeof [1]          // object
+typeof {}           // object
+typeof console.log  // function
+```
+
+- 判断null：`(!null && typeof null === 'object')`
+- 判断数组：
+  - Array.isArray()
+  - [] instanceof Array
+  - Object.prototype.toString.call([]) === '[object Array]'
+  - Object.prototype.toString.call({}) === '[object Object]'
+  - [].constructor === Array
+
 ::: warning 注意
 typeof()是判断基本类型的。对于引用类型，除function，都返回object【null返回object】。
-:::  
+::: 
+
+### instanceof
+```
+const p1 = new Person()
+
+p1 instanceof Person    // true
+```
   
 ## 执行上下文
 [JavaScript系列之执行上下文和执行栈 - 知乎](https://zhuanlan.zhihu.com/p/68799915)
@@ -126,40 +147,17 @@ IIFE是闭包吗？
 :::
 
 ## 作用域和作用域链
+
+### 变量声明提升
+* 在 JavaScript 中，函数声明（`function aa(){}`）与变量声明（`var`）经常被 JavaScript 引擎隐式地提升到当前作用域的顶部。
+* 函数声明的优先级高于变量，如果变量名跟函数名相同且未赋值，则函数声明会覆盖变量声明
+* 声明语句中的赋值部分并不会被提升，只有变量的名称被提升
+
+### 作用域链
+因为函数的嵌套形成作用域的层级关系。当函数执行时，从当前作用域开始搜，没有找到的变量，会向上层作用域查找，直至全局函数，这就是作用域链。如下图：
 ![Scope](./images/scope.jpeg)
 
 [js基础：作用域及作用域链](https://baijiahao.baidu.com/s?id=1627502571462484522&wfr=spider&for=pc)
-
-## Event Loop
-`Event Loop`主要指的是**任务栈**，**宏任务**与**微任务**（JS线程），**同步任务**与**异步任务**， **线程**与**进程**。
-
-### 进程和线程的区别，js单线程带来的好处？
-**进程**就是执行中的一个程序，是操作资源分配的最小单位。**线程**是进程中执行的一个任务，是程序执行的最小单位。**一个进程由多个线程组成**。进程间相互独立，一个进程下的多个线程共享资源
-打开一个不同地址的游览器tab就是一个进程，里面由渲染线程，JS引擎线程，HTTP请求线程。
-
-### 什么是执行栈（任务栈）？
-一个存储函数调用的栈结构，遵循先进后出的原则，后执行的函数会先弹出栈
-
-### Event Loop？
-![Event Loop](./images/eventloop.jpg)
-1. 首先全局上下文进入函数调用栈，执行同步代码
-2. 执行完同步代码后，查询任务队列里是否由异步代码需要执行
-3. 执行所有微任务，微任务执行完毕后
-4. 循环再次从宏任务开始，从任务队列中拿出一个执行，一直循环下去
-
-### 宏任务和微任务
-
-#### 宏任务
-宏任务：当前调用栈执行的任务（主代码快【同步任务】，定时器等等【异步任务】）。事件放在`callback queue`中，由事件触发线程维护。包括script ， setTimeout ，setInterval ，setImmediate ，I/O ，UI rendering
-
-#### 微任务
-微任务：宏任务执行完，在下一个宏任务执行之前执行的任务（可以理解为回调事件，promise.then，proness.nextTick等等）。事件放在微任务队列，有 `javascript` 引擎线程维护。
-包括process.nextTick ，promise ，MutationObserver
-
-![宏任务和微任务](./images/task.jpg)
-
-[如何解释Event Loop面试官才满意？- 知乎](https://zhuanlan.zhihu.com/p/72507900)
-
 
 ## Class
 

@@ -242,27 +242,6 @@ function throttle(func, wait ,type) {
 }
 ```
 
-## 事件机制
-事件机制包括：事件捕获，事件目标，事件冒泡，事件代理【事件委托叫法不同或者说主体不同】。
-
-一般来说事件机制`W3C标准`先触发事件捕获 => 目标事件 => 事件冒泡。`IE`中先触发事件冒泡 => 目标事件 => 事件捕获。
-
-* 阻止事件冒泡：`W3C标准`中使用`stopPropagation()`；在`IE`中使用`cancelBubble = true`;
-* 阻止事件捕获：`W3C标注`中使用`preventDefault()`；在`IE`中使用`window.event.returnValue = false`
-
-### addEventListener
-如果给一个目标节点同时注册冒泡和捕获事件，事件触发会按照注册的顺序执行。
-```js
-// 以下会先打印冒泡然后是捕获
-// addEventListener默认第三个参数是false也就是在冒泡阶段触发。
-node.addEventListener('click',(event) =>{
-    console.log('冒泡')
-},false); // false 冒泡
-node.addEventListener('click',(event) =>{
-    console.log('捕获 ')
-},true)   // true 捕获
-```
-
 ## 用户输入URL到底发生了啥
 1. 根据URL地址解析出主机名
 2. 游览器将主机名转换成服务器IP地址，再从URL中解析出端口号

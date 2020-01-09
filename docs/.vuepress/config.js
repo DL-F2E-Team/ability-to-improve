@@ -37,6 +37,8 @@ module.exports = {
                 '/javascript/Array.md',
                 '/javascript/Function.md',
                 '/javascript/Prototype.md',
+                '/javascript/Event.md',
+                '/javascript/EventLoop.md',
                 '/javascript/HOF.md',
                 '/javascript/Curry.md',
                 '/javascript/SEO.md',
