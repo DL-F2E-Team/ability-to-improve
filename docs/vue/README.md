@@ -1,5 +1,17 @@
 # Vuejs
 
+## Vue的渲染过程
+
+![Vue render](./images/vuerender.jpg)
+
+1. 调用 compile 函数,生成 render 函数字符串 ,编译过程如下:
+* parse 函数解析 template,生成 ast(抽象语法树)
+* optimize 函数优化静态节点 (标记不需要每次都更新的内容,diff 算法会直接跳过静态节点,从而减少比较的过程,优化了 patch 的性能)
+* generate 函数生成 render 函数字符串
+2. 调用 new Watcher 函数,监听数据的变化,当数据发生变化时，Render 函数执行生成 vnode 对象
+3. 调用 patch 方法,对比新旧 vnode 对象,通过 DOM diff 算法,添加、修改、删除真正的 DOM 元素
+
+
 ## 双向数据绑定
 `Vuejs` 是采用`数据劫持`结合`发布者-订阅者模式`的方式，通过`Object.defineProperty()`来劫持各个属性的`setter`，`getter`，在数据变动时发布消息给订阅者，触发相应的监听回调。
 
@@ -265,13 +277,55 @@ mounted () {
 ```
  
 ## `Vuejs`的两个核心
-1. 数据驱动[数据变动触发视图跟新]
-2. 组件系统[.vue]
+1. 数据驱动【数据变动触发视图跟新】
+2. 组件系统【.vue】
 
-## `"v-model"`的实现原理
+## Vue@3为什么采用`proxy`，弃用了`Object.defineProperty`?
+`Object.defineProperty`本身有一定的监控*数组下标变化*的能力，从性能/体验的性价比考虑【[Vue为什么不能检测数组变动](https://segmentfault.com/a/1190000015783546)】。Vue自身内部处理一些方法来监听了数组变动：
+```js
+push();
+pop();
+shift();
+unshift();
+splice();
+sort();
+reverse();
+```
+只有以上方法进行了hack，具有一定的局限性。
+
+`Object.defineProperty`只能劫持对象的属性,因此我们需要对每个对象的每个属性进行遍历。`Vue 2.x`里,是通过**递归 + 遍历**data对象来实现对数据的监控的,如果属性值也是对象那么需要深度遍历,显然如果能劫持一个完整的对象是才是更好的选择。**`Proxy`可以劫持整个对象,并返回一个新的对象。`Proxy`不仅可以代理对象、数组，还可以代理动态增加的属性**。
+
+## `v-for`中的key到底有什么用？
+key 是给每一个 vnode 的唯一 id,依靠 key,我们的 diff 操作可以更准确、更快速 (对于简单列表页渲染来说 diff 节点也更快,但会产生一些隐藏的副作用,比如可能不会产生过渡效果,或者在某些节点有绑定数据（表单）状态，会出现状态错位。)
+
+diff 算法的过程中,先会进行新旧节点的首尾交叉对比,当无法匹配的时候会用新节点的 key 与旧节点进行比对,从而找到相应旧节点.
+
+更准确 : 因为带 key 就不是就地复用了,在 sameNode 函数 a.key === b.key 对比中可以避免就地复用的情况。所以会更加准确,如果不加 key,会导致之前节点的状态被保留下来,会产生一系列的 bug。
+
+更快速 : key 的唯一性可以被 Map 数据结构充分利用,相比于遍历查找的时间复杂度 O(n),Map 的时间复杂度仅仅为 O(1),源码如下:
+```js
+function createKeyToOldIdx(children, beginIdx, endIdx) {
+  let i, key;
+  const map = {};
+  for (i = beginIdx; i <= endIdx; ++i) {
+    key = children[i].key;
+    if (isDef(key)) map[key] = i;
+  }
+  return map;
+}
+```
+
+## v-model 的实现原理
 `v-model` 是 `v-bind:value` 和输入框 `change事件` 的语法糖.
 
-## 重置data
+## Vue 组件 data 为什么必须是函数？
+> new Vue()实例中,data 可以直接是一个对象,为什么在 vue 组件中,data 必须是一个函数呢?
+
+因为组件是可以复用的，JS 里对象是引用关系,如果组件 data 是一个对象，那么子组件中的 data 属性值会互相污染，产生副作用。
+
+所以一个组件的 data 选项必须是一个函数，因此每个实例可以维护一份被返回对象的独立的拷贝。new Vue 的实例是不会被复用的,因此不存在以上问题。
+
+### 如何重置data？
 ```js
 Object.assign(this.$data, this.$options.data())
 ```
@@ -333,5 +387,141 @@ goAnchor(selector, index) {
 
 ## 内置组件 component【is】
 
+## `vm.$set()`实现原理是什么?
+```js
+export function set(target: Array<any> | Object, key: any, val: any): any {
+  // target 为数组
+  if (Array.isArray(target) && isValidArrayIndex(key)) {
+    // 修改数组的长度, 避免索引>数组长度导致splice()执行有误
+    target.length = Math.max(target.length, key);
+    // 利用数组的splice变异方法触发响应式
+    target.splice(key, 1, val);
+    return val;
+  }
+  // target为对象, key在target或者target.prototype上 且必须不能在 Object.prototype 上,直接赋值
+  if (key in target && !(key in Object.prototype)) {
+    target[key] = val;
+    return val;
+  }
+  // 以上都不成立, 即开始给target创建一个全新的属性
+  // 获取Observer实例
+  const ob = (target: any).__ob__;
+  // target 本身就不是响应式数据, 直接赋值
+  if (!ob) {
+    target[key] = val;
+    return val;
+  }
+  // 进行响应式处理
+  defineReactive(ob.value, key, val);
+  ob.dep.notify();
+  return val;
+}
+```
+
+1. 如果目标是**数组**,使用 Vue 实现的变异方法 **`splice`** 实现响应式
+2. 如果目标是**对象**,判断属性存在,即为响应式,直接赋值
+3. 如果 target 本身就不是响应式,直接赋值
+4. 如果属性不是响应式,则调用 defineReactive 方法进行响应式处理
+
+## 聊聊`keep-alive`的实现原理和缓存策略
+
+```js
+export default {
+  name: "keep-alive",
+  abstract: true, // 抽象组件属性 ,它在组件实例建立父子关系的时候会被忽略,发生在 initLifecycle 的过程中
+  props: {
+    include: patternTypes, // 被缓存组件
+    exclude: patternTypes, // 不被缓存组件
+    max: [String, Number] // 指定缓存大小
+  },
+
+  created() {
+    this.cache = Object.create(null); // 缓存
+    this.keys = []; // 缓存的VNode的键
+  },
+
+  destroyed() {
+    for (const key in this.cache) {
+      // 删除所有缓存
+      pruneCacheEntry(this.cache, key, this.keys);
+    }
+  },
+
+  mounted() {
+    // 监听缓存/不缓存组件
+    this.$watch("include", val => {
+      pruneCache(this, name => matches(val, name));
+    });
+    this.$watch("exclude", val => {
+      pruneCache(this, name => !matches(val, name));
+    });
+  },
+
+  render() {
+    // 获取第一个子元素的 vnode
+    const slot = this.$slots.default;
+    const vnode: VNode = getFirstComponentChild(slot);
+    const componentOptions: ?VNodeComponentOptions =
+      vnode && vnode.componentOptions;
+    if (componentOptions) {
+      // name不在inlcude中或者在exlude中 直接返回vnode
+      // check pattern
+      const name: ?string = getComponentName(componentOptions);
+      const { include, exclude } = this;
+      if (
+        // not included
+        (include && (!name || !matches(include, name))) ||
+        // excluded
+        (exclude && name && matches(exclude, name))
+      ) {
+        return vnode;
+      }
+
+      const { cache, keys } = this;
+      // 获取键，优先获取组件的name字段，否则是组件的tag
+      const key: ?string =
+        vnode.key == null
+          ? // same constructor may get registered as different local components
+            // so cid alone is not enough (#3269)
+            componentOptions.Ctor.cid +
+            (componentOptions.tag ? `::${componentOptions.tag}` : "")
+          : vnode.key;
+      // 命中缓存,直接从缓存拿vnode 的组件实例,并且重新调整了 key 的顺序放在了最后一个
+      if (cache[key]) {
+        vnode.componentInstance = cache[key].componentInstance;
+        // make current key freshest
+        remove(keys, key);
+        keys.push(key);
+      }
+      // 不命中缓存,把 vnode 设置进缓存
+      else {
+        cache[key] = vnode;
+        keys.push(key);
+        // prune oldest entry
+        // 如果配置了 max 并且缓存的长度超过了 this.max，还要从缓存中删除第一个
+        if (this.max && keys.length > parseInt(this.max)) {
+          pruneCacheEntry(cache, keys[0], keys, this._vnode);
+        }
+      }
+      // keepAlive标记位
+      vnode.data.keepAlive = true;
+    }
+    return vnode || (slot && slot[0]);
+  }
+};
+```
+
+1. 获取 keep-alive 包裹着的第一个子组件对象及其组件名
+2. 根据设定的 include/exclude（如果有）进行条件匹配,决定是否缓存。不匹配,直接返回组件实例
+3. 根据组件 ID 和 tag 生成缓存 Key,并在缓存对象中查找是否已缓存过该组件实例。如果存在,直接取出缓存值并更新该 key 在 this.keys 中的位置(更新 key 的位置是实现 LRU 置换策略的关键)
+4. 在 this.cache 对象中存储该组件实例并保存 key 值,之后检查缓存的实例数量是否超过 max 的设置值,超过则根据 LRU 置换策略删除最近最久未使用的实例（即是下标为 0 的那个 key）
+5. 最后组件实例的 keepAlive 属性设置为 true,这个在渲染和执行被包裹组件的钩子函数会用到,这里不细说
+
+### LRU 缓存淘汰算法
+**LRU（Least recently used）** 算法根据数据的历史访问记录来进行淘汰数据,其核心思想是“如果数据最近被访问过,那么将来被访问的几率也更高”。
+
+**keep-alive 的实现正是用到了 LRU 策略,将最近访问的组件 push 到 this.keys 最后面,this.keys[0]也就是最久没被访问的组件,当缓存实例超过 max 设置值,删除 this.keys[0]**
+
 ## 相关文章
-[7个有用的vue开发技巧](https://juejin.im/post/5ce3b519f265da1bb31c0d5f)
+* [7个有用的vue开发技巧 - 掘金](https://juejin.im/post/5ce3b519f265da1bb31c0d5f)
+* [12道vue高频原理面试题,你能答出几道? - 知乎](https://zhuanlan.zhihu.com/p/101330697)

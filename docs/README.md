@@ -144,14 +144,3 @@ footer: created by lijiahao8898
 * [Nintendo](https://store.nintendo.com.hk/)
 * [PlayStation® Country selector](https://www.playstation.com/country-selector/index.html)
 * [The official Pokémon Website in China](https://cn.portal-pokemon.com/)
-
-<style lang="scss">
-  .hero{
-  img {
-   width: 120px;
-      height: 120px;
-      border-radius: 100%;
-      box-shadow: 1px 1px 10px rgba(0,0,0,.5)
-   }
-  }
-</style>

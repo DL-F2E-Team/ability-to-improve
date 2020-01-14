@@ -25,7 +25,7 @@ module.exports = {
                 ]
             }
         ],
-        sidebarDepth: 1,
+        sidebarDepth: 2,
         sidebar: [{
             title: '目录',
             children: ['/Catalogue.md']
