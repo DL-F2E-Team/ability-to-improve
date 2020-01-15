@@ -95,10 +95,10 @@ function renderExternal (h, to, text) {
 <style lang="stylus">
 .sidebar .sidebar-sub-headers
   padding-left 1rem
-  font-size 0.95em
+  font-size 0.9em
 
 a.sidebar-link
-  font-size 1em
+  font-size .9em
   font-weight 400
   display inline-block
   color $textColor
