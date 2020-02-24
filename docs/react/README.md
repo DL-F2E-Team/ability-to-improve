@@ -108,25 +108,92 @@ class ColorPicker extends React.Component {
 * `Context.Consumer`
 
 ##  高阶组件（HOC）
+高阶组件（HOC，Higher-Order Components）不是组件，而是一个**函数**，关于其原理的详细说明查看[官方文档](https://zh-hans.reactjs.org/docs/higher-order-components.html)，它会接收一个组件作为参数并返回一个**经过改造的**新组件：
+```jsx harmony
+const EnhancedComponent = higherOrderComponent(WrappedComponent);
+```
 ### 代理方式的高阶组件
-作用：
-* 操纵props
-* 访问ref
-* 抽取状态
-* 包装组件
+作用：**操纵props**、**访问ref**、**抽取状态**、**包装组件**
 ```jsx harmony
 export default () => WrapperComponent => class A extends Component {
-    render () {
-        const {...otherProps} = this.props;
-        return <WrapperComponent {...otherProps}></WrapperComponent>
-    }
+  render () {
+    const {...otherProps} = this.props;
+    return <WrapperComponent {...otherProps}></WrapperComponent>
+  }
 }
 ```
 
+#### 操纵props
+```jsx
+// 返回一个无状态的函数组件
+function HOC(WrappedComponent) {
+  const newProps = { type: 'HOC' };
+  return props => <WrappedComponent {...props} {...newProps}/>;
+}
+
+
+// 返回一个有状态的 class 组件
+function HOC(WrappedComponent) {
+  return class extends React.Component {
+    render() {
+      const newProps = { type: 'HOC' };
+      return <WrappedComponent {...this.props} {...newProps}/>;
+    }
+  };
+}
+```
+
+#### 抽象state
+
+需要注意 ⚠️的是，通过属性代理方式实现的高阶组件**无法直接操作**原组件的 state，但是可以通过 props 和回调函数对 state 进行抽象。️
+
+常见的例子是实现非受控组件到**受控组件**的转变：
+```jsx
+// 高阶组件
+function HOC(WrappedComponent) {
+  return class extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        name: '',
+      };
+      this.onChange = this.onChange.bind(this);
+    }
+    
+    onChange = (event) => {
+      this.setState({
+        name: event.target.value,
+      })
+    }
+    
+    render() {
+      const newProps = {
+        name: {
+          value: this.state.name,
+          onChange: this.onChange,
+        },
+      };
+      return <WrappedComponent {...this.props} {...newProps} />;
+    }
+  };
+}
+
+// 使用
+@HOC
+class Example extends Component {
+  render() {
+    return <input name="name" {...this.props.name} />;
+  }
+}
+```
+
+#### 获取ref引用
+通过属性代理方式实现的高阶组件**无法直接获取**原组件的 refs 引用，但是可以通过在原组件的ref回调函数中父组件调用传入的 ref 回调函数来获取原组件的refs 引用。
+
 ### 继承方式的高阶组件
-作用：
-* 操纵props
-* 操作生命周期函数
+反向继承指的是使用一个函数接受一个组件作为参数传入，并返回一个**继承**了该传入组件的类组件，且在返回组件的 render() 方法中返回 super.render() 方法，最简单的实现如下：
+
+作用：**操纵props**、**操作生命周期函数**
 ```jsx harmony
 export default () => WrapperComponent => class A extends WrapperComponent {
     render () {
@@ -136,6 +203,113 @@ export default () => WrapperComponent => class A extends WrapperComponent {
     }
 }
 ```
+相较于属性代理方式，使用反向继承方式实现的高阶组件的特点是允许高阶组件通过 this 访问到原组件，所以可以**直接**读取和操作原组件的 **state/ref/生命周期**方法。
+
+反向继承方式实现的高阶组件可以通过 super.render() 方法获取到传入组件实例的 render 结果，所以可对传入组件进行**渲染劫持**（最大特点）
+
+#### 劫持原组件生命周期方法
+因为反向继承方式实现的高阶组件返回的新组件是**继承**于传入组件，所以当新组件定义了同样的方法时，将会会覆盖父类（传入组件）的实例方法，如下面代码所示：
+```jsx
+function HOC(WrappedComponent){
+  // 继承了传入组件
+  return class HOC extends WrappedComponent {
+    // 注意：这里将重写 componentDidMount 方法
+    componentDidMount(){
+      ...
+    }
+
+    render(){
+      //使用 super 调用传入组件的 render 方法
+      return super.render();
+    }
+  }
+}
+```
+虽然生命周期重写会被覆盖，但我们可以通过其他方式来劫持生命周期：
+```jsx
+function HOC(WrappedComponent){
+  const didMount = WrappedComponent.prototype.componentDidMount;
+  
+  // 继承了传入组件
+  return class HOC extends WrappedComponent {
+    componentDidMount(){
+      // 劫持 WrappedComponent 组件的生命周期
+      if (didMount) {
+        didMount.apply(this);
+      }
+      ...
+    }
+
+    render(){
+      //使用 super 调用传入组件的 render 方法
+      return super.render();
+    }
+  }
+}
+```
+
+#### 读取/操作原组件的 state
+反向继承方式实现的高阶组件中可以读取、编辑和删除传入组件实例中的 state，如下面代码所示：
+```jsx
+function HOC(WrappedComponent){
+  const didMount = WrappedComponent.prototype.componentDidMount;
+  // 继承了传入组件
+  return class HOC extends WrappedComponent {
+    async componentDidMount(){
+      if (didMount) {
+        await didMount.apply(this);
+      }
+      // 将 state 中的 number 值修改成 2
+      this.setState({ number: 2 });
+    }
+
+    render(){
+      //使用 super 调用传入组件的 render 方法
+      return super.render();
+    }
+  }
+}
+```
+
+#### 渲染劫持
+条件渲染指的是我们可以根据部分参数去决定是否渲染组件（与属性代理方式类似），如：
+```jsx
+const HOC = (WrappedComponent) =>
+  class extends WrappedComponent {
+    render() {
+      if (this.props.isRender) {
+        return super.render();
+      } else {
+        return <div>暂无数据</div>;
+      }
+    }
+  }
+```
+
+我们还可以通过 React.cloneElement 方法修改由 render 方法输出的 React 组件树：
+```jsx
+// 例子来源于《深入React技术栈》
+function HigherOrderComponent(WrappedComponent) {
+  return class extends WrappedComponent {
+    render() {
+      const tree = super.render();
+      const newProps = {};
+      if (tree && tree.type === 'input') {
+        newProps.value = 'something here';
+      }
+      const props = {
+        ...tree.props,
+        ...newProps,
+      };
+      const newTree = React.cloneElement(tree, props, tree.props.children);
+      return newTree;
+    }
+  };
+}
+```
+
+[React高阶组件(HOC)的入门📖及实践💻](https://juejin.im/post/5e169204e51d454112714580)
+
 
 ## @16.4
 * 增加 `Pointer Events`

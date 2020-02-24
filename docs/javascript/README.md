@@ -1,25 +1,22 @@
 # ECMAScript
 
 ## 基础
-* 广义的JavaScript是指：`ECMAScript`、`文档对象模型【DOM】`、`游览器对象模型【BOM】`。
-  - JavaScript是**弱类型**语言。
-  - 基本数据类型：**数字**、**字符串**、**Boolean**、**undefined**、**null**、**symbol**【ES6新增】
-  - 引用数据类型：**Object**对象包括【function、array】
-  - 原生函数：String、Number、Boolean、Array、Object、Function、RegExp、Date、Error、Symbol
-  
+* JavaScript是**弱类型**语言，广义的JavaScript是指：`ECMAScript`、`文档对象模型【DOM】`、`游览器对象模型【BOM】`。
+
+* 数据类型
+  - **基本数据类型**：**数字**、**字符串**、**Boolean**、**undefined**、**null**、**symbol**【ES6新增】
+  - **引用数据类型**：**Object**对象包括【function、array】
+
+* 原生函数【内建函数】：String、Number、Boolean、Array、Object、Function、RegExp、Date、Error、Symbol
+
 * `forEach` - forEach中return有效果吗？如何中断forEach循环？
   - forEach中return**无效果**
   - 中断forEach
-    - 使用try catch中断，抛出异常
-    - 官方推荐：使用every和some替代forEach.`every`在碰到`return false`的时候，中止循环。`some`在碰到`return true`的时候，中止循环
-    
+    1. 使用try catch中断，抛出异常
+    2. 官方推荐：使用every和some替代forEach.`every`在碰到`return false`的时候，中止循环。`some`在碰到`return true`的时候，中止循环  
 * `undefined` 和 `is not defined` 是两回事，前者已声明未赋值，后者未声明。
 
-* `AO`与`VO`
-  - AO：作用域链的开始是当前代码执行环境的变量对象，常被称之为“活跃对象”（AO）
-  - VO
-
-* 稀疏数组
+* 稀疏数组与密集数组
 
 * `void`
 
@@ -27,17 +24,15 @@
 
 * `Date.now()` === `(new Date()).getTime()`
 
-* throw new Error ('')
+* 抛出异常 - `throw new Error ('')`
 
 * 类型转换
-  - 隐式强制类型转换(`valueOf()`，`toString()`)
+  - 隐式强制类型转换(`valueOf()`，`toString()`) - 什么情况下 `a == 1 && a == 2 && a == 3` 返回 `true`？
   - 显式强制类转换：假值 - `undefined` `null` `false` `+0` `-0` `NaN` `''`
   - `+`一元运算符能将字符串快速转换为数字，并且将日期转换为时间戳
+  - +、~~【转为数字0和1】、!!【转为boolean】的妙用、||、&&的使用简写、==和===的区别 
+  - `[]+{} === [object Object]`、`{}+[] === 0 `、`!+[] === true`
 
-* +、~~、!!的妙用、||、&&的使用简写、==和===的区别
-  
-* `[]+{} === [object Object]`  `{}+[] === 0 `
-  
 * 运算符优先级 `&&` > `||` > `(? : 【右关联】)` `=【右关联】` >  `,`
 
 * `JSON.stringify()` 
@@ -48,33 +43,31 @@
 
 * `try…catch…finally`
 
-* HTML元素id也会创建全局变量
+* HTML元素id也会为自身创建全局变量
   
-* 变量、（变量声明、变量赋值）=> 变量的初始化
+* 变量、（变量声明、变量赋值）=> 变量的初始化、变量提升
 
 * 清内存，赋值为null
+* 类，类的继承，super
+* 继承
+* 红黑树算法，二叉树算法
+* 函数声明 、函数表达式（声明提升）
+* 高阶函数、纯函数、函数柯里化
+* 面向对象编程、面向函数编程
+* set
+* 修饰器 - 编译时执行的函数
+* AMD/CMD、commonjs
+* 匿名函数
+* 隐式换算
+* JavaScript 中的迭代器（iterators）和迭代（iterables）是什么？ 你知道什么是内置迭代器吗？
+* JSON.parse(JSON.stringify(Obejct))的注意点
+* 单向数据流和双向数据绑定
+* httpXMLrequest、fetch、axios、ajax
+* 使用单页应用将文件上传到服务器的有哪些方法(XMLHttpRequest2（streaming），fetch（non-streaming），File API)
 
-  ```
-  24. 类，类的继承，super
-  25.  继承
-  27. 红黑树算法，二叉树算法
-  31. 函数声明 、函数表达式（声明提升）
-  32.  高阶函数、纯函数、函数柯里化
-  33. 面向对象编程、面向函数编程
-  34. set
-  35.  修饰器 - 编译时执行的函数
-  36.  AMD/CMD、commonjs
-  37. 匿名函数
-  38. 隐式换算
-  40. JavaScript 中的迭代器（iterators）和迭代（iterables）是什么？ 你知道什么是内置迭代器吗？
-  41. JSON.parse(JSON.stringify(Obejct))的注意点
-  42. 单向数据流和双向数据绑定
-  43. httpXMLrequest、fetch、axios、ajax
-  44. 使用单页应用将文件上传到服务器的有哪些方法(XMLHttpRequest2（streaming），fetch（non-streaming），File API)
-  ```
 ## 数据类型检测
 ### typeof
-```
+```{6}
 typeof 5            // number
 typeof '5'          // string
 typeof undefined    // undefined
@@ -103,24 +96,25 @@ typeof()是判断基本类型的。对于引用类型，除function，都返回o
 ### instanceof
 ```
 const p1 = new Person()
-
 p1 instanceof Person    // true
 ```
 
 ## `bind`、`call`和`apply`区别
-三者都是用来改变this指向的
+三者都是用来改变this指向的。
 
-`bind`是返回一个新的可执行的函数，第一个参数是要指向的对象，第二个参数是绑定时候参数的顺序以及新可执行函数的参数作为原函数的参数来调用原函数。
+`bind`是返回一个**新的可执行的**函数，第一个参数是要指向的对象，第二个参数是**绑定时候参数的顺序以及新可执行函数的参数作为原函数的参数来调用原函数**。
   
-`call`和`apply`都是执行函数，第一个参数是需要指向的对象，第二参数不同，call需要把参数按顺序依次传递，apply则是把参数放在数组里。
+`call`和`apply`都是执行函数，第一个参数是需要指向的对象，第二参数不同，call需要把参数**按顺序依次传递**，apply则是把参数**放在数组里**。
   
 如果 call和apply的第一个参数是null或者undefined，那么this的指向就是全局变量，在游览器里面就是windows。
   
 
 ## 闭包
-1. 可以访问其他函数内变量的函数，叫做闭包。或者说在一个函数内部可访问该函数内部局部变量的函数，作用就是让函数外部可以访问函数内部局部变量。
-2. 闭包可以用来保存一个需要持久保存的变量，可以模拟命名空间。
-3. 闭包在IE种会造成内存泄露（IE BUG）
+**可以访问其他函数内变量的函数**，叫做闭包。或者说在一个函数内部可访问该函数内部局部变量的函数，作用就是让函数外部可以访问函数内部局部变量。
+
+闭包可以用来保存一个需要持久保存的变量，可以模拟命名空间。
+
+闭包在IE会造成**内存泄露**（IE BUG）
 ```js
     function foo () {
         var ex = 1;
@@ -134,7 +128,7 @@ var func = foo()
 func()
 ```
 
-::: tip 提示
+::: warning 注意
 IIFE是闭包吗？
 严格来讲IIFE并不算闭包，因为函数并没用在本身的词法作用域以外执行。
 :::
@@ -142,47 +136,6 @@ IIFE是闭包吗？
 ::: tip 资料库 
 [「每日一题」JS 中的闭包是什么？- 知乎](https://zhuanlan.zhihu.com/p/22486908)
 :::
-
-## 作用域和作用域链
-
-### 变量声明提升
-* 在 JavaScript 中，函数声明（`function aa(){}`）与变量声明（`var`）经常被 JavaScript 引擎隐式地提升到当前作用域的**顶部**。
-* **函数声明的优先级高于变量**，如果变量名跟函数名相同且未赋值，则函数声明会覆盖变量声明
-* 声明语句中的**赋值部分并不会被提升**，只有变量的名称被提升
-
-### 作用域
-作用域是指可以有效访问变量或函数的区域。有三种类型的作用域：**全局作用域**、**函数作用域**、**块级作用域【ES6】**。
-
-### 作用域链
-因为函数的嵌套形成作用域的层级关系。当函数执行时，从当前作用域开始搜，没有找到的变量，会向上层作用域查找，直至全局函数，这就是作用域链。如下图：
-![Scope](./images/scope.jpeg)
-
-[js基础：作用域及作用域链](https://baijiahao.baidu.com/s?id=1627502571462484522&wfr=spider&for=pc)
-
-## Class
-
-class super static 继承
-```jsx harmony
-
-class myClassParents {
-    parentMethods () {
-        
-    }
-}
-
-class myClass extends myClassParents {
-    constructor () {
-        super()
-    }
-    unstaticMethods () {
-        myClass.staticMethods()
-        super.parentMethods()
-    }
-    static staticMethods () {
-        
-    }
-}
-```
 
 ## ES6
 * `let`、`const`
