@@ -144,3 +144,78 @@ footer: created by lijiahao8898
 * [Nintendo](https://store.nintendo.com.hk/)
 * [PlayStation® Country selector](https://www.playstation.com/country-selector/index.html)
 * [The official Pokémon Website in China](https://cn.portal-pokemon.com/)
+
+
+/**
+ * @param obj 需要获取值的目标对象
+ * @param key 当前需要获取的key
+ */
+getDeepObjectValue(obj, 'organization.config.id')
+
+function getDeepObjectValue (obj, keyString) {
+    if(!obj) return;
+    if(keyString.indexOf('.') !== -1) {
+        // 多层
+        const keyArr = keyString.split('.');
+        let VObj = JSON.parse(JSON.stringify(obj));
+        for(let i = 0; i < keyArr.length; i ++) {
+            if(VObj[keyArr[i]]) {
+                VObj = VObj[keyArr[i]]
+            } else {
+                return
+            }
+        }
+        return VObj
+    } else {
+        // 1层的情况
+        return obj[keyString]
+    }
+}
+
+var obj = {organization: {config: {id: 1}}}
+function setDeepObjectValue (obj, keyString, value) {
+    // copyObject = JSON.parse(JSON.stringify(obj))
+    if(keyString.indexOf('.') !== -1) {
+        const keyArr = keyString.split('.');
+        if(keyArr.length > 0) {
+            if(obj[keyArr[0]]) {
+                // 存在
+                if(typeof obj[keyArr[0]] === 'object' && obj[keyArr[0]]) {
+                    // 是对象
+                    keyArr.splice(0, 1)
+                    var newObj = obj[keyArr[0]]
+                    setDeepObjectValue(newObj, keyArr.join('.'), value)
+                }
+            }
+        } else if(keyArr.length == 0) {
+            // 没有keyArr了
+            obj[keyArr[0]] = value
+        }
+    } else {
+        //if(copyObject[keyString]) {
+            //copyObject[keyString] = value
+        //} else {
+            // todo 不存在
+        //}
+    }
+}
+setDeepObjectValue(obj, 'organization.config.id', 5) 
+
+// var obj = {organization: {config: {id: 1}}}
+// var obj = {}
+function setDeepObjectValue (obj, keyString, value) {
+    var keyArr = keyString.split('.');
+    keyArr.reduce(function (acc, cur, index, arr) {
+        console.log(acc, cur, index, arr)
+        if(index < keyArr.length - 1) {
+            if(!acc[cur]) {
+                return acc[cur] = {}
+            }
+        }
+        if(index === keyArr.length - 1) {
+            acc[cur] = value;
+        }
+        return acc[cur]
+    }, obj)
+}
+setDeepObjectValue(obj, 'organization.config.id', 5) 
