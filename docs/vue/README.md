@@ -1,22 +1,10 @@
 # Vuejs
 
-## Vue的渲染过程
-
-![Vue render](./images/vuerender.jpg)
-
-1. 调用 compile 函数,生成 render 函数字符串 ,编译过程如下:
-* parse 函数解析 template,生成 ast(抽象语法树)
-* optimize 函数优化静态节点 (标记不需要每次都更新的内容,diff 算法会直接跳过静态节点,从而减少比较的过程,优化了 patch 的性能)
-* generate 函数生成 render 函数字符串
-2. 调用 new Watcher 函数,监听数据的变化,当数据发生变化时，Render 函数执行生成 vnode 对象
-3. 调用 patch 方法,对比新旧 vnode 对象,通过 DOM diff 算法,添加、修改、删除真正的 DOM 元素
-
-
 ## 双向数据绑定
 `Vuejs` 是采用`数据劫持`结合`发布者-订阅者模式`的方式，通过`Object.defineProperty()`来劫持各个属性的`setter`，`getter`，在数据变动时发布消息给订阅者，触发相应的监听回调。
 
 具体步骤：
- 1. 需要`Observe`的数据对象进行递归遍历，包括子属性对象的属性，都加上 setter 和 getter 这样的话，给这个对象的某个值赋值，就会触发 setter，那么就能监听到了数据变化。
+1. **需要`Observe`的数据对象进行递归遍历，包括子属性对象的属性，都加上`setter`和`getter`**。这样的话，给这个对象的某个值赋值，就会触发 setter，那么就能监听到了数据变化。
 
 ```js
 // 响应式的数据绑定
@@ -51,7 +39,8 @@ function Vue(options) {
 }
 ```
 
-2. `Compile`解析模板指令，将模板中的变量替换成数据，然后初始化渲染页面视图，并将每个指令对应的节点绑定更新函数，添加监听数据的订阅者，一旦数据有变动，收到通知，更新视图。
+2. **`Compile`解析模板指令，将模板中的变量替换成数据，然后初始化渲染页面视图，并将每个指令对应的节点绑定更新函数，添加监听数据的订阅者**。一旦数据有变动，收到通知，更新视图。
+
 ```js
  // 劫持node的所有子节点
   function nodeToFragment(node, vm) {
@@ -107,7 +96,8 @@ function Vue(options) {
   }
 ```
 
-3. `Watcher`订阅者是`Observer`和`Compile`之间通信的桥梁，主要做的事情是:在自身实例化时往属性订阅器(dep)里面添加自己自身必须有一个 update()方法待属性变动 dep.notice()通知时，能调用自身的 update() 方法，并触发`Compile`中绑定的回调，则功成身退。
+3. **`Watcher`订阅者是`Observer`和`Compile`之间通信的桥梁**，主要做的事情是:在自身实例化时往属性订阅器(dep)里面添加自己自身必须有一个 update()方法待属性变动 dep.notice()通知时，能调用自身的 update() 方法，并触发`Compile`中绑定的回调，则功成身退。
+
 ```js
 function compile(node, vm) {
     var reg = /\{\{(.*)\}\}/;
@@ -219,6 +209,17 @@ V代表View，负责系统向用户的展示，主要由HTML及JSP等完成；
 ### `MVVM`和`MVC`的区别
 区别不大，都是设计思想。MVVM中的ViewModal 替换成了Controller，MVVM 主要解决了MVC 中大量的 DOM操作使页面渲染性能降低，加载速度变慢，影响用户体验。和当 Model 频繁发生变化，开发者需要主动更新到 View。
 
+## Vue的渲染过程
+
+![Vue render](./images/vuerender.jpg)
+
+1. 调用 compile 函数,生成 render 函数字符串 ,编译过程如下:
+* parse 函数解析 template,生成 ast(抽象语法树)
+* optimize 函数优化静态节点 (标记不需要每次都更新的内容,diff 算法会直接跳过静态节点,从而减少比较的过程,优化了 patch 的性能)
+* generate 函数生成 render 函数字符串
+2. 调用 new Watcher 函数,监听数据的变化,当数据发生变化时，Render 函数执行生成 vnode 对象
+3. 调用 patch 方法,对比新旧 vnode 对象,通过 DOM diff 算法,添加、修改、删除真正的 DOM 元素
+
 ## 组件间数据传递的方式
 数据传递的方式有：
 1. `props` 和 `$emit`、`on`
@@ -234,6 +235,8 @@ V代表View，负责系统向用户的展示，主要由HTML及JSP等完成；
 
 ## 生命周期
 ### 父子组件生命周期的执行顺序
+在以下生命周期中，`mixins`相应的生命周期会在**当前混入的生命周期之前执行**，如果是`methods`相同，就会完全覆盖掉。
+
 * 初始化渲染
   - 【1】**父组件**的`beforeCreate`、`created` 、`beforeMounted`
   - 【2】**子组件**的`beforeCreate`、`created`、`beforeMount`、`mounted`
@@ -295,14 +298,30 @@ reverse();
 
 `Object.defineProperty`只能劫持对象的属性,因此我们需要对每个对象的每个属性进行遍历。`Vue 2.x`里,是通过**递归 + 遍历**data对象来实现对数据的监控的,如果属性值也是对象那么需要深度遍历,显然如果能劫持一个完整的对象是才是更好的选择。**`Proxy`可以劫持整个对象,并返回一个新的对象。`Proxy`不仅可以代理对象、数组，还可以代理动态增加的属性**。
 
-## `v-for`中的key到底有什么用？
-key 是给每一个 vnode 的唯一 id,依靠 key,我们的 diff 操作可以更准确、更快速 (对于简单列表页渲染来说 diff 节点也更快,但会产生一些隐藏的副作用,比如可能不会产生过渡效果,或者在某些节点有绑定数据（表单）状态，会出现状态错位。)
+## `$nextTick`的作用
+下次DOM更新循环结束之后执行延迟**回调**。在修改数据之后立即使用这个方法，获取更新后的DOM。
 
-diff 算法的过程中,先会进行新旧节点的首尾交叉对比,当无法匹配的时候会用新节点的 key 与旧节点进行比对,从而找到相应旧节点.
+**有些时候在改变数据后立即要对dom进行操作**，此时获取到的DOM仍是获取到的是数据刷新前的DOM，无法满足需要，这个时候就用到`$nextTick`。
+```js
+this.$nextTick(() => {
+    // do something
+})
+```
 
-更准确 : 因为带 key 就不是就地复用了,在 sameNode 函数 a.key === b.key 对比中可以避免就地复用的情况。所以会更加准确,如果不加 key,会导致之前节点的状态被保留下来,会产生一系列的 bug。
+## `v-for`中`key`的作用
+主要作用是**为了高效的更新`Virtual DOM`**，是因为`Virtual DOM`使用`Diff`算法实现的原因。
 
-更快速 : key 的唯一性可以被 Map 数据结构充分利用,相比于遍历查找的时间复杂度 O(n),Map 的时间复杂度仅仅为 O(1),源码如下:
+`key`是给每一个`vnode`的唯一id，依靠`key`，我们的`Diff`操作可以**更准确、更快速**【对于简单列表页渲染来说`Diff`节点也更快，但会产生一些隐藏的副作用，比如可能不会产生过渡效果，或者在某些节点有绑定数据（表单）状态，会出现状态错位。】
+
+Diff 算法的过程中，先会进行新旧节点的首尾交叉对比，当无法匹配的时候会用新节点的 key 与旧节点进行比对，从而找到相应旧节点。
+
+![keys](./images/vforkeys.jpg)
+
+### 更准确
+因为带 key 就不是就地复用了，在 sameNode 函数`a.key === b.key`对比中可以避免就地复用的情况。所以会更加准确，如果不加 key，会导致之前节点的状态被保留下来，会产生一系列的 bug。
+
+### 更快速【降低时间复杂度】
+key 的唯一性可以被 Map 数据结构充分利用，相比于遍历查找的时间复杂度 O(n)，Map 的时间复杂度仅仅为 O(1)，源码如下:
 ```js
 function createKeyToOldIdx(children, beginIdx, endIdx) {
   let i, key;

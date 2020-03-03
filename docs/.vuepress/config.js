@@ -25,7 +25,7 @@ module.exports = {
                 ]
             }
         ],
-        sidebarDepth: 2,
+        sidebarDepth: 1,
         sidebar: [{
             title: '目录',
             children: ['/Catalogue.md']
@@ -63,6 +63,7 @@ module.exports = {
             title: 'Vue',
             children: [
                 '/vue/',
+                '/vue/VueRouter',
                 '/vue/Vuex.md'
             ]
         }, {

@@ -9,6 +9,14 @@ title: Prototype
 ### 如何避免？
 使用 `hasOwnProperty`。
 
+```js
+const object1 = new Object();
+object1.property1 = 42;
+
+console.log(object1.hasOwnProperty('property1'));
+// expected output: true
+```
+
 ## 原型链
 ![solar](./images/1.jpg)
 

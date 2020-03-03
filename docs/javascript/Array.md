@@ -2,7 +2,7 @@
 
 ## 数组方法
 #### `Array.from()`
-从一个类似数组或可迭代对象创建一个新的，浅拷贝的数组实例。
+`Array.from(arrayLike[, mapFn[, thisArg]])`从一个类似数组或可迭代对象创建一个新的，浅拷贝的数组实例。
 #### `Array.isArray()`
 用于确定传递的值是否是一个`Array`。
 
@@ -50,6 +50,7 @@
 #### `Array.prototype.every()` 
 测试一个数组内的所有元素是否都能通过某个指定函数的测试
   
+### 其他
 #### `Array.prototype.forEach()`
 对数组的每个元素执行一次提供的函数，`renturn undefined`。
 #### `Array.prototype.join()` 
@@ -62,34 +63,25 @@
 :::
 
 ## 数组去重
-1. indexOf
-
-思路：使用`indexOf`判断是否在**临时数组**中。
-```js {8}
+1. **indexOf** - 使用`indexOf`判断是否在**临时数组**中。
+```js {6}
 var arr = ['12','32','89','12','12','78','12','32'];
-
 function unique(array){
   // 一个新的临时数组
   var n = [];
-
   array.forEach((item) => {
     if(n.indexOf(item) === -1){
       n.push(item)
     }
   });
-
   return n
 }
-
 arr = unique(arr);
 ```
 
-2. splice
-
-思路：将当前项与**之后每一项**进行比较，如果相同就使用`splice()`删除。
-```js {7}
+2. **splice** - 将当前项与**之后每一项**进行比较，如果相同就使用`splice()`删除。
+```js {6}
 var arr = ['12','32','89','12','12','78','12','32'];
-
 function unique(a) {
     for(let i = 0; i < a.length; i ++) {
         for(let j = i+1; j < a.length; j ++) {
@@ -100,13 +92,10 @@ function unique(a) {
         }
     }
 }
-
 unique(arr);
 ```
 
-3. 数组下标判断法
-
-思路：判断数组**当前项下标**与**第一次出现当前项数值的下标**是否是相同的。
+3. **数组下标判断法** - 判断数组**当前项下标**与**第一次出现当前项数值的下标**是否是相同的。
 ```js {9,17}
 var arr = ['12','32','89','12','12','78','12','32'];
 
