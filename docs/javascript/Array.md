@@ -1,5 +1,7 @@
 # 数组
 
+稀疏数组与密集数组
+
 ## 数组方法
 #### `Array.from()`
 `Array.from(arrayLike[, mapFn[, thisArg]])`从一个类似数组或可迭代对象创建一个新的，浅拷贝的数组实例。

@@ -1,53 +1,57 @@
 # ECMAScript
+JavaScript 是**弱类型**语言，通常所说的 JavaScript 是指`ECMAScript`、`DOM【文档对象模型】`和`BOM【游览器对象模型】`。
+
+数据类型可分为**基本数据类型**：**数字**、**字符串**、**Boolean**、**undefined**、**null**、**symbol**和**引用数据类型**：**Object**对象包括【function、array】。
+
+`undefined` 和 `is not defined` 是两回事，前者已声明未赋值，后者未声明。
+
+[void运算符](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/void)会对它的操作数表达式进行求值，然后忽略掉求值的结果，直接返回`undefined`。譬如：`<a href="javascript:void(0)">Hi</a>`
+
+`Object.prototype.valueOf()`获取封装对象的值。
+```js
+// Object：返回对象本身
+var obj = {name: "张三", age: 18};
+console.log( obj.valueOf() === obj );   // true
+```
+
+`Date.now()` === `(new Date()).getTime()` === `+new Date()`都是转换成时间戳。
+
+ `throw new Error ('错误信息')`抛出异常。一般与错误处理一起使用：``try…catch…finally``。
+ ```js
+try{
+    // 可能发生错误的代码
+    // todo something
+}catch(err){
+    // 只有发生错误时才执行的代码
+    throw new Error ('错误信息')
+}finally{
+    // 无论是否出错，肯定都要执行的代码
+    // todo other things
+}
+```
+
+HTML元素id也会为自身创建全局变量
+
+清内存，赋值为null。游览器的垃圾回收机制使用了引用计数法（引用下标计数法，为0则标识不使用。）
+
+
+【语句（声明语句）、表达式（赋值表达式）、表达式语句】一个表达式会产生一个值,它可以放在任何需要一个值的地方，如语句则是由分号分隔的句子或命令。如果在表达式后面加上一个“；”分隔符，这就被称为“表达式语句”。
+它表明“只有表达式，而没有其他语法元素的语句”。
 
 ## 基础
-* JavaScript是**弱类型**语言，广义的JavaScript是指：`ECMAScript`、`文档对象模型【DOM】`、`游览器对象模型【BOM】`。
-
-* 数据类型
-  - **基本数据类型**：**数字**、**字符串**、**Boolean**、**undefined**、**null**、**symbol**【ES6新增】
-  - **引用数据类型**：**Object**对象包括【function、array】
-
 * 原生函数【内建函数】：String、Number、Boolean、Array、Object、Function、RegExp、Date、Error、Symbol
-
-* `forEach` - forEach中return有效果吗？如何中断forEach循环？
-  - forEach中return**无效果**
-  - 中断forEach
+* `forEach`
+  - **forEach中return有效果吗？**
+    - forEach中return**无效果**
+  - **如何中断forEach循环？**
     1. 使用try catch中断，抛出异常
     2. 官方推荐：使用every和some替代forEach.`every`在碰到`return false`的时候，中止循环。`some`在碰到`return true`的时候，中止循环  
-* `undefined` 和 `is not defined` 是两回事，前者已声明未赋值，后者未声明。
-
-* 稀疏数组与密集数组
-
-* `void`
-
-* 获取封装对象的值：`valueOf`
-
-* `Date.now()` === `(new Date()).getTime()`
-
-* 抛出异常 - `throw new Error ('')`
-
-* 类型转换
-  - 隐式强制类型转换(`valueOf()`，`toString()`) - 什么情况下 `a == 1 && a == 2 && a == 3` 返回 `true`？
-  - 显式强制类转换：假值 - `undefined` `null` `false` `+0` `-0` `NaN` `''`
-  - `+`一元运算符能将字符串快速转换为数字，并且将日期转换为时间戳
-  - +、~~【转为数字0和1】、!!【转为boolean】的妙用、||、&&的使用简写、==和===的区别 
-  - `[]+{} === [object Object]`、`{}+[] === 0 `、`!+[] === true`
-
 * 运算符优先级 `&&` > `||` > `(? : 【右关联】)` `=【右关联】` >  `,`
-
 * `JSON.stringify()` 
-  - 无法处理：`undefined`，`function`，`symbol`。
+  - JSON.parse(JSON.stringify(Obejct))的注意点
+  - 无法处理：`NaN`、`RegExp`、`Error`、`undefined`，`function`，`symbol`。
   - 该方法可以接受第二个参数JSON.stringify(a, {b,c}, num)
-  
-* 语句（声明语句）、表达式（赋值表达式）。表达式语句（b）
-
-* `try…catch…finally`
-
-* HTML元素id也会为自身创建全局变量
-  
 * 变量、（变量声明、变量赋值）=> 变量的初始化、变量提升
-
-* 清内存，赋值为null
 * 类，类的继承，super
 * 继承
 * 红黑树算法，二叉树算法
@@ -58,12 +62,33 @@
 * 修饰器 - 编译时执行的函数
 * AMD/CMD、commonjs
 * 匿名函数
-* 隐式换算
 * JavaScript 中的迭代器（iterators）和迭代（iterables）是什么？ 你知道什么是内置迭代器吗？
-* JSON.parse(JSON.stringify(Obejct))的注意点
-* 单向数据流和双向数据绑定
-* httpXMLrequest、fetch、axios、ajax
-* 使用单页应用将文件上传到服务器的有哪些方法(XMLHttpRequest2（streaming），fetch（non-streaming），File API)
+
+## 类型转换
+类型转换分为**隐式类型转换【隐式换算】**和**显示类型转换**。
+
+什么情况下 `a == 1 && a == 2 && a == 3` 返回 `true`？隐式强制类型转换(`valueOf()`，`toString()`)
+
+显式强制类转换：假值 - `undefined` `null` `false` `+0` `-0` `NaN` `''`
+
+`+`一元运算符能将字符串快速转换为数字，并且将日期转换为时间戳。
+```js
+var str = 'Hello World'  // Hello World
+var str = +'Hello World' // NaN 
+```
+
++、~~【转为数字0和1】、!!【转为boolean】的妙用、||、&&的使用简写、==和===的区别 
+
+```js
+// []转换成""，+{}转换成[object Object]
+[]+{} === '[object Object]'
+
+// {}转换成块级作用域，+[]转换成0
+{}+[] === 0
+
+// +[]转换成0,和!在一起又转换成true,再取反
+!+[] === true
+```
 
 ## 数据类型检测
 ### typeof

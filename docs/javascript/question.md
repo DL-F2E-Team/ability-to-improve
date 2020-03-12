@@ -296,3 +296,59 @@ window.jQuery = window.$ = jQuery
 1. `借用构造函数继承` 使用call和apply方法，将父对象的构造函数绑定在子对象上
 2. `原型继承`，将子对象的prototype指向父对象的一个实例
 3. `组合继承`
+
+## 实现函数
+
+### 1.获取获取深层对象的值
+```js
+/**
+ * @param obj 需要获取值的目标对象
+ * @param key 当前需要获取的key
+ */
+getDeepObjectValue(obj, 'organization.config.id')
+
+function getDeepObjectValue (obj, keyString) {
+    if(!obj) return;
+    if(keyString.indexOf('.') !== -1) {
+        // 多层
+        const keyArr = keyString.split('.');
+        let VObj = JSON.parse(JSON.stringify(obj));
+        for(let i = 0; i < keyArr.length; i ++) {
+            if(VObj[keyArr[i]]) {
+                VObj = VObj[keyArr[i]]
+            } else {
+                return
+            }
+        }
+        return VObj
+    } else {
+        // 1层的情况
+        return obj[keyString]
+    }
+}
+```
+
+### 2.设置深层对象的值
+```js
+var obj = {organization: {config: {id: 1}}}
+setDeepObjectValue(obj, 'organization.config.id', 5) 
+
+// var obj = {organization: {config: {id: 1}}}
+// var obj = {}
+function setDeepObjectValue (obj, keyString, value) {
+    var keyArr = keyString.split('.');
+    keyArr.reduce(function (acc, cur, index, arr) {
+        console.log(acc, cur, index, arr)
+        if(index < keyArr.length - 1) {
+            if(!acc[cur]) {
+                return acc[cur] = {}
+            }
+        }
+        if(index === keyArr.length - 1) {
+            acc[cur] = value;
+        }
+        return acc[cur]
+    }, obj)
+}
+setDeepObjectValue(obj, 'organization.config.id', 5) 
+```
