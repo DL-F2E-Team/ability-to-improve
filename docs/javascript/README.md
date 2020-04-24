@@ -38,7 +38,6 @@ HTML元素id也会为自身创建全局变量
 【语句（声明语句）、表达式（赋值表达式）、表达式语句】一个表达式会产生一个值,它可以放在任何需要一个值的地方，如语句则是由分号分隔的句子或命令。如果在表达式后面加上一个“；”分隔符，这就被称为“表达式语句”。
 它表明“只有表达式，而没有其他语法元素的语句”。
 
-## 基础
 * 原生函数【内建函数】：String、Number、Boolean、Array、Object、Function、RegExp、Date、Error、Symbol
 * `forEach`
   - **forEach中return有效果吗？**
@@ -69,7 +68,7 @@ HTML元素id也会为自身创建全局变量
 
 什么情况下 `a == 1 && a == 2 && a == 3` 返回 `true`？隐式强制类型转换(`valueOf()`，`toString()`)
 
-显式强制类转换：假值 - `undefined` `null` `false` `+0` `-0` `NaN` `''`
+显式强制类转换：假值 - `undefined` `null` `false` `+0` `-0` `NaN` `''`,`Number(...)`
 
 `+`一元运算符能将字符串快速转换为数字，并且将日期转换为时间戳。
 ```js
