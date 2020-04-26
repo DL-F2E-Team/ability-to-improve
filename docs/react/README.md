@@ -31,27 +31,24 @@ this.setState((state) => {
 
 可以看这篇文章：[你真的理解setState吗？](https://zhuanlan.zhihu.com/p/39512941)。
 
-我这里还是用最简单的语言让你理解：在 React 的 setState 函数实现中，会根据 isBatchingUpdates(默认是 false) 变量判断是否直接更新 this.state 还是放到队列中稍后更新。然后有一个 batchedUpdate 函数，可以修改 isBatchingUpdates 为 true，当 React 调用事件处理函数之前，或者生命周期函数之前就会调用 batchedUpdate 函数，这样的话，setState 就不会同步更新 this.state，而是放到更新队列里面后续更新。
+我这里还是用最简单的语言让你理解：在 React 的 setState 函数实现中，会根据 `isBatchingUpdates`(默认是 false) 变量判断是否直接更新 this.state 还是放到队列中稍后更新。然后有一个 `batchedUpdate` 函数，可以修改 isBatchingUpdates 为 true，当 React 调用事件处理函数之前，或者生命周期函数之前就会调用 batchedUpdate 函数，这样的话，setState 就不会同步更新 this.state，而是放到更新队列里面后续更新。
 
 这样你就可以理解为什么原生事件和 setTimeout/setinterval 里面调用 this.state 会同步更新了吧，因为通过这些函数调用的 React 没办法去调用 batchedUpdate 函数将 isBatchingUpdates 设置为 true，那么这个时候 setState 的时候默认就是 false，那么就会同步更新。
 
-[你真的理解setState吗？ - 知乎](https://zhuanlan.zhihu.com/p/39512941)
-
 ## `props`和`props.children`
-`this.props.children` 表示组件下面所有的子节点。 <br/>
-当没有的时候显示 `undefined` 当有一个的时候显示为类型 `object` 当有多个的时候显示为数组 `array`。<br/>
+`this.props.children` 表示组件下面所有的子节点。当没有的时候显示 `undefined` 当有一个的时候显示为类型 `object` 当有多个的时候显示为数组 `array`。
+
 `React.Children.map` 来遍历子节点，不用担心数据类型。
 
 ## 生命周期
 ### 原生命周期
 * ~~`componentWillMount(nextProps, nextState)`~~
-无法保证在 `componentWillUnmount` 中取消掉相应的事件订阅，或者导致多次重复获取异步数据等问题
-
+  * 无法保证在 `componentWillUnmount` 中取消掉相应的事件订阅，或者导致多次重复获取异步数据等问题
 * `render`
 * `componentDidMount`
 * ~~`componentWillReceiveProps(nextProps)`~~
 * ~~`componentWillUpdate(nextProps, nextState)`~~
-`re-render` 问题，并且对 `DOM` 的更新操作也可能导致重新渲染
+  * `re-render` 问题，并且对 `DOM` 的更新操作也可能导致重新渲染
 
 * `shouldComponentUpdate`
 * `componentDidUpdate`
@@ -61,6 +58,8 @@ this.setState((state) => {
 
 ### 新生命周期
 * `getDerivedStateFromProps`
+
+顾名思义从 props 获取派生的 state 。可以查看这里了解更多[React 中 getDerivedStateFromProps 的用法和反模式](https://juejin.im/post/5c3ad49be51d45521053fde0)
 
 `getDerivedStateFromProps(nextProps, prevState)`
 
@@ -81,11 +80,10 @@ class ColorPicker extends React.Component {
     }
     ... // 选择颜色方法
     render () {
-        .... // 显示颜色和选择颜色操作
+        ... // 显示颜色和选择颜色操作
     }
 }
 ```
-[React 中 getDerivedStateFromProps 的用法和反模式](https://juejin.im/post/5c3ad49be51d45521053fde0)
 
 * `getSnapshotBeforeUpdate`
 

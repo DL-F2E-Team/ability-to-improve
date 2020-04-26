@@ -1,24 +1,26 @@
-# Vuejs
-`Vue`单向数据流和双向数据绑定的。
+# Vuejs@2.x
+`Vuejs`是单向数据流和双向数据绑定的。
+
+`Vuejs`的两个核心 1. **数据驱动**【数据变动触发视图跟新】2. **组件系统**【.vue】
 
 ## 双向数据绑定
 `Vuejs` 是采用`数据劫持`结合`发布者-订阅者模式`的方式，通过`Object.defineProperty()`来劫持各个属性的`setter`，`getter`，在数据变动时发布消息给订阅者，触发相应的监听回调。
 
-具体步骤：
-1. **需要`Observe`的数据对象进行递归遍历，包括子属性对象的属性，都加上`setter`和`getter`**。这样的话，给这个对象的某个值赋值，就会触发 setter，那么就能监听到了数据变化。
+具体步骤如下（当然实际要比这个复杂很多）：
+1. **对需要`Observe`的数据对象进行递归遍历，包括子属性对象的属性，都加上`setter`和`getter`**。这样的话，给这个对象的某个值赋值，就会触发 setter，那么就能监听到数据变化。
 
 ```js
 // 响应式的数据绑定
 function defindReactive(obj, key, val) {
   Object.defineProperty(obj, key, {
     get: function() {
-      // 经过某些操作
+      ... // 经过某些操作
       return val
     },
     set: function(newVal) {
       if (newVal === val) return;
       val = newVal;
-      // 经过某些操作
+      ... // 经过某些操作
     }
   })
 }
@@ -180,17 +182,16 @@ function Watcher(vm, node, name, nodeType) {
 ```
 4. `MVVM` 作为数据绑定的入口，整合 `Observer`、`Compile` 和 `Watcher` 三者，通过Observer来监听自己的model数据变化，通过Compile来解析编译模板指令，最终利用Watcher搭起Observer和Compile之间的通信桥梁，达到数据变化 -> 视图更新；视图交互变化(input) -> 数据 model 变更的双向绑定效果。
 
-## `MVVM`与`MVC`
+## MVVM 与 MVC
 
-### 什么是`MVVM`
+### 什么是 MVVM ?
 `MVVM`是`Modal-View-ViewModal`的缩写，是一种设计思想。
 * `Modal`代表数据模型：定义数据、修改、操作业务逻辑。
 * `View`代表UI组件：将Modal层的数据转化为UI渲染出来。
 * `ViewModel`：是同步上述两个的对象（方法是通过双向数据绑定）。是View和Modal链接的桥梁，是双向的。
  View <=> Modal （自动同步的，只需关注业务逻辑，不需要操作DOM和关注数据的状态同步问题）
  
-### 什么是`MVC`
-
+### 什么是 MVC ?
 * `M`代表 Model，即模型，用于封装与业务逻辑有关的代码和数据。例如订单模型、商品模型。
 * `V` 代表 View，即视图，用于呈现内容给用户。例如商品列表页面、后台登录页面。
 * `C` 代表 Controller，即控制器，用于接收用户输入（通过浏览器发起的请求），然后调用模型（Model）对输入数据进行处理并获得处理结果。最后将结果传递到视图（View），从而让用户能够看到自己操作的结果。例如用户点击删除文章按钮后，控制器调用操作文章的模型，删除掉指定文章，最后通过视图显示成功删除文章的提示信息。
@@ -208,18 +209,17 @@ M代表Model，负责整个解决方案的业务逻辑实现，底层的数据�
 V代表View，负责系统向用户的展示，主要由HTML及JSP等完成；
  
 ### `MVVM`和`MVC`的区别
-区别不大，都是设计思想。MVVM中的ViewModal 替换成了Controller，MVVM 主要解决了MVC 中大量的 DOM操作使页面渲染性能降低，加载速度变慢，影响用户体验。和当 Model 频繁发生变化，开发者需要主动更新到 View。
+区别不大，都是设计思想。**MVVM中的 ViewModal 替换成了MVC中的 Controller**，MVVM 主要解决了MVC 中大量的 DOM操作使页面渲染性能降低，加载速度变慢，影响用户体验。和当 Model 频繁发生变化，开发者需要主动更新到 View。
 
 ## Vue的渲染过程
-
 ![Vue render](./images/vuerender.jpg)
 
-1. 调用 compile 函数,生成 render 函数字符串 ,编译过程如下:
-* parse 函数解析 template,生成 ast(抽象语法树)
-* optimize 函数优化静态节点 (标记不需要每次都更新的内容,diff 算法会直接跳过静态节点,从而减少比较的过程,优化了 patch 的性能)
-* generate 函数生成 render 函数字符串
-2. 调用 new Watcher 函数,监听数据的变化,当数据发生变化时，Render 函数执行生成 vnode 对象
-3. 调用 patch 方法,对比新旧 vnode 对象,通过 DOM diff 算法,添加、修改、删除真正的 DOM 元素
+1. 调用 compile 函数，生成 render 函数字符串，编译过程如下:
+  * parse 函数解析 template，生成 ast (抽象语法树)
+  * optimize 函数优化静态节点 (标记不需要每次都更新的内容，diff 算法会直接跳过静态节点，从而减少比较的过程，优化了 patch 的性能)
+  * generate 函数生成 render 函数字符串
+2. 调用 new Watcher 函数，监听数据的变化，当数据发生变化时，Render 函数执行生成 vnode 对象
+3. 调用 patch 方法，对比新旧 vnode 对象，通过 DOM diff 算法，添加、修改、删除真正的 DOM 元素
 
 ## 组件间数据传递的方式
 数据传递的方式有：
@@ -233,6 +233,21 @@ V代表View，负责系统向用户的展示，主要由HTML及JSP等完成；
 8. `refs`
 9. `sync`
 10. `observable`
+
+## `Vue.observable`
+轻量级的`Vuex`，用作状态管理
+
+```js
+// store.js
+import Vue from 'vue';
+
+export let store = Vue.observable({count: 0});
+export let mutations = {
+    setCount(count) {
+        store.count = count;
+    }
+}
+```
 
 ## 生命周期
 ### 父子组件生命周期的执行顺序
@@ -279,13 +294,9 @@ mounted () {
 ```vue
 <Child @hook:mounted="doSomething"/>
 ```
- 
-## `Vuejs`的两个核心
-1. 数据驱动【数据变动触发视图跟新】
-2. 组件系统【.vue】
 
 ## Vue@3为什么采用`proxy`，弃用了`Object.defineProperty`?
-`Object.defineProperty`本身有一定的监控*数组下标变化*的能力，从性能/体验的性价比考虑【[Vue为什么不能检测数组变动](https://segmentfault.com/a/1190000015783546)】。Vue自身内部处理一些方法来监听了数组变动：
+`Object.defineProperty`本身有一定的监控**数组下标变化**的能力，从性能/体验的性价比考虑【[Vue为什么不能检测数组变动](https://segmentfault.com/a/1190000015783546)】。Vue自身内部处理一些方法来监听了数组变动：
 ```js
 push();
 pop();
@@ -339,7 +350,7 @@ function createKeyToOldIdx(children, beginIdx, endIdx) {
 `v-model` 是 `v-bind:value` 和输入框 `change事件` 的语法糖.
 
 ## Vue 组件 data 为什么必须是函数？
-> new Vue()实例中,data 可以直接是一个对象,为什么在 vue 组件中,data 必须是一个函数呢?
+> new Vue()实例中，data 可以直接是一个对象，为什么在 vue 组件中，data 必须是一个函数呢?
 
 因为组件是可以复用的，JS 里对象是引用关系,如果组件 data 是一个对象，那么子组件中的 data 属性值会互相污染，产生副作用。
 
@@ -348,21 +359,6 @@ function createKeyToOldIdx(children, beginIdx, endIdx) {
 ### 如何重置data？
 ```js
 Object.assign(this.$data, this.$options.data())
-```
-
-## `Vue.observable`
-轻量级的`Vuex`，用作状态管理
-
-```js
-// store.js
-import Vue from 'vue';
-
-export let store = Vue.observable({count: 0});
-export let mutations = {
-    setCount(count) {
-        store.count = count;
-    }
-}
 ```
 
 ## 保留模板中的HTML注释
