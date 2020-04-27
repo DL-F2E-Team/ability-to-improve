@@ -11,7 +11,8 @@
     "docs:build": "vuepress build docs",
     "deploy": "gh-pages -d docs/.vuepress/dist",
     "deploy:build": "npm run docs:build && gh-pages -d docs/.vuepress/dist",
-    "set": "npm run deploy:build"
+    "set": "npm run deploy:build",
+    "publish": "gh-pages -d docs/.vuepress/dist"
   },
   "dependencies": {
     "@vuepress/theme-default": "^1.0.0-rc.1",

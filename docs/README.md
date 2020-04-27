@@ -1,24 +1,18 @@
 ---
 home: true
-heroText: F2E !
-heroImage: logo.jpg
-tagline: 温故而知新，可以为师矣
+heroText: Front to End
+tagline: Is worthy of being a teacher who gets to know what is new by keeping fresh in his mind what he is already familiar with.
 actionText: 快速开始 →
 actionLink: /javascript/
 footer: created by lijiahao8898
 ---   
-
-<style>
-
-</style>
-                   
-# 目录
-
             You cannot improve your past, but you can improve your future.
             once time is wasted, life is wasted.
 
             你不能改变你的过去，但你可以让你的未来变得更好。
             一旦时间浪费了，生命就浪费了。
+            
+# 目录            
 
 ## 常用
 - :fire::fire::fire:[JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)
