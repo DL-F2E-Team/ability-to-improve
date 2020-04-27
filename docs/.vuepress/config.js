@@ -71,6 +71,7 @@ module.exports = {
       title: 'React',
       children: [
         '/react/',
+        '/react/react@16-8.md',
         '/react/router.md',
         '/react/redux.md',
         '/react/dva.md'

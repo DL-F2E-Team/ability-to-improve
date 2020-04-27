@@ -6,7 +6,12 @@ tagline: 温故而知新，可以为师矣
 actionText: 快速开始 →
 actionLink: /javascript/
 footer: created by lijiahao8898
----                      
+---   
+
+<style>
+
+</style>
+                   
 # 目录
 
             You cannot improve your past, but you can improve your future.

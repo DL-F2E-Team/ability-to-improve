@@ -325,67 +325,6 @@ function HigherOrderComponent(WrappedComponent) {
 * Suspense组件【悬念组件？】
 * 废弃 `React.StrictMode`
 
-## @16.8
-### `Hooks`
-
-只能在函数最外层调用 Hook。不要在循环、条件判断或者子函数中调用。<br/>
-只能在 React 的函数组件中调用 Hook。不要在其他 JavaScript 函数中调用。（或者自定义的 Hook 中。）
-
-* [React Hooks](https://zh-hans.reactjs.org/docs/hooks-intro.html)
-* [React Hooks 原理](https://github.com/brickspert/blog/issues/26)
-
-#### Hooks Api
-* `useState`
-```jsx
-import React, { useState } from 'react';
-
-function Example() {
-  // 声明一个叫 “count” 的 state 变量。
-  const [count, setCount] = useState(0);
-
-  return (
-    <div>
-      <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}>
-        Click me
-      </button>
-    </div>
-  );
-}
-```
-* `useEffect`
-
-相当于 `componentDidMount`、 `componentDidUpdate`、`componentWillUnmount`.
-```jsx
-import React, { useState, useEffect } from 'react';
-
-function Example() {
-  const [count, setCount] = useState(0);
-
-  // 相当于 componentDidMount 和 componentDidUpdate:
-  useEffect(() => {
-    // 使用浏览器的 API 更新页面标题
-    document.title = `You clicked ${count} times`;
-  });
-
-  return (
-    <div>
-      <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}>
-        Click me
-      </button>
-    </div>
-  );
-}
-```
-
-* `useContext`
-* `useReducer`
-
-* 自定义 `Hook`
-
-* 额外的 `Hook`
-
 ## todo
 
 * jsx
