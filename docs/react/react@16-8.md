@@ -2,9 +2,9 @@
 
 ## Hooks
 Hook 是一些可以让你在函数组件里“钩入” React state 及生命周期等特性的函数，它们的名字通常以`use`开头。
-Hook 不能在 class 组件中使用 —— 这使得你不使用 class 也能使用 React。
+Hook 不能在 class 组件中使用 — 这使得你不使用 class 也能使用 React。
 
-只能在函数最外层调用 Hook。不要在循环、条件判断或者子函数中调用，否则会导致bug的产生。
+**只能在函数最外层调用 Hook。不要在循环、条件判断或者子函数中调用，否则会导致bug的产生。**
 
 **只能在 React 的函数组件中（或者自定义的 Hook 中）调用 Hook**。不要在其他 JavaScript 函数中调用。
 
@@ -24,7 +24,7 @@ Hooks Api
   
 了解更多：
 * [React Hooks](https://zh-hans.reactjs.org/docs/hooks-intro.html)
-* [React Hooks索引](https://react.docschina.org/docs/hooks-reference.html#uselayouteffect)
+* [React Hooks 索引](https://react.docschina.org/docs/hooks-reference.html#uselayouteffect)
 * [React Hooks 原理](https://github.com/brickspert/blog/issues/26)  
 
 ### Hooks Api
