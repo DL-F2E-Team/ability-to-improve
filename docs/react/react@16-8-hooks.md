@@ -1,6 +1,4 @@
-# React@16.8
-
-## Hooks
+# React@16.8 Hooks
 Hook 是一些可以让你在函数组件里“钩入” React state 及生命周期等特性的函数，它们的名字通常以`use`开头。
 Hook 不能在 class 组件中使用 — 这使得你不使用 class 也能使用 React。
 
@@ -27,10 +25,10 @@ Hooks Api
 * [React Hooks 索引](https://react.docschina.org/docs/hooks-reference.html#uselayouteffect)
 * [React Hooks 原理](https://github.com/brickspert/blog/issues/26)  
 
-### Hooks Api
-* `useState`又叫 State Hook
+## useState
+又叫 State Hook
 
-⚠️ setCount 不会把新的 state 和 旧的 state 合并
+setCount 不会把新的 state 和 旧的 state 合并
 ```jsx {6,8,13}
 import React, { useState } from 'react';
 
@@ -51,7 +49,8 @@ function Example() {
   );
 }
 ```
-* `useEffect`又叫 Effect Hook
+## useEffect
+又叫 Effect Hook
 
 相当于 `componentDidMount`、 `componentDidUpdate`、`componentWillUnmount`
 
@@ -128,16 +127,16 @@ useEffect(() => {
 }, []); // 仅在组件挂载和卸载时执行 
 ```
 
-* 自定义 `Hook`
+## useContext
+useContext 让你不使用组件嵌套就可以订阅 React 的 Context。
 
-⚠️ 自定义 Hook 是一种复用状态逻辑的方式，它不复用 state 本身。
+## useReducer
+useReducer 可以让你通过 reducer 来管理组件本地的复杂 state。
+
+## 自定义 Hook
+
+自定义 Hook 是一种复用状态逻辑的方式，它不复用 state 本身。
 
 事实上 Hook 的每次调用都有一个完全独立的 state —— 因此你可以在单个组件中多次调用同一个自定义 Hook。
 
 自定义 Hook 更像是一种约定而不是功能。如果函数的名字以 “use” 开头并调用其他 Hook，我们就说这是一个自定义 Hook，自定义 Hook 内部可以调用其他 Hook。
-
-* `useContext`
-useContext 让你不使用组件嵌套就可以订阅 React 的 Context。
-
-* `useReducer`
-useReducer 可以让你通过 reducer 来管理组件本地的复杂 state。
