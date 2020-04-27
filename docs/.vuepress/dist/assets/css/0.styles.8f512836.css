@@ -1320,35 +1320,35 @@ body, html {
   font-family: drifttype;
   font-style: normal;
   font-weight: 400;
-  src: url(/fonts/drifttype.woff2) format("woff2"), url(/fonts/drifttype.woff) format("woff")
+  src: url(./fonts/drifttype.woff2) format("woff2"), url(./fonts/drifttype.woff) format("woff")
 }
 
 @font-face {
   font-family: drifttype;
   font-style: normal;
   font-weight: 700;
-  src: url(/fonts/drifttype_solid.woff2) format("woff2"), url(/fonts/drifttype_solid.woff) format("woff")
+  src: url(./fonts/drifttype_solid.woff2) format("woff2"), url(./fonts/drifttype_solid.woff) format("woff")
 }
 
 @font-face {
   font-family: Moholy Sans;
   font-style: normal;
   font-weight: 400;
-  src: url(/fonts/MoholySans-Regular.woff2) format("woff2"), url(/fonts/MoholySans-Regular.woff2) format("woff")
+  src: url(./fonts/MoholySans-Regular.woff2) format("woff2"), url(./fonts/MoholySans-Regular.woff2) format("woff")
 }
 
 @font-face {
   font-family: Moholy Sans;
   font-style: normal;
   font-weight: 700;
-  src: url(/fonts/MoholySans-Bold.woff2) format("woff2"), url(/fonts/MoholySans-Bold.woff2) format("woff")
+  src: url(./fonts/MoholySans-Bold.woff2) format("woff2"), url(./fonts/MoholySans-Bold.woff2) format("woff")
 }
 
 @font-face {
   font-family: Moholy Sans;
   font-style: normal;
   font-weight: 300;
-  src: url(/fonts/MoholySans-Light.woff2) format("woff2"), url(/fonts/MoholySans-Light.woff2) format("woff")
+  src: url(./fonts/MoholySans-Light.woff2) format("woff2"), url(./fonts/MoholySans-Light.woff2) format("woff")
 }
 
 body {

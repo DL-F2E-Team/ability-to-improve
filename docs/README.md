@@ -2,7 +2,7 @@
 home: true
 heroText: Front to End
 tagline: Is worthy of being a teacher who gets to know what is new by keeping fresh in his mind what he is already familiar with.
-actionText: 快速开始 →
+actionText: start →
 actionLink: /javascript/
 footer: created by lijiahao8898
 ---   
