@@ -29,54 +29,55 @@ module.exports = {
     sidebar: [{
       title: '目录',
       children: ['/Catalogue.md']
-    }, {
-      title: 'JavaScript',
-      children: [
-        '/javascript/',
-        '/javascript/This.md',
-        '/javascript/Array.md',
-        '/javascript/Function.md',
-        '/javascript/Prototype.md',
-        '/javascript/Event.md',
-        '/javascript/EventLoop.md',
-        '/javascript/Class.md',
-        '/javascript/HOF.md',
-        '/javascript/Curry.md',
-        '/javascript/SEO.md',
-        '/javascript/mobile.md',
-        '/javascript/highQuestion.md',
-        '/javascript/question.md',
-      ]
-    }, '/html/', {
-      title: 'CSS',
-      children: [
-        '/style/',
-        '/style/SASS.md',
-        '/style/LESS.md'
-      ]
-    }, {
-      title: 'BOM',
-      children: [
-        '/http/'
-      ]
-    }, {
-      title: 'Vue',
-      children: [
-        '/vue/',
-        '/vue/VueRouter.md',
-        '/vue/Vuex.md',
-        '/vue/VuexQuestions.md'
-      ]
-    }, {
-      title: 'React',
-      children: [
-        '/react/',
-        '/react/Context.md',
-        '/react/react@16-8-hooks.md',
-        '/react/router.md',
-        '/react/redux.md',
-        '/react/dva.md'
-      ]
-    }, '/blog/', '/tool/', '/Taro/'],
+    },
+      '/Test/'
+      , {
+        title: 'JavaScript',
+        children: [
+          '/javascript/',
+          '/javascript/This.md',
+          '/javascript/Array.md',
+          '/javascript/Function.md',
+          '/javascript/Prototype.md',
+          '/javascript/Event.md',
+          '/javascript/EventLoop.md',
+          '/javascript/Class.md',
+          '/javascript/HOF.md',
+          '/javascript/Curry.md',
+          '/javascript/SEO.md',
+          '/javascript/mobile.md',
+          '/javascript/Question.md',
+        ]
+      }, '/html/', {
+        title: 'CSS',
+        children: [
+          '/style/',
+          '/style/SASS.md',
+          '/style/LESS.md'
+        ]
+      }, {
+        title: 'BOM',
+        children: [
+          '/http/'
+        ]
+      }, {
+        title: 'Vue',
+        children: [
+          '/vue/',
+          '/vue/VueRouter.md',
+          '/vue/Vuex.md',
+          '/vue/VuexQuestions.md'
+        ]
+      }, {
+        title: 'React',
+        children: [
+          '/react/',
+          '/react/Context.md',
+          '/react/react@16-8-hooks.md',
+          '/react/router.md',
+          '/react/redux.md',
+          '/react/dva.md'
+        ]
+      }, '/blog/', '/tool/', '/Taro/'],
   }
 };

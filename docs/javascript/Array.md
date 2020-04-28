@@ -1,27 +1,37 @@
 # 数组
+数组分为稀疏数组与密集数组。
 
-稀疏数组与密集数组
+::: tip
+[Array - MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array)
+:::
 
-## 数组方法
-#### `Array.from()`
-`Array.from(arrayLike[, mapFn[, thisArg]])`从一个类似数组或可迭代对象创建一个新的，浅拷贝的数组实例。
-#### `Array.isArray()`
+## Array.from()
+`Array.from(arrayLike[, mapFn[, thisArg]])`
+
+从一个类似数组或可迭代对象创建一个新的，浅拷贝的数组实例。
+
+## Array.isArray()
 用于确定传递的值是否是一个`Array`。
 
-### 修改原数组
-#### `Array.prototype.pop()`
+## 修改原数组 Array.prototype.pop()
 **删除最后一个**元素，并返回该元素。更改数组长度。
-#### `Array.prototype.push()`
+
+## 修改原数组 Array.prototype.push()
 将**一个或多个元素**添加到数组的**末尾**，并返回该数组的新长度。
-#### `Array.prototype.shift()`
+
+## 修改原数组 Array.prototype.shift()
 方法从数组中**删除第一个**元素，并返回该元素。此方法更改数组的长度。
-#### `Array.prototype.unshift()`
+
+## 修改原数组 Array.prototype.unshift()
 将**一个或多个元素**添加到数组的**开头**，并返回该数组的新长度(该方法修改原有数组)。
-#### `Array.prototype.reverse()`
+
+## 修改原数组 Array.prototype.reverse()
 反转数组，并返回该数组。
-#### `Array.prototype.sort()`
+
+## 修改原数组 Array.prototype.sort()
 对数组进行排序。
-#### `Array.prototype.splice()`
+
+## 修改原数组 Array.prototype.splice()
 **删除或替换**现有元素或者原地添加新的元素来修改数组,并以数组形式返回被修改的内容。此方法会改变原数组。
   
 ### 创建新数组
@@ -60,11 +70,7 @@
 #### `Array.prototype.reduce()`
 方法对数组中的每个元素执行一个由您提供的reducer函数(升序执行)，将其结果汇总为单个返回值。
 
-::: tip 资料库
-[Array - MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array)
-:::
-
-## 数组去重
+## 数组去重的6个方法
 1. **indexOf** - 使用`indexOf`判断是否在**临时数组**中。
 ```js {6}
 var arr = ['12','32','89','12','12','78','12','32'];
