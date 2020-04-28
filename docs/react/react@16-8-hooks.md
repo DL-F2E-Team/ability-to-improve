@@ -2,7 +2,7 @@
 Hook 是一些可以让你在函数组件里“钩入” React state 及生命周期等特性的函数，它们的名字通常以`use`开头。
 Hook 不能在 class 组件中使用 — 这使得你不使用 class 也能使用 React。
 
-**只能在函数最外层调用 Hook，不要在循环、条件判断或者子函数中调用，否则会导致bug的产生。**
+**只能在函数最外层调用 Hook，不要在循环、条件判断或者子函数中调用，否则会导致bug产生。**
 
 **只能在 React 的函数组件中（或者自定义的 Hook 中）调用 Hook，不要在其他 JavaScript 函数中调用。**
 
@@ -28,6 +28,7 @@ Hooks Api
 * [React Hooks](https://zh-hans.reactjs.org/docs/hooks-intro.html)
 * [React Hooks 索引](https://react.docschina.org/docs/hooks-reference.html#uselayouteffect)
 * [React Hooks 原理](https://github.com/brickspert/blog/issues/26)  
+* [React Hooks 你真的用对了吗？ - 橘子小睿](https://zhuanlan.zhihu.com/p/85969406)
 
 ## useState
 useState 又叫 State Hook。
@@ -221,6 +222,34 @@ export default Example
 
 从这里也可以看出，memo是在DOM更新前触发的，就像官方所说的，类比生命周期就是`shouldComponentUpdate`
 
+## useRef
+
+```jsx {10,14}
+import React, { useState, useEffect, useMemo, useRef } from 'react';
+
+export default function App(props){
+  const [count, setCount] = useState(0);
+
+  const doubleCount = useMemo(() => {
+    return 2 * count;
+  }, [count]);
+
+  const couterRef = useRef();
+
+  useEffect(() => {
+    document.title = `The value is ${count}`;
+    console.log(couterRef.current);
+  }, [count]);
+  
+  return (
+    <>
+      <button ref={couterRef} onClick={() => {setCount(count + 1)}}>Count: {count}, double: {doubleCount}</button>
+    </>
+  );
+}
+```
+代码中用 useRef 创建了 couterRef 对象，并将其赋给了 button 的 ref 属性。这样，通过访问 couterRef.current 就可以访问到 button 对应的DOM对象。
+
 ## 自定义 Hook
 
 自定义 Hook 是一种复用状态逻辑的方式，它不复用 state 本身。
@@ -228,3 +257,151 @@ export default Example
 事实上 Hook 的每次调用都有一个完全独立的 state —— 因此你可以在单个组件中多次调用同一个自定义 Hook。
 
 自定义 Hook 更像是一种约定而不是功能。如果函数的名字以 “use” 开头并调用其他 Hook，我们就说这是一个自定义 Hook，自定义 Hook 内部可以调用其他 Hook。
+
+## 使用单个 state，还是多个 state
+答：
+
+使用多个 state 变量可以让 state 的粒度更细，更易于逻辑的拆分和组合，将完全不相关的 state 拆分为多组 state。
+
+如果某些 state 是相互关联的，或者需要一起发生改变，就可以把它们合并为一组 state。
+
+## deps 依赖过多，导致 Hooks 难以维护？
+答：
+
+依赖数组依赖的值最好不要超过 3 个，否则会导致代码会难以维护。如果发现依赖数组依赖的值过多，我们应该采取一些方法来减少它：
+* 去掉不必要的依赖。
+* 将 Hook 拆分为更小的单元，每个 Hook 依赖于各自的依赖数组。
+* 通过合并相关的 state，将多个依赖值聚合为一个。
+* 通过 setState 回调函数获取最新的 state，以减少外部依赖。
+* 通过 ref 来读取可变变量的值，不过需要注意控制修改它的途径。
+
+## 使用 Hooks 时还有哪些好的实践？
+1. 若 Hook 类型相同，且依赖数组一致时，应该合并成一个 Hook。否则会产生更多开销。
+```jsx harmony
+const dataA = useMemo(() => {
+  return getDataA();
+}, [A, B]);
+
+const dataB = useMemo(() => {
+  return getDataB();
+}, [A, B]);
+
+// 应该合并为
+const [dataA, dataB] = useMemo(() => {
+  return [getDataA(), getDataB()]
+}, [A, B]);
+```
+
+2. 参考原生 Hooks 的设计，自定义 Hooks 的返回值可以使用 Tuple 类型，更易于在外部重命名。但如果返回值的数量超过三个，还是建议返回一个对象。
+```jsx
+export const useToggle = (defaultVisible: boolean = false) => {
+  const [visible, setVisible] = useState(defaultVisible);
+  const show = () => setVisible(true);
+  const hide = () => setVisible(false);
+
+  return [visible, show, hide] as [typeof visible, typeof show, typeof hide];
+};
+
+const [isOpen, open, close] = useToggle(); // 在外部可以更方便地修改名字
+const [visible, show, hide] = useToggle();
+```
+
+3. ref 不要直接暴露给外部使用，而是提供一个修改值的方法。
+
+4. 在使用 useMemo 或者 useCallback 时，确保返回的函数只创建一次。也就是说，函数不会根据依赖数组的变化而二次创建。举个例子：
+
+```jsx harmony
+export const useCount = () => {
+  const [count, setCount] = useState(0);
+
+  const [increase, decrease] = useMemo(() => {
+    const increase = () => {
+      setCount(count + 1);
+    };
+
+    const decrease = () => {
+      setCount(count - 1);
+    };
+    return [increase, decrease];
+  }, [count]);
+
+  return [count, increase, decrease];
+};
+```
+
+在 useCount Hook 中， count 状态的改变会让 useMemo 中的 increase 和 decrease 函数被重新创建。由于闭包特性，如果这两个函数被其他 Hook 用
+到了，我们应该将这两个函数也添加到相应 Hook 的依赖数组中，否则就会产生 bug。比如：
+
+```jsx harmony
+function Counter() {
+  const [count, increase] = useCount();
+
+  useEffect(() => {
+    const handleClick = () => {
+      increase(); // 执行后 count 的值永远都是 1
+    };
+
+    document.body.addEventListener("click", handleClick);
+    return () => {
+      document.body.removeEventListener("click", handleClick);
+    };
+  }, []); 
+
+  return <h1>{count}</h1>;
+}
+```
+
+在 useCount 中，increase 会随着 count 的变化而被重新创建。但是 increase 被重新创建之后， useEffect 并不会再次执行，所以 useEffect 中取到
+的 increase 永远都是首次创建时的 increase 。而首次创建时 count 的值为 0，因此无论点击多少次， count 的值永远都是 1。
+
+那把 increase 函数放到 useEffect 的依赖数组中不就好了吗？事实上，这会带来更多问题：
+
+* increase 的变化会导致频繁地绑定事件监听，以及解除事件监听。
+* 需求是只在组件 mount 时执行一次 useEffect，但是 increase 的变化会导致 useEffect 多次执行，不能满足需求。
+
+如何解决这些问题呢？
+
+一、通过 setState 回调，让函数不依赖外部变量。例如：
+```jsx harmony
+export const useCount = () => {
+  const [count, setCount] = useState(0);
+
+  const [increase, decrease] = useMemo(() => {
+    const increase = () => {
+      setCount((latestCount) => latestCount + 1);
+    };
+
+    const decrease = () => {
+      setCount((latestCount) => latestCount - 1);
+    };
+    return [increase, decrease];
+  }, []); // 保持依赖数组为空，这样 increase 和 decrease 方法都只会被创建一次
+
+  return [count, increase, decrease];
+};
+```
+
+二、通过 ref 来保存可变变量。例如：
+```jsx harmony
+export const useCount = () => {
+  const [count, setCount] = useState(0);
+  const countRef = useRef(count);
+
+  useEffect(() => {
+    countRef.current = count;
+  });
+
+  const [increase, decrease] = useMemo(() => {
+    const increase = () => {
+      setCount(countRef.current + 1);
+    };
+
+    const decrease = () => {
+      setCount(countRef.current - 1);
+    };
+    return [increase, decrease];
+  }, []); // 保持依赖数组为空，这样 increase 和 decrease 方法都只会被创建一次
+
+  return [count, increase, decrease];
+};
+```

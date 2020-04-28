@@ -1,12 +1,16 @@
 # Context
 Context 可以让我们无须明确地传遍每一个组件，就能将值深入传递进组件树。
 
+----
+
 Context Api：
 * [React.createContext](Context.html#react-createcontext)
 * [Context.Provider](Context.html#context-provider)
 * [Class.contextType](Context.html#class-contextType)
 * [Context.Consumer](Context.html#context-consumer)
 * [Context.displayName](Context.html#context-displayName)
+
+----
 
 实例：
 ```jsx {3}

@@ -141,3 +141,8 @@ footer: created by lijiahao8898
 * [Nintendo](https://store.nintendo.com.hk/)
 * [PlayStation® Country selector](https://www.playstation.com/country-selector/index.html)
 * [The official Pokémon Website in China](https://cn.portal-pokemon.com/)
+
+## 素材资源
+- [Zwicon – Handcrafted iconset for your next project](https://www.zwicon.com/)
+- [Create Your Own @font-face Kits | Font Squirrel](https://www.fontsquirrel.com/tools/webfont-generator)
+- [Fancy &gt; Western fonts | dafont.com](https://www.dafont.com/theme.php?cat=106)
