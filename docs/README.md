@@ -22,6 +22,7 @@ footer: created by lijiahao8898
 - 库
   - :fire:[Lodash 中文文档 | Lodash 中文网](https://www.lodashjs.com/)
   - [Moment.js 中文网](http://momentjs.cn/)
+  - [hammer.js - 移动端手势库](https://github.com/hammerjs/hammer.js)
 - [DevDocs API Documentation](https://devdocs.io/)
 - [SassMeister | The Sass Playground!](https://www.sassmeister.com/)
 - [Webstorm - download](https://www.jetbrains.com/webstorm/download/download-thanks.html?platform=mac)

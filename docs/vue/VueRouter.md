@@ -1,6 +1,40 @@
-# VueRouter
+# Vue-router
 
-## VueRouter引入异步组件和同步组件的区别?
+## active-class 是哪个组件的属性?
+vue-router 模块的 router-link 组件。
+
+## 路由之间跳转？
+声明式（标签跳转）
+编程式（ js 跳转） router.push('index')
+
+## 懒加载（按需加载路由）
+webpack 中提供了 require.ensure()来实现按需加载。以前引入路由是通过 import 这样的方式引入，改为 const 定义的方式进行引入。
+
+不进行页面按需加载引入方式：
+```jsx
+import  home   from '../../common/home.vue'
+```
+
+进行页面按需加载的引入方式：
+```jsx
+const  home = r => require.ensure( [], () => r (require('../../common/home.vue')))
+```
+
+## vue-router 有哪几种导航钩子?
+三种
+
+全局导航钩子
+router.beforeEach(to, from, next),
+router.beforeResolve(to, from, next),
+router.afterEach(to, from ,next)
+组件内钩子
+beforeRouteEnter,
+beforeRouteUpdate,
+beforeRouteLeave
+单独路由独享
+beforeEnter
+
+## 路由引入异步组件和同步组件的区别?
 1. 缓存组件供未来重渲染
 2. 将应用分割成小一些的代码块，并且只在需要的时候才从服务器加载一个模块
 

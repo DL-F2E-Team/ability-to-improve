@@ -70,7 +70,44 @@
 #### `Array.prototype.reduce()`
 方法对数组中的每个元素执行一个由您提供的reducer函数(升序执行)，将其结果汇总为单个返回值。
 
-## 数组去重的6个方法
+## 数组清空
+1: for 循环然后依次pop || shift ;
+
+2:数组赋值 [] ;
+
+3: 数组的 length 是可操作的  所以设置 数组的 length = 0  也是变向的清空;
+
+4: var a = [1,2,3]   a.splice(0 , a.length )  // splice 0 到他的 长度  就可以清空了;
+
+## 数组排序
+::: tip
+* [数组排序](https://zhuanlan.zhihu.com/p/81442639)
+* https://www.jianshu.com/p/c6123b732dc3
+* https://www.cnblogs.com/lindazhong/p/6669013.html
+:::
+
+### 冒泡排序
+实现：用 for 循环遍历数组元素，拿出前一个和后一个元素对比，如果前边的值大于后边的值就交换位置，遍历元素进行排序。
+
+![冒泡排序](./images/sort1.gif)
+
+### 快速排序
+实现：
+1. 在数据集之中，选择一个元素作为”基准”。
+2. 所有小于”基准”的元素，都移到”基准”的左边；所有大于”基准”的元素，都移到”基准”的右边。这个操作称为分区操作，分区操作结束后，基准元素所处的位置就是最终排序后它的位置。
+3. 对”基准”左边和右边的两个子集，不断重复第一步和第二步，直到所有子集只剩下一个元素为止。
+
+![快速排序](./images/sort2.gif)
+
+### 选择排序
+实现：
+选择排序（Selection Sort）是一种简单直观的排序算法。它的工作原理如下，首先在未排序序列中找到最小（大）元素，存放到排序序列的起始位置，然后，再从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾。以此类推，直到所有元素均排序完毕。
+
+![选择排序](./images/sort3.gif)
+
+### sort
+
+## 数组去重
 1. **indexOf** - 使用`indexOf`判断是否在**临时数组**中。
 ```js {6}
 var arr = ['12','32','89','12','12','78','12','32'];
@@ -170,14 +207,6 @@ function unique(a) {
 arr = unique(arr);
 ```
 
-## 判断数组中包含某个值
-- `array.indexOf`、`array.findeIndex(callback[,thisArg])`
-  - 存在，则返回数组元素的下标，否则返回-1。
-- `array.includes(searchElement[, fromIndex])`
-  - 存在返回true，否则返回false
-- `array.find(callback[,thisArg])`
-  - 返回数组中满足条件的第一个元素的值，如果没有，返回undefined
-
 ## 数组扁平化
 1. `Array.prototype.flat([depth])`
   - depth - 指定要提取嵌套数组的结构深度，默认值为 1。
@@ -248,4 +277,12 @@ while (ary.some(Array.isArray)) {
   ary = [].concat(...ary);
 }
 ```
+
+## 判断数组中包含某个值
+- `array.indexOf`、`array.findeIndex(callback[,thisArg])`
+  - 存在，则返回数组元素的下标，否则返回-1。
+- `array.includes(searchElement[, fromIndex])`
+  - 存在返回true，否则返回false
+- `array.find(callback[,thisArg])`
+  - 返回数组中满足条件的第一个元素的值，如果没有，返回undefined
 

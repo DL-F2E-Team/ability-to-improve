@@ -1,7 +1,9 @@
 # Vuejs@2.x
 `Vuejs`是单向数据流和双向数据绑定的。
 
-`Vuejs`的两个核心 1. **数据驱动**【数据变动触发视图跟新】2. **组件系统**【.vue】
+`Vuejs`的两个核心：
+1. **数据驱动**【数据变动触发视图跟新】
+2. **组件系统**【.vue】
 
 ## 双向数据绑定
 `Vuejs` 是采用`数据劫持`结合`发布者-订阅者模式`的方式，通过`Object.defineProperty()`来劫持各个属性的`setter`，`getter`，在数据变动时发布消息给订阅者，触发相应的监听回调。
@@ -254,20 +256,20 @@ export let mutations = {
 在以下生命周期中，`mixins`相应的生命周期会在**当前混入的生命周期之前执行**，如果是`methods`相同，就会完全覆盖掉。
 
 * 初始化渲染
-  - 【1】**父组件**的`beforeCreate`、`created` 、`beforeMounted`
-  - 【2】**子组件**的`beforeCreate`、`created`、`beforeMount`、`mounted`
-  - 【3】**父组件**的`mounted`
+  1. 父组件的`beforeCreate`、`created` 、`beforeMounted`
+  2. 子组件的`beforeCreate`、`created`、`beforeMount`、`mounted`
+  3. 父组件的`mounted`
 * 子组件更新
-  - 【1】**父组件**的`beforeUpdate`
-  - 【2】**子组件**的`beforeUpdate`、`updated`
-  - 【3】**父组件**的`updated`
+  1. 父组件的`beforeUpdate`
+  2. 子组件的`beforeUpdate`、`updated`
+  3. 父组件的`updated`
 * 父组件更新
-  - 【1】父组件的`beforeUpdate`
-  - 【2】父组件的`updated`
+  1. 父组件的`beforeUpdate`
+  2. 父组件的`updated`
 * 销毁过程
-  - 【1】父组件的`beforeDestroy`
-  - 【2】子组件的`beforeDestroy`、`destroyed`
-  - 【3】父组件`destroyed`
+  1. 父组件的`beforeDestroy`
+  2. 子组件的`beforeDestroy`、`destroyed`
+  3. 父组件`destroyed`
 
 ### 生命周期以及触发机制
 #### `beforeCreate、created`
@@ -276,6 +278,11 @@ export let mutations = {
 beforeCreate => initState【data】 => created
 
 * beforeMounted
+
+创建前/后：在beforeCreated阶段，vue实例的挂载元el还没有。
+载入前/后：在beforeMount阶段，vue实例的$el和data都初始化了，但还是挂载之前为虚拟的dom节点，data.message还未替换。在mounted阶段，vue实例挂载完成，data.message成功渲染。
+更新前/后：当data变化时，会触发beforeUpdate和updated方法。
+销毁前/后：在执行destroy方法后，对data的改变不会再触发周期函数，说明此时vue实例已经解除了事件监听以及和dom的绑定，但是dom结构依然存在。
 
 [生命周期钩子](https://cn.vuejs.org/v2/api/index.html#%E9%80%89%E9%A1%B9-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E9%92%A9%E5%AD%90)
 
@@ -439,7 +446,7 @@ export function set(target: Array<any> | Object, key: any, val: any): any {
 3. 如果 target 本身就不是响应式,直接赋值
 4. 如果属性不是响应式,则调用 defineReactive 方法进行响应式处理
 
-## 聊聊`keep-alive`的实现原理和缓存策略
+## 聊聊 keep-alive 的实现原理和缓存策略
 
 ```js
 export default {
@@ -526,17 +533,128 @@ export default {
   }
 };
 ```
-
 1. 获取 keep-alive 包裹着的第一个子组件对象及其组件名
-2. 根据设定的 include/exclude（如果有）进行条件匹配,决定是否缓存。不匹配,直接返回组件实例
-3. 根据组件 ID 和 tag 生成缓存 Key,并在缓存对象中查找是否已缓存过该组件实例。如果存在,直接取出缓存值并更新该 key 在 this.keys 中的位置(更新 key 的位置是实现 LRU 置换策略的关键)
-4. 在 this.cache 对象中存储该组件实例并保存 key 值,之后检查缓存的实例数量是否超过 max 的设置值,超过则根据 LRU 置换策略删除最近最久未使用的实例（即是下标为 0 的那个 key）
-5. 最后组件实例的 keepAlive 属性设置为 true,这个在渲染和执行被包裹组件的钩子函数会用到,这里不细说
+2. 根据设定的 include/exclude（如果有）进行条件匹配，决定是否缓存。不匹配，直接返回组件实例
+3. 根据组件 ID 和 tag 生成缓存 Key，并在缓存对象中查找是否已缓存过该组件实例。如果存在，直接取出缓存值并更新该 key 在 this.keys 中的位置(更新 key 的位置是实现 LRU 置换策略的关键)
+4. 在 this.cache 对象中存储该组件实例并保存 key 值，之后检查缓存的实例数量是否超过 max 的设置值，超过则根据 LRU 置换策略删除最近最久未使用的实例（即是下标为 0 的那个 key）
+5. 最后组件实例的 keepAlive 属性设置为 true，这个在渲染和执行被包裹组件的钩子函数会用到，这里不细说
 
 ### LRU 缓存淘汰算法
-**LRU（Least recently used）** 算法根据数据的历史访问记录来进行淘汰数据,其核心思想是“如果数据最近被访问过,那么将来被访问的几率也更高”。
+**LRU（Least recently used）** 算法根据数据的历史访问记录来进行淘汰数据，其核心思想是“如果数据最近被访问过，那么将来被访问的几率也更高”。
 
-**keep-alive 的实现正是用到了 LRU 策略,将最近访问的组件 push 到 this.keys 最后面,this.keys[0]也就是最久没被访问的组件,当缓存实例超过 max 设置值,删除 this.keys[0]**
+**keep-alive 的实现正是用到了 LRU 策略，将最近访问的组件 push 到 this.keys 最后面，this.keys[0]也就是最久没被访问的组件，当缓存实例超过 max 设置值，删除 this.keys[0]**
+
+## Vue.extend Vue构造器
+Vue.extend 返回的是一个“扩展实例构造器”，也就是预设了部分选项的 Vue 的实例构造器。vue.extend() 方法其实是 Vue 的一个构造器，继承自 Vue。
+```js
+// 使用基础 Vue 构造器，创建一个“子类”。参数是一个包含组件选项的对象。
+// data 选项是特例，需要注意 - 在 Vue.extend() 中它必须是函数
+<div id="mount-point"></div>
+
+// 创建构造器
+var Profile = Vue.extend({
+  template: '<p>{{firstName}} {{lastName}} aka {{alias}}</p>',
+  data: function () {
+    return {
+      firstName: 'Walter',
+      lastName: 'White',
+      alias: 'Heisenberg'
+    }
+  }
+})
+// 创建 Profile 实例，并挂载到一个元素上。
+new Profile().$mount('#mount-point')
+```
+
+```js
+// hello.js
+import Vue from 'vue';
+import HelloTemplate from './hello.vue';
+
+// 使用extend方法创建vue的子类
+const HelloConstructor = Vue.extend(HelloTemplate);
+
+// 使用这个方法调用hello组件
+function Hello(options) {
+  options = options || {};
+  if (typeof options === 'string') {
+    options = {
+      text: options
+    }
+  }
+  
+  // 实例化子组件，然后获取到DOM结构并挂载到body上
+  const helloInstence = new HelloConstructor({data: options});
+  helloInstence.vm = helloInstence.$mount();
+  console.log(helloInstence.vm)
+  document.body.appendChild(helloInstence.vm.$el);
+}
+export default Hello;
+```
+
+## Watch高级用法
+```js {3,7,14,18}
+watch: {
+ firstName: {
+  handler(newName, oldName) {
+   this.fullName = newName + ' ' + this.lastName;
+  },
+  // 代表在wacth里声明了firstName这个方法之后立即先去执行handler方法
+  immediate: true,
+ },
+ obj: {
+  handler() {
+     ...
+  },
+  // 是否深度监听
+  deep: true
+ }
+ 
+ // 或者
+'obj.a': {
+  handler(newName, oldName) {
+   console.log('obj.a changed');
+  },
+  immediate: true,
+  // deep: true/
+ }
+}
+```
+
+## 自定义指令(v-check, v-focus) 的方法有哪些? 它有哪些钩子函数? 还有哪些钩子函数参数
+全局定义指令：在 vue 对象的 directive 方法里面有两个参数, 一个是指令名称, 另一个是函数。
+组件内定义指令：directives
+钩子函数: bind(绑定事件出发)、inserted(节点插入时候触发)、update(组件内相关更新)
+钩子函数参数： el、binding
+
+## 页面中定义一个定时器，在哪个阶段清除？
+答案：在 beforeDestroy 中销毁定时器。
+```js
+mounted(){
+ this.timer = setInterval(()=>{
+    console.log(1)
+ },1000)
+},
+beforeDestroy(){
+ clearInterval(this.timer)
+}
+```
+缺点：
+它需要在这个组件实例中保存这个 timer，如果可以的话最好只有生命周期钩子可以访问到它。这并不算严重的问题，但是它可以被视为杂物。
+
+我们的建立代码独立于我们的清理代码，这使得我们比较难于程序化的清理我们建立的所有东西。
+
+该方法是通过$once这个事件侦听器在定义完定时器之后的位置来清除定时器
+```js
+mounted(){
+ const timer = setInterval(()=>{
+    console.log(1)
+ },1000)
+ this.$once('hook:beforeDestroy',()=>{
+  clearInterval(timer)
+ })
+}
+```
 
 ## 相关文章
 * [7个有用的vue开发技巧 - 掘金](https://juejin.im/post/5ce3b519f265da1bb31c0d5f)

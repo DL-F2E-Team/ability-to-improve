@@ -30,6 +30,7 @@ module.exports = {
       title: '目录',
       children: ['/Catalogue.md']
     },
+      '/WORK.md',
       '/Test/'
       , {
         title: 'JavaScript',

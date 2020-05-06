@@ -1,8 +1,18 @@
 # [Vuex](https://vuex.vuejs.org/zh/)
-`Vuex`使用单一状态树，每个应用将仅仅包含一个`store`实例。
+`Vuex` 并没有实现一套响应式系统，而是**直接通过 new Vue，实例化了一个 Vue 对象**来实现数据响应式的。`Vuex`使用单一状态树，每个应用将仅仅包含一个`store`实例。
+
+不过刷新浏览器，vuex 中的 state 会重新变为初始状态，可以使用插件`vuex-along`，`vuex-persistedstate`来解决。本质上是使用了 `sessionStorage` 或者 `localStorage` 持久化存储数据。
+
+其核心可以简单理解为：
+* state: 单一状态树
+* Getter: 从s tate 派生出的一些状态，（本质就是 computed， 无 side effects 的纯函数）
+* action: 提交 mutation，(而不是直接 change state)。
+* Mutation: change state
+
+那么？你会把请求都放在 action 还是组件 methods 里面
 
 一般的结构
-```
+```{8,9,10,11,12,13,14}
 ├── index.html
 ├── main.js
 ├── api
@@ -19,11 +29,17 @@
         └── products.js   # 产品模块
 ```
 
-`Vuex`暴露出`Store、install`，通过`Vue.use(Vuex)`调用`Vuex`的`install`中的`applyMixin`方法，在
-`Vue2.*`中调用`Vue.mixin({ beforeCreate: vuexInit })`全局混合`vuexInit`。在Vue实例中添加`$store`。
+可以看下面的入门文章了解如何使用：
+::: tip
+[VueJS中学习使用Vuex详解](https://segmentfault.com/a/1190000015782272)
+:::
+
+## Vuex 如何解决组件间数据通讯
+ Vuex 暴露出 Store、install，通过`Vue.use(Vuex)`调用 Vuex 的`install`中的`applyMixin`方法，在
+`Vue2.*`中调用`Vue.mixin({ beforeCreate: vuexInit })`全局混合`vuexInit`。在每一个 Vue 实例的 beforeCreate hook 中添加`$store`。
 
 store.js
-```js
+```js {4}
 export function install (_Vue) {
   ...
   Vue = _Vue
@@ -57,6 +73,61 @@ export default function (Vue) {
   }
 }
 ```
+
+## Vuex 如何将 state 转变成响应式
+其核心在 resetStoreVM，位于 vuex/src/store.js：
+```js {26,27,28,29,30,31}
+function resetStoreVM (store, state, hot) {
+  const oldVm = store._vm
+
+  // bind store public getters
+  store.getters = {}
+  // reset local getters cache
+  store._makeLocalGettersCache = Object.create(null)
+  const wrappedGetters = store._wrappedGetters
+  const computed = {}
+  forEachValue(wrappedGetters, (fn, key) => {
+    // use computed to leverage its lazy-caching mechanism
+    // direct inline function use will lead to closure preserving oldVm.
+    // using partial to return function with only arguments preserved in closure environment.
+    computed[key] = partial(fn, store)
+    Object.defineProperty(store.getters, key, {
+      get: () => store._vm[key],
+      enumerable: true // for local getters
+    })
+  })
+
+  // use a Vue instance to store the state tree
+  // suppress warnings just in case the user has added
+  // some funky global mixins
+  const silent = Vue.config.silent
+  Vue.config.silent = true
+  store._vm = new Vue({
+    data: {
+      $$state: state
+    },
+    computed
+  })
+  Vue.config.silent = silent
+
+  // enable strict mode for new vm
+  if (store.strict) {
+    enableStrictMode(store)
+  }
+
+  if (oldVm) {
+    if (hot) {
+      // dispatch changes in all subscribed watchers
+      // to force getter re-evaluation for hot reloading.
+      store._withCommit(() => {
+        oldVm._data.$$state = null
+      })
+    }
+    Vue.nextTick(() => oldVm.$destroy())
+  }
+}
+```
+**Vuex 通过使用 Vue 的响应式系统，实例化一个 Vue 对象，把 state 装载到 data 属性上面，并且把 getters 装载到 computed 属性上面，来实现数据的响应式化。**
 
 ## State
 在Vue根实例中注册`store`之后，获取`state`
