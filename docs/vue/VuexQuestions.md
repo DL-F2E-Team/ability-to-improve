@@ -451,9 +451,6 @@ store 初始化时，所有配置的 action 和 mutation 以及 getters 均被�
 ## 为什么有 action 了还需要 mutation ？
 因为 Vuex 需要保证将全部的状态改变都用同步方式实现。同步的意义在于这样每一个 mutation 执行完成后都可以对应到一个新的状态，这样 devtools 就可以打个 snapshot 存下来，然后就可以随便 time-travel 了。
 
-## Vuex 中要从 state 派生一些状态出来，且多个组件使用它，该怎么做？
-getters
-
 ## 多人同时使用 Vuex 如何防止数据污染
 module
 
@@ -524,3 +521,119 @@ const store = new Vuex.Store({
   plugins: [plugin]
 })
 ```
+
+## mutations 里的方法，为什么可以修改 state？
+在Vuex实例化的时候，会调用 Store ，Store 会调用 installModule，来对传入的配置进行模块的注册和安装。对 mutations 进行注册和安装，调用了 registerMutation 方法：
+
+```js
+/**
+ * 注册 mutation 作用同步修改当前模块的 state
+ * @param {*} store  Store实例
+ * @param {*} type  mutation 的 key
+ * @param {*} handler  mutation 执行的函数
+ * @param {*} local  当前模块
+ */
+function registerMutation (store, type, handler, local) {
+  const entry = store._mutations[type] || (store._mutations[type] = []) 
+  entry.push(function wrappedMutationHandler (payload) { 
+    handler.call(store, local.state, payload)
+  })
+}
+```
+
+该方法对mutation方法进行再次封装，注意 handler.call(store, local.state, payload)，这里改变 mutation 执行的函数的 this 指向为 Store实例，local.state 为当前模块的 state，payload 为额外参数。
+
+因为改变了 mutation 执行的函数的 this 指向为 Store实例，就方便对 this.state 进行修改。
+
+## 为什么可以通过 this.commit 来调用 mutation 函数？
+在 Vuex 中，mutation 的调用是通过 store 实例的 API 接口 commit 来调用的。来看一下 commit 函数的定义：
+
+```js
+/**
+   * 
+   * @param {*} _type mutation 的类型
+   * @param {*} _payload 额外的参数
+   * @param {*} _options 一些配置
+   */
+  commit (_type, _payload, _options) {
+    // check object-style commit
+    // unifyObjectStyle 方法对 commit 多种形式传参 进行处理
+    // commit 的载荷形式和对象形式的底层处理
+    const {
+      type,
+      payload,
+      options
+    } = unifyObjectStyle(_type, _payload, _options) 
+
+    const mutation = { type, payload }
+
+    // 根据 type 去查找对应的 mutation
+    const entry = this._mutations[type]
+    // 没查到 报错提示
+    if (!entry) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.error(`[vuex] unknown mutation type: ${type}`)
+      }
+      return
+    }
+
+    // 使用了 this._withCommit 的方法提交 mutation
+    this._withCommit(() => {
+      entry.forEach(function commitIterator (handler) {
+        handler(payload)
+      })
+    })
+
+    // 遍历 this._subscribers，调用回调函数，并把 mutation 和当前的根 state 作为参数传入
+    this._subscribers.forEach(sub => sub(mutation, this.state))
+
+    if (
+      process.env.NODE_ENV !== 'production' &&
+      options && options.silent
+    ) {
+      console.warn(
+        `[vuex] mutation type: ${type}. Silent option has been removed. ` +
+        'Use the filter functionality in the vue-devtools'
+      )
+    }
+}
+```
+
+this.commmit() 接收mutation的类型和外部参数，在 commmit 的实现中通过 this._mutations[type] 去匹配到对应的 mutation 函数，然后调用。
+
+## 通过 this.$store.getters.xx，是如何可以访问到 getter 函数的执行结果的？
+
+在 Vuex 源码的 Store 实例的实现中有这样一个方法 resetStoreVM:
+```js
+function resetStoreVM (store, state, hot) {
+    const oldVm = store._vm
+
+    // bind store public getters
+    store.getters = {}
+    const wrappedGetters = store._wrappedGetters
+    const computed = {}
+    Object.keys(wrappedGetters).forEach(key => {
+        const fn = wrappedGetters[key]
+        // use computed to leverage its lazy-caching mechanism
+        computed[key] = () => fn(store)
+        Object.defineProperty(store.getters, key, {
+        get: () => store._vm[key]
+        })
+    })
+    
+    // ...
+    
+    store._vm = new Vue({
+        data: { state },
+        computed
+    })
+    
+    // ...
+}
+```
+
+遍历 store._wrappedGetters 对象，在遍历过程中拿到每个 getter 的包装函数，并把这个包装函数执行的结果用 computed 临时保存。
+
+然后实例化了一个 Vue实例，把上面的 computed 作为计算属性传入，把 状态树state 作为 data 传入，这样就完成了注册。
+
+我们就可以在组件中访问 this.$store.getters.xxgetter了，相当于访问了 store._vm[xxgetter]，也就是在访问 computed[xxgetter]，这样就访问到 xxgetter 的回调函数了。

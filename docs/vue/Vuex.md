@@ -1,4 +1,5 @@
-# [Vuex](https://vuex.vuejs.org/zh/)
+# [Vuex@3.3.0](https://vuex.vuejs.org/zh/)
+
 `Vuex` 并没有实现一套响应式系统，而是**直接通过 new Vue，实例化了一个 Vue 对象**来实现数据响应式的。`Vuex`使用单一状态树，每个应用将仅仅包含一个`store`实例。
 
 不过刷新浏览器，vuex 中的 state 会重新变为初始状态，可以使用插件`vuex-along`，`vuex-persistedstate`来解决。本质上是使用了 `sessionStorage` 或者 `localStorage` 持久化存储数据。
