@@ -15,17 +15,21 @@ footer: created by lijiahao8898
 # 目录            
 
 ## 常用
-- :fire::fire::fire:[JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)
+- :fire::fire:[JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)
 - :fire:[Can I use... Support tables for HTML5, CSS3, etc](https://caniuse.com/)
 - :fire:[知乎](https://www.zhihu.com/)
+- :fire:[掘金](https://juejin.im/timeline)
 - :fire:[Stack Overflow - Where Developers Learn, Share, & Build Careers](https://stackoverflow.com/)
+- [Carbon | 代码美丽图片](https://carbon.now.sh/)
 - 库
-  - :fire:[Lodash 中文文档 | Lodash 中文网](https://www.lodashjs.com/)
+  - [Lodash 中文文档 | Lodash 中文网 | 辅助函数库](https://www.lodashjs.com/)
   - [Moment.js 中文网](http://momentjs.cn/)
   - [hammer.js - 移动端手势库](https://github.com/hammerjs/hammer.js)
 - [DevDocs API Documentation](https://devdocs.io/)
 - [SassMeister | The Sass Playground!](https://www.sassmeister.com/)
-- [Webstorm - download](https://www.jetbrains.com/webstorm/download/download-thanks.html?platform=mac)
+- IDE
+  - [Webstorm - download](https://www.jetbrains.com/webstorm/download/download-thanks.html?platform=mac)
+- [prerender-spa-plugin - SPA预渲染](https://github.com/chrisvfritz/prerender-spa-plugin)  
   
 ## JavaScript
 
@@ -45,6 +49,7 @@ footer: created by lijiahao8898
   - [Vant Weapp - 轻量、可靠的小程序 UI 组件库](https://youzan.github.io/vant-weapp/#/intro)
   - [Quasar框架介绍 - Quasar Framework 中文网](http://v0-16.quasarchs.com/guide/introduction-to-quasar.html)
   - [Nuxt.js](https://zh.nuxtjs.org/)
+  - [vue-virtual-scroll-list - 优化无限列表](https://github.com/tangbc/vue-virtual-scroll-list)
 - [VuePress](https://vuepress.vuejs.org/) 
 - docs
   - :fire:[Vue.js技术揭秘 - ustbhuangyi.github.io](https://ustbhuangyi.github.io/vue-analysis/)
@@ -147,3 +152,4 @@ footer: created by lijiahao8898
 - [Zwicon – Handcrafted iconset for your next project](https://www.zwicon.com/)
 - [Create Your Own @font-face Kits | Font Squirrel](https://www.fontsquirrel.com/tools/webfont-generator)
 - [Fancy &gt; Western fonts | dafont.com](https://www.dafont.com/theme.php?cat=106)
+- [Dribbble - Discover the World’s Top Designers & Creative Professionals](https://dribbble.com/)

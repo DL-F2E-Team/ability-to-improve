@@ -3,27 +3,21 @@
 ## 什么是 Vuex？
 Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式，它采用集中式存储管理应用的所有组件的状态。
 
-## Vuex 解决了什么问题？
+## Vuex 解决了什么问题？什么时候使用？
 1. 多个组件依赖于同一状态时，对于多层嵌套的组件的传参将会非常繁琐，并且对于兄弟组件间的状态传递无能为力。
 2. 来自不同组件的行为需要变更同一状态。以往采用父子组件直接引用或者通过事件来变更和同步状态的多份拷贝。以上的这些模式非常脆弱，通常会导致无法维护的代码。
 
-## 什么时候用 Vuex？
-1. 多个组件依赖于同一状态时。
-2. 来自不同组件的行为需要变更同一状态。
-
-## Vuex 的5个核心属性是什么？
-state、getter、mutation、action、module 。
-
 ## Vuex 中状态储存在哪里，怎么改变它？
-存储在 stat 中
+存储在 state 中
 
 改变 Vuex 中的状态的唯一途径就是显式地提交 （commit）mutation。
 
 ## Vuex 中状态是对象，使用时候注意什么？
 因为对象是引用类型，复制后改变属性还是会影响原始数据，这样会改变 state 里面的状态，是不允许，所以先用深度克隆复制对象，再修改。
 
-## 怎么在组件中批量使用 Vuex 的 state 状态？
+## 怎么在组件中批量使用 state 状态？
 使用 mapState 辅助函数，利用对象展开运算符将 state 混入 computed 对象中
+
 ```js
 import {mapState} from 'vuex'
 
@@ -34,10 +28,9 @@ export default{
 }
 ```
 
-## Vuex 中要从 state 派生一些状态出来，且多个组件使用它，该怎么做？
+## Vuex 要从 state 派生一些状态出来，且多个组件使用它，该怎么做？
 使用 getter 属性，相当 Vue 中的计算属性 computed，只有原状态改变派生状态才会改变。
 
-getter 接收两个参数，第一个是 state，第二个是 getters (可以用来访问其他 getter)。
 ```js
 const store = new Vuex.Store({
   state: {
@@ -49,6 +42,7 @@ const store = new Vuex.Store({
     total: state => {
       return state.price * state.number
     },
+    // getter 接收两个参数，第一个是 state，第二个是 getters (可以用来访问其他 getter)。
     discountTotal: (state, getters) => {
       return state.discount * getters.total
     }
@@ -69,7 +63,7 @@ computed: {
 }
 ```
 
-## 怎么通过 getter 来实现在组件内可以通过特定条件来获取 state 的状态？
+## 怎么通过 getter 来实现在组件内可以通过特定条件获取 state 的状态？
 通过让 getter 返回一个函数，来实现给 getter 传参。然后通过参数来进行判断从而获取 state 中满足要求的状态。
 
 ```js
@@ -131,10 +125,10 @@ export default{
 }
 ```
 
-## 在 Vuex 中使用 mutation 要注意什么？
+## 使用 mutation 要注意什么？
 mutation 必须是同步函数
 
-## 在组件中多次提交同一个 mutation，怎么写使用更方便。
+## 在组件中多次提交同一个 mutation，怎么写使用更方便
 使用 mapMutations 辅助函数，在组件中这么使用
 
 ```js
@@ -147,7 +141,7 @@ methods: {
 
 然后调用 this.setNumber(10) 相当调用 this.$store.commit('SET_NUMBER', 10)
 
-## 在组件中多次提交同一个action，怎么写使用更方便。
+## 在组件中多次提交同一个action，怎么写使用更方便
 
 使用 mapActions 辅助函数，在组件中这么使用
 
@@ -161,7 +155,7 @@ methods: {
 
 然后调用 this.setNumber(10) 相当调用 this.$store.dispatch('SET_NUMBER'，10)
 
-## Vuex 中有两个 action，分别是 actionA 和 actionB，其内都是异步操作，在 actionB 要提交 actionA，需在 actionA 处理结束再处理其它操作，怎么实现？
+## 有两个 action，分别是 actionA 和 actionB，都是异步操作，在 actionB 要提交 actionA，需在 actionA 处理结束再处理其它操作，怎么实现？
 利用 ES6 的`async`和`await`来实现。
 ```js
 actions:{
@@ -175,7 +169,7 @@ actions:{
 }
 ```
 
-## 有用过 Vuex 模块吗，为什么要使用，怎么使用。
+## 有用过 Vuex 模块吗，为什么要使用，怎么使用？
 有，因为使用单一状态树，应用的所有状态会集中到一个比较大的对象。当应用变得非常复杂时，store 对象就有可能变得相当臃肿。所以将 store 分割成模块（module）。每个模块拥有自己的 state、mutations、actions、getters，甚至是嵌套子模块，从上至下进行同样方式的分割。
 
 在 module 文件新建 moduleA.js 和 moduleB.js 文件。在文件中写入：

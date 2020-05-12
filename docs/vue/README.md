@@ -381,10 +381,22 @@ Object.assign(this.$data, this.$options.data())
 3. `v-once`
 
 ## 性能优化
-1. 使用v-pre、v-once
-2. 路由懒加载
-3. 组件懒加载
-4. Object.freeze冻结列表数据/虚拟列表-展示用户手机显示区域内的列表（长列表优化）
+
+### Vue 应用运行时性能优化建议
+* 使用 v-pre、v-once
+* 路由懒加载
+* 通过组件懒加载优化超长应用内容初始渲染性能
+* `Object.freeze()`冻结列表数据/虚拟列表-展示用户手机显示区域内的列表
+* 优化无限列表性能
+  - vue-virtual-scroll-list 和 vue-virtual-scroller 都是解决这类问题的开源项目。你也可以参考 Google 工程师的文章Complexities of an Infinite Scroller 来尝试自己实现一个虚拟的滚动列表来优化性能，主要使用到的技术是 DOM 回收、墓碑元素和滚动锚定。
+* 使用单文件组件（.vue）预编译模板
+* 提取组件的 CSS 到单独到文件
+* 扁平化 Store 数据结构
+* 避免持久化 Store 数据带来的性能问题
+
+### Vue 应用加载性能优化建议
+* 利用服务端渲染（SSR）和预渲染（Prerender）来优化加载性能
+* 通过组件懒加载优化超长应用内容加载性能
 
 ## 如何实现权限控制
 beforeEach和动态路由加载(addRoutes)

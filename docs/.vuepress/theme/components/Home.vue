@@ -85,6 +85,8 @@ export default {
       margin 3rem auto 1.5rem
     h1
       font-size 3rem
+      &#main-title
+       font-size 4rem
     h1, .description, .action
       margin 1.8rem auto
     .description
@@ -98,7 +100,7 @@ export default {
       color #fff
       background-color $accentColor
       padding 0.8rem 1.6rem
-      border-radius 4px
+      /*border-radius 4px*/
       transition background-color .1s ease
       box-sizing border-box
       border-bottom 1px solid darken($accentColor, 10%)
