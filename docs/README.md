@@ -12,17 +12,23 @@ footer: created by lijiahao8898
             你不能改变你的过去，但你可以让你的未来变得更好。
             一旦时间浪费了，生命就浪费了。
             
-# 目录            
+# 目录
+
+## 核心
+* [JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)      
+* [Typescript | TypeScript 中文手册 ](https://typescript.bootcss.com/)
+* [Typescript | TypeScript 入门教程](https://ts.xcatliu.com/)
+* [Lodash | Lodash 中文文档 | Lodash 中文网](https://www.lodashjs.com/)
+* [eggjs | egg - 为企业级框架和应用而生](https://eggjs.org/zh-cn/)
+* [Threejs](http://www.webgl3d.cn/Three.js/)
 
 ## 常用
-- :fire::fire:[JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)
 - :fire:[Can I use... Support tables for HTML5, CSS3, etc](https://caniuse.com/)
+- :fire:[Stack Overflow - Where Developers Learn, Share, & Build Careers](https://stackoverflow.com/)
 - :fire:[知乎](https://www.zhihu.com/)
 - :fire:[掘金](https://juejin.im/timeline)
-- :fire:[Stack Overflow - Where Developers Learn, Share, & Build Careers](https://stackoverflow.com/)
 - [Carbon | 代码美丽图片](https://carbon.now.sh/)
 - 库
-  - [Lodash 中文文档 | Lodash 中文网 | 辅助函数库](https://www.lodashjs.com/)
   - [Moment.js 中文网](http://momentjs.cn/)
   - [hammer.js - 移动端手势库](https://github.com/hammerjs/hammer.js)
 - [DevDocs API Documentation](https://devdocs.io/)
@@ -32,22 +38,19 @@ footer: created by lijiahao8898
 - [prerender-spa-plugin - SPA预渲染](https://github.com/chrisvfritz/prerender-spa-plugin)  
   
 ## JavaScript
-
 - [JavaScript](./javascript)
   - [Layui 开发使用文档 - 入门指南](https://www.layui.com/doc/)
-- [TypeScript](https://ts.xcatliu.com/)  
 - docs  
   - [从html、css到 js，WEB前端开发在线学习视频教程 - html中文网](https://www.html.cn/)
   - [(建议精读)原生JS灵魂之问(中)，检验自己是否真的熟悉JavaScript？ - 知乎](https://zhuanlan.zhihu.com/p/90017386)
 
 ## Vuejs
-
 - :fire:[Vuejs](./vue)
-  - :fire:[iView - A high quality UI Toolkit based on Vue.js](https://www.iviewui.com/)
-  - [iView Weapp - 一套高质量的微信小程序 UI 组件库](https://weapp.iviewui.com/)
-  - [Mand Mobile-面向金融场景的Vue移动端UI组件库](https://didi.github.io/mand-mobile/)
-  - [Vant Weapp - 轻量、可靠的小程序 UI 组件库](https://youzan.github.io/vant-weapp/#/intro)
-  - [Quasar框架介绍 - Quasar Framework 中文网](http://v0-16.quasarchs.com/guide/introduction-to-quasar.html)
+  - [iView | A high quality UI Toolkit based on Vue.js](https://www.iviewui.com/)
+  - [iView Weapp | 一套高质量的微信小程序 UI 组件库](https://weapp.iviewui.com/)
+  - [Mand Mobile | 面向金融场景的Vue移动端UI组件库](https://didi.github.io/mand-mobile/)
+  - [Vant Weapp | 轻量、可靠的小程序 UI 组件库](https://youzan.github.io/vant-weapp/#/intro)
+  - [Quasar框架介绍 | Quasar Framework 中文网](http://v0-16.quasarchs.com/guide/introduction-to-quasar.html)
   - [Nuxt.js](https://zh.nuxtjs.org/)
   - [vue-virtual-scroll-list - 优化无限列表](https://github.com/tangbc/vue-virtual-scroll-list)
 - [VuePress](https://vuepress.vuejs.org/) 
@@ -62,6 +65,7 @@ footer: created by lijiahao8898
 
 ## Reactjs  
 - [React](./react)
+  - [React | Create React App 中文文档 · 通过运行一个命令来建立现代Web应用程序。](https://www.html.cn/create-react-app/)
   - [prop-types](https://github.com/facebook/prop-types)
   - :fire:[antd](https://ant.design/docs/spec/introduce-cn)
     - [ant.design - 1x](https://1x.ant.design/)

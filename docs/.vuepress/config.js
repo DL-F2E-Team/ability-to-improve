@@ -77,6 +77,7 @@ module.exports = {
           '/react/react@16-8-hooks.md',
           '/react/router.md',
           '/react/redux.md',
+          '/react/redux-saga.md',
           '/react/dva.md'
         ]
       }, '/blog/', '/tool/', '/Taro/'],

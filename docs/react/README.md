@@ -46,19 +46,33 @@ this.setState((state) => {
 
 ## 生命周期
 ### 原生命周期
+![lifecycle](./images/lifecycle_old.jpg)
+
+#### initialization 阶段
+* constructor
+  * super(props)用来调用基类的构造方法( constructor() ), 也将父组件的props注入给子组件，功子组件读取(组件中props只读不可变，state可变)。
+
+#### Mounting（挂载）阶段
 * ~~`componentWillMount(nextProps, nextState)`~~
+  * 在组件挂载到DOM前调用，且只会被调用一次，在这边调用this.setState不会引起组件重新渲染，也可以把写在这边的内容提前到constructor()中，所以项目中很少用。
   * 无法保证在 `componentWillUnmount` 中取消掉相应的事件订阅，或者导致多次重复获取异步数据等问题
 * `render`
+  * 根据组件的props和state（无两者的重传递和重赋值，论值是否有变化，都可以引起组件重新render） ，return 一个React元素（描述组件，即UI），不负责组件实际渲染工作，之后由React自身根据此元素去渲染出页面DOM。render是纯函数（Pure function：函数的返回结果只依赖于它的参数；函数执行过程里面没有副作用），不能在里面执行this.setState，会有改变组件状态的副作用。
 * `componentDidMount`
+  * 组件挂载到DOM后调用，且只会被调用一次
+
+#### update 阶段
 * ~~`componentWillReceiveProps(nextProps)`~~
+  * 此方法只调用于props引起的组件更新过程中，响应 Props 变化之后进行更新的唯一方式，参数nextProps是父组件传给当前组件的新props。但父组件render方法的调用不能保证重传给当前组件的props是有变化的，所以在此方法中根据nextProps和this.props来查明重传的props是否改变，以及如果改变了要执行啥，比如根据新的props调用this.setState出发当前组件的重新render
+* `shouldComponentUpdate`
+  * 此方法通过比较nextProps，nextState及当前组件的this.props，this.state，返回true时当前组件将继续执行更新过程，返回false则当前组件更新停止，以此可用来减少组件的不必要渲染，优化组件性能。
 * ~~`componentWillUpdate(nextProps, nextState)`~~
   * `re-render` 问题，并且对 `DOM` 的更新操作也可能导致重新渲染
+* `render`
+* `componentDidUpdate(prevProps, prevState)`
 
-* `shouldComponentUpdate`
-* `componentDidUpdate`
+#### 卸载阶段
 * `componentWillunMount`
-
-![lifecycle](./images/lifecycle_old.jpg)
 
 ### 新生命周期
 * `getDerivedStateFromProps`
