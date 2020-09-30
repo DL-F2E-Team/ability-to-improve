@@ -40,13 +40,17 @@ function Example() {
   // 声明一个叫 "setCount" 的更新函数，类似于 this.setState
   const [count, setCount] = useState(0);
   // 或者
-  const [count, setCount] = useState({number: 0})
+  const [count2, setCount2] = useState({number: 0})
 
   return (
     <div>
       <p>You clicked {count} times</p>
       <button onClick={() => setCount(count + 1)}>
         Click me
+      </button>
+      {/*坑：这种写法可以防止 count 被缓存起来【一直都是初始的{number: 0}】*/}
+      <button onClick={() => setCount2(count2 => count2 + 1)}>
+        Click me2
       </button>
     </div>
   );
@@ -63,7 +67,7 @@ setCount((prevState) => ({
 ```
 
 ## useEffect
-useEffect 又叫 Effect Hook。
+useEffect 又叫 Effect Hook。简单理解为依赖 `[deps]` 变化的作用。
 
 其相当于 `componentDidMount`、 `componentDidUpdate`、`componentWillUnmount`。
 
@@ -143,11 +147,41 @@ useEffect(() => {
 ## useContext
 useContext 让你不使用组件嵌套就可以订阅 React 的 Context。
 
+### 创建 context
+```typescript
+const Context = React.createContext(0);
+```
+### 提供 context
+```typescript
+function conpoment () {
+    return <Context.Provider value={0}></Context.Provider>
+}
+```
+### 获取 context
+```typescript
+const count = useContext(Context)
+```
+
+
 ## useReducer
 useReducer 可以让你通过 reducer 来管理组件本地的复杂 state。
 
+### 定义 userReducer
+```typescript
+const reducer = (state, action) => {
+    switch (action.type) {
+      case "add":
+        return state + 1;
+      case "sub":
+        return state - 1; 
+    }
+}
+
+const [counter, dispath] = useReducer(reducer, 0)
+```
+
 ## useMemo
-当你调用 useEffect 时，就是在告诉 React 在完成对 DOM 的**更改后**运行你的“副作用”函数
+useMemo 缓存（另外一个useCallback）。当你调用 useEffect 时，就是在告诉 React 在完成对 DOM 的**更改后**运行你的“副作用”函数
 
 **传入 useMemo 的函数会在渲染期间执行，而 useEffect 只能在DOM更新后再触发**，所以使用 useMemo 就能解决"怎么**在DOM改变的时候**，控制某些函数不被触发"。
 

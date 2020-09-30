@@ -1,9 +1,15 @@
 # ECMAScript
-JavaScript 是**弱类型**语言，通常所说的 JavaScript 是指`ECMAScript`、`DOM【文档对象模型】`和`BOM【游览器对象模型】`。
+JavaScript 是**弱类型**语言，解释时动态，通常所说的 JavaScript 是指`ECMAScript`、`DOM【文档对象模型】`和`BOM【游览器对象模型】`。
 
-数据类型可分为**基本数据类型**：**数字**、**字符串**、**Boolean**、**undefined**、**null**、**symbol**和**引用数据类型**：**Object对象**包括【function、array】。
+## 变量与数据类型
+数据类型可分为**基本数据类型**：**数字（number）**、**字符串（string）**、**Boolean**、**undefined**、**null**、**symbol**和**引用数据类型**：**Object对象**包括【function、array】。
 
 `undefined` 和 `is not defined` 是两回事，前者已声明未赋值，后者未声明。
+
+申明变量有**显式定义（var）** 与 **隐式定义**两种方式。变量申明遵循以下规则：
+1. 首字母必须是字母（大小写均可）、下划线（_）、或者美元符号（$）。
+2. 余下可以是下划线，美元符号，任意数字或字母。
+3. 变量名不能使用**关键字**。
 
 [void运算符](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/void)会对它的操作数表达式进行求值，然后忽略掉求值的结果，直接返回`undefined`。譬如：`<a href="javascript:void(0)">Hi</a>`
 
@@ -83,6 +89,12 @@ JavaScript 中的迭代器（iterators）和迭代（iterables）是什么？ �
 ## 类型转换
 类型转换分为**隐式类型转换**【隐式换算】和 **显示类型转换**。
 
+`parseInt` 会将十六进制转换成十进制，`parseFloat` 会直接截取。
+```js
+parseInt('0xA')     // 10
+parseFloat('0xA')   // 0
+```
+
 什么情况下 `a == 1 && a == 2 && a == 3` 返回 `true`？隐式强制类型转换(`valueOf()`，`toString()`)
 
 显式强制类转换：假值 - `undefined`， `null`， `false`， `+0`， `-0`， `NaN`， `''`， `Number(...)`。
@@ -140,6 +152,70 @@ typeof()是判断基本类型的。对于引用类型，除function，都返回o
 const p1 = new Person()
 p1 instanceof Person    // true
 ```
+
+## 字符串
+### 字符串处理方法
+|  处理方法   | 说明  |
+|  ----  | ----  |
+| charAt()  | 获取特定索引处字符 |
+| toUpperCase() / toLowerCase()  | 大小写 |
+| indexOf() / lastIndexOf()  | 返回特定字符串第一次或者最后一次出现的位置 |
+| substring() / slice() | 截取字符串（slice支持形参为负数） |
+| contact() | 字符串拼接 |
+| replace() | 字符串替换 |
+| split() | 字符串分割 |
+| match() / search() | 正则表达式搜索字符串，match返回字符串，search返回下标 |
+
+## 正则表达式
+
+```js
+var str = /pattern/
+var str = new RegExp(/pattern/)
+var str = new RegExp('pattern', 'i')
+```
+
+|  处理方法   | 说明  |
+|  ----  | ----  |
+| exec(str)  | 检索指定的值，返回找到的值 |
+| test(str)  | 检索指定的值是否满足指定的条件，返回true或者false |
+
+
+|  通配符   | 说明  |
+|  ----  | ----  |
+| .  | 可以匹配任意字符 |
+| \d  | 匹配0-9的所有数字 |
+| \D  | 匹配非数字 |
+| \s  | 匹配所有空白字符串，包括空格、制表符、换行符、回车符 |
+| \S  | 匹配所有非空白字符串 |
+| \w  | 匹配所有的单词字符，包括0-9数字、26个英文字母和下划线 |
+| \w  | 匹配所有非单词字符 |
+| \b  | 匹配单词边界 - 【单词边界：开头还是结尾】 |
+| \B  | 匹配非单词边界 |
+| `[abc]`  | 查找方括号之间的任意字符 |
+| `[^abc]`  | 查找任何不在方括号之间的字符 |
+| `[0-9]`  | 查找任何从0-9的数字 |
+| `[a-z]`  | 查找任何从a-z的字符 |
+| `[A-Z]`  | 查找任何从A-Z的字符 |
+| `[A-z]`  | 查找任何从A-z的字符 |
+| `(green|blue|red)`  | 查找任何从指定的字符 |
+
+|  量词   | 说明  |
+|  ----  | ----  |
+| n+  | 匹配任意包含至少一个 n |
+| n*  | 匹配任意包含0个或者多个 n |
+| n?  | 匹配任意包含0个或者一个 n |
+| n{X}  | 匹配包含 X个 n 的序列 |
+| n{X,Y}  | 匹配包含 X个 或 Y个 n 的序列  |
+| n{X,}  | 匹配包含至少 X个 n 的序列 |
+| n$ | 匹配任意结尾为 n的字符 |
+| ^n | 匹配任意开头为 n的字符 |
+
+|  修饰符   | 说明  |
+|  ----  | ----  |
+| i | 执行对大小写不敏感的匹配 |
+| g | 执行全部匹配（查找所有匹配，不仅仅是找到一个后停止） |
+| m  | 执行多行匹配 |
+
 
 ## bind、call 和 apply 区别
 三者都是用来改变this指向的。

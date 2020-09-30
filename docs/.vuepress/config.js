@@ -80,6 +80,19 @@ module.exports = {
           '/react/redux-saga.md',
           '/react/dva.md'
         ]
-      }, '/blog/', '/tool/', '/Taro/'],
+      }, '/blog/', '/tool/', '/Taro/',
+      {
+        title: 'Typescript',
+        children: [
+          '/typescript/',
+        ]
+      },
+      {
+        title: 'Node',
+        children: [
+          '/Node/',
+        ]
+      },
+    ],
   }
 };
