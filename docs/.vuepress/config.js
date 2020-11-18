@@ -36,9 +36,10 @@ module.exports = {
         title: 'JavaScript',
         children: [
           '/javascript/',
+          '/javascript/Function.md',
+          '/javascript/Context.md',
           '/javascript/This.md',
           '/javascript/Array.md',
-          '/javascript/Function.md',
           '/javascript/Prototype.md',
           '/javascript/Event.md',
           '/javascript/EventLoop.md',

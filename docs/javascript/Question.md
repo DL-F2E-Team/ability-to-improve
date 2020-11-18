@@ -108,6 +108,26 @@ function debounce(func, wait) {
 }
 ```
 
+```js
+/**
+ * 防抖Debounce
+ */
+module.exports.debounce = (fn, delay) => {
+  let timer;
+  return (...args) => {
+    // 判断定时器是否存在，清除定时器
+    if (timer) {
+      clearTimeout(timer);
+    }
+
+    // 重新调用setTimeout
+    timer = setTimeout(() => {
+      fn.apply(this, args);
+    }, delay);
+  };
+};
+```
+
 立即执行版本
 ```js
 function debounce(func,wait) {
@@ -212,9 +232,7 @@ function debounce (func, wait = 50, immediate = true) {
 ```
 
 ### 节流
-`节流（throttle）`是指连续触发事件但是N秒内只执行一次。
-
-节流：高频事件触发，但在 n 秒内只会执行一次，所以节流会稀释函数的执行频率。
+`节流（throttle）`是指**一段时间内调用多次、只有第一次调用有效**。高频事件触发，但在 n 秒内只会执行一次，所以节流会稀释函数的执行频率。
 
 思路：每次触发事件时都判断当前是否有等待执行的延时函数。
 
@@ -237,6 +255,21 @@ function throttle(func, wait) {
         if (now - previous > wait) {
             func.apply(context, args);
             previous = now;
+        }
+    }
+}
+```
+
+```js
+module.exports.throttle = (fn, delay) => {
+    // 定义上次触发时间
+    let last = 0;
+    return (...args) => {
+        const now = +Date.now();
+        console.log("call", now, last, delay);
+        if(now > last + delay) {
+            last = now;
+            fn.apply(this, args);
         }
     }
 }

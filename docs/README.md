@@ -73,6 +73,9 @@ footer: created by lijiahao8898
 - [React Router](http://react-guide.github.io/react-router-cn/index.html) 
 - [Redux](https://redux.js.org/) 
   - [自述 · Redux](https://www.redux.org.cn/)  
+  - [redux-logger | github](https://github.com/LogRocket/redux-logger)
+- [Rematch | rematch/rematch: A Redux Framework | github](https://github.com/rematch/rematch)
+  - [Rematch | gitbook](https://rematch.gitbook.io/handbook/)  
 - docs    
   - [core-decorators — @autobind自动绑定](https://github.com/jayphelps/core-decorators)
   - 掘金
