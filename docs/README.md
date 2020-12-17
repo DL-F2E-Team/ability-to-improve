@@ -15,9 +15,7 @@ footer: created by lijiahao8898
 # 目录
 
 ## 核心
-* [JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)      
-* [Typescript | TypeScript 中文手册 ](https://typescript.bootcss.com/)
-* [Typescript | TypeScript 入门教程](https://ts.xcatliu.com/)
+* [JavaScript | MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)
 * [Lodash | Lodash 中文文档 | Lodash 中文网](https://www.lodashjs.com/)
 * [eggjs | egg - 为企业级框架和应用而生](https://eggjs.org/zh-cn/)
 * [Threejs](http://www.webgl3d.cn/Three.js/)
@@ -43,6 +41,11 @@ footer: created by lijiahao8898
 - docs  
   - [从html、css到 js，WEB前端开发在线学习视频教程 - html中文网](https://www.html.cn/)
   - [(建议精读)原生JS灵魂之问(中)，检验自己是否真的熟悉JavaScript？ - 知乎](https://zhuanlan.zhihu.com/p/90017386)
+  
+## TypeScript
+- [TypeScript | TypeScript中文网 · TypeScript——JavaScript的超集](https://www.tslang.cn/index.html)
+- [Typescript | TypeScript 中文手册 ](https://typescript.bootcss.com/)
+- [Typescript | TypeScript 入门教程](https://ts.xcatliu.com/)
 
 ## Vuejs
 - :fire:[Vuejs](./vue)
@@ -62,6 +65,9 @@ footer: created by lijiahao8898
   - [Vue服务端渲染指南](https://ssr.vuejs.org/zh/)
 - 面试  
   - [fe-interview/Vue.md at master · haizlin/fe-interview](https://github.com/haizlin/fe-interview/blob/master/lib/Vue.md)
+
+## Vuejs@next
+- [Vuejs@next | Vue3中文文档 - vuejs](https://vue3js.cn/docs/zh/)
 
 ## Reactjs  
 - [React](./react)
@@ -89,8 +95,9 @@ footer: created by lijiahao8898
     - [基于create-react-app的再配置 - 小火柴的蓝色理想 - 博客园](https://www.cnblogs.com/xiaohuochai/p/8491055.html)
     - [Redux 入门教程（一）：基本用法 - 阮一峰的网络日志](http://www.ruanyifeng.com/blog/2016/09/redux_tutorial_part_one_basic_usages.html)  
 
-## Css    
+## Style    
 - [cssinspirationguide - csc inspiration guide online](https://chokcoco.github.io/CSS-Inspiration/#/)
+- [Sass | Sass世界上最成熟、稳定和强大的CSS扩展语言 | Sass中文网](https://www.sass.hk/)
 - images website
   - :fire:[Beautiful Free Images & Pictures | Unsplash](https://unsplash.com/)
   - [Free Stock Photos & Images • picjumbo](https://picjumbo.com/)

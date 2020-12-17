@@ -1,12 +1,14 @@
 # Typescript
-![typescript](./images/typescript.jpg)
+> 基本语法、函数、元组、循环、命名空间、模块、声明文件、联合类型、接口、类、对象、Vue中使用TypeScript
+
+![TypeScript](./images/typescript.jpg)
 
 ## 基础类型
 1. `boolean`
 2. `number`
 3. `string`
 4. `number[] || Array<number>`
-5. 元祖 Tuple
+5. 元组 Tuple
 6. 枚举 `enum`
 7. 任意值 `any`
 8. 空值 `void`
@@ -39,7 +41,7 @@ let list: number[] = [1,2,3]
 let list2: Array<number> = [1,2,3]
 ```
 
-### 元祖 Tuple
+### 元组 Tuple
 ```typescript
 let x: [string, number];
 // Initialize it
@@ -253,3 +255,117 @@ function createArray<T>(len:number,value:T): T[] {
 }
 ```
 
+## 高级类型 - 联合类型
+```ts
+function padLeft(value: string, padding: string | number) {
+    // ...
+}
+```
+
+如果一个值是联合类型，我们只能访问此联合类型的所有类型里**共有的成员**：
+```ts
+interface Bird {
+    fly();
+    layEggs();
+}
+
+interface Fish {
+    swim();
+    layEggs();
+}
+
+function getSmallPet(): Fish | Bird {
+    // ...
+}
+
+let pet = getSmallPet();
+pet.layEggs(); // okay
+pet.swim();    // errors
+```
+
+## 声明文件 declare
+* declare var/const/let 声明全局变量
+* declare function 声明全局方法
+* declare class 声明全局类
+* declare enum 声明全局枚举类型
+* declare namespace 声明全局对象（含有子属性）
+* interface 和 type 声明全局类型
+
+通常我们会把声明语句放到一个单独的文件（jQuery.d.ts）中，这就是声明文件：
+
+**声明文件必需以 .d.ts 为后缀**
+```ts
+// src/jQuery.d.ts
+// 声明变量
+declare var jQuery: (selector: string) => any
+
+// 声明函数
+declare function jQuery(selector: string): any;
+
+// 声明类
+declare class Animal {
+    constructor(name: string);
+    sayHi(): string;
+}
+
+let cat = new Animal('Tom');
+
+// 声明枚举
+declare enum Directions {
+    Up,
+    Down,
+    Left,
+    Right
+}
+```
+declare class 语句也只能用来定义类型，不能用来定义具体的值，比如定义 sayHi 方法的具体实现则会报错：
+
+```ts
+declare class Animal {
+    constructor(name: string);
+    sayHi() {
+        return `My name is ${this.name}`;
+    };
+    // ERROR: An implementation cannot be declared in ambient contexts.
+}
+```
+namespace 被淘汰了，但是在声明文件中，declare namespace 还是比较常用的，它用来表示全局变量是一个对象，包含很多子属性。
+
+比如 jQuery 是一个全局变量，它是一个对象，提供了一个 jQuery.ajax 方法可以调用，那么我们就应该使用 declare namespace jQuery 来声明这个拥有多个子属性的全局变量
+```ts
+declare namespace jQuery {
+    function ajax(url: string, settings?: any): void;
+    const version: number;
+    class Event {
+        blur(eventType: EventType): void
+    }
+    enum EventType {
+        CustomClick
+    }
+}
+
+jQuery.ajax('/api/get_something');
+console.log(jQuery.version);
+const e = new jQuery.Event();
+e.blur(jQuery.EventType.CustomClick);
+```
+
+### 嵌套的命名空间
+如果对象拥有深层的层级，则需要用嵌套的 namespace 来声明深层的属性的类型：
+```ts
+declare namespace jQuery {
+    function ajax(url: string, settings?: any): void;
+    namespace fn {
+        function extend(object: any): void;
+    }
+}
+
+jQuery.ajax('/api/get_something');
+jQuery.fn.extend({
+    check: function() {
+        return this.each(function() {
+            this.checked = true;
+        });
+    }
+});
+```
