@@ -1,5 +1,4 @@
 # Typescript
-> 基本语法、函数、元组、循环、命名空间、模块、声明文件、联合类型、接口、类、对象、Vue中使用TypeScript
 
 ![TypeScript](./images/typescript.jpg)
 
@@ -174,14 +173,79 @@ mySearch = function(source: string, subString: string) {
 }
 ```
 
+### 类类型 - 实现接口
+```ts
+interface ClockInterface {
+    currentTime: Date;
+    setTime(d: Date);
+}
+
+class Clock implements ClockInterface {
+    currentTime: Date;
+    setTime(d: Date) {
+        this.currentTime = d;
+    }
+    constructor(h: number, m: number) { }
+}
+```
+
+### 继承接口
+```ts
+interface Shape {
+    color: string;
+}
+
+interface Square extends Shape {
+    sideLength: number;
+}
+
+let square = <Square>{};
+square.color = "blue";
+square.sideLength = 10;
+```
+一个接口可以继承多个接口，创建出多个接口的合成接口。
+```ts
+interface Shape {
+    color: string;
+}
+
+interface PenStroke {
+    penWidth: number;
+}
+
+interface Square extends Shape, PenStroke {
+    sideLength: number;
+}
+
+let square = <Square>{};
+square.color = "blue";
+square.sideLength = 10;
+square.penWidth = 5.0;
+```
+
+### implements与extends的定位
+implements
+
+顾名思义，实现，一个新的类，从父类或者接口实现所有的属性和方法，同时可以重写属性和方法，包含一些新的功能
+
+extends
+
+顾名思义，继承，一个新的接口或者类，从父类或者接口继承所有的属性和方法，不可以重写属性，但可以重写方法
+
+注意点
+* 接口不能实现接口或者类，所以实现只能用于类身上,即类可以实现接口或类
+* 接口可以继承接口或类
+* 类不可以继承接口，类只能继承类
+* 可多继承或者多实现
+
 
 ## 类
-* public
-* private
-* protected
-* readonly
-* static
-* abstract
+* public：默认，省略即为public
+* private：当成员被标记成 private 时，它就不能在声明它的类的外部访问
+* protected：与 private 相似，但是 protected 成员在派生类中仍然可以访问
+* readonly：只读属性必须在声明时或构造函数里被初始化
+* static：这些属性存在于类本身上面而不是类的实例上
+* abstract：abstract 关键字是用于定义抽象类和在抽象类内部定义抽象方法
 
 ```typescript
 class Person {
@@ -226,7 +290,9 @@ const jake = Student.create('jake',18);
 ```
 
 ## 泛型
+使用any类型会导致这个函数可以接收任何类型的arg参数，这样就丢失了一些信息：传入的类型与返回的类型应该是相同的。如果我们传入一个数字，我们只知道任何类型的值都有可能被返回。
 
+因此，我们需要一种方法使返回值的类型与传入参数的类型是相同的。 这里，我们使用了 类型变量，它是一种特殊的变量，只用于表示类型而不是值
 ```typescript
 function identity<T>(arg: T): T {
     return arg;
@@ -255,7 +321,11 @@ function createArray<T>(len:number,value:T): T[] {
 }
 ```
 
+## 高阶类型 - 交叉类型
+交叉类型是将多个类型合并为一个类型
+
 ## 高级类型 - 联合类型
+联合类型表示一个值可以是几种类型之一。 我们用竖线（ |）分隔每个类型，所以 number | string | boolean表示一个值可以是 number， string，或 boolean。
 ```ts
 function padLeft(value: string, padding: string | number) {
     // ...

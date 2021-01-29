@@ -381,6 +381,7 @@ Object.assign(this.$data, this.$options.data())
 3. `v-once`
 
 ## 性能优化
+[揭秘 Vue.js 九个性能优化技巧](https://juejin.cn/post/6922641008106668045)
 
 ### Vue 应用运行时性能优化建议
 * 使用 v-pre、v-once
@@ -393,6 +394,73 @@ Object.assign(this.$data, this.$options.data())
 * 提取组件的 CSS 到单独到文件
 * 扁平化 Store 数据结构
 * 避免持久化 Store 数据带来的性能问题
+* 使用 `Functional components`
+```vue
+// 优化前
+<template>
+  <div class="cell">
+    <div v-if="value" class="on"></div>
+    <section v-else class="off"></section>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ['value'],
+}
+</script>
+```
+
+```vue
+// 优化后
+<template functional>
+  <div class="cell">
+    <div v-if="props.value" class="on"></div>
+    <section v-else class="off"></section>
+  </div>
+</template>
+```
+* `Child component splitting` 子组件拆分
+* 计算属性 `computed`
+* 局部变量
+* `v-show` 复用DOM
+* `KeepAlive`组件缓存DOM
+* 使用`Deferred`组件延时分批渲染组件
+```vue
+// deferred mixins
+export default function (count = 10) {
+  return {
+    data () {
+      return {
+        displayPriority: 0
+      }
+    },
+
+    mounted () {
+      this.runDisplayPriority()
+    },
+
+    methods: {
+      runDisplayPriority () {
+        const step = () => {
+          requestAnimationFrame(() => {
+            this.displayPriority++
+            if (this.displayPriority < count) {
+              step()
+            }
+          })
+        }
+        step()
+      },
+
+      defer (priority) {
+        return this.displayPriority >= priority
+      }
+    }
+  }
+}
+```
+
 
 ### Vue 应用加载性能优化建议
 * 利用服务端渲染（SSR）和预渲染（Prerender）来优化加载性能

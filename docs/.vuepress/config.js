@@ -66,6 +66,7 @@ module.exports = {
         title: 'Vue',
         children: [
           '/vue/',
+          '/vue/VueSSR.md',
           '/vue/VueRouter.md',
           '/vue/Vuex.md',
           '/vue/VuexQuestions.md'
@@ -94,6 +95,9 @@ module.exports = {
           '/Node/',
         ]
       },
+      '/Plugin.md',
+      '/Vue.md',
+      '/Juejin.md'
     ],
   }
 };
