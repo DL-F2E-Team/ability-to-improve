@@ -30,7 +30,7 @@ module.exports = {
       title: '目录',
       children: ['/Catalogue.md']
     },
-      '/WORK.md',
+      '/Problem.md',
       '/Test/'
       , {
         title: 'JavaScript',
@@ -49,6 +49,7 @@ module.exports = {
           '/javascript/SEO.md',
           '/javascript/mobile.md',
           '/javascript/Question.md',
+          '/javascript/Let-Const.md'
         ]
       }, '/html/', {
         title: 'CSS',

@@ -1,5 +1,5 @@
 # ECMAScript
-JavaScript 是**弱类型**语言，解释时动态，通常所说的 JavaScript 是指`ECMAScript`、`DOM【文档对象模型】`和`BOM【游览器对象模型】`。
+JavaScript 是**弱类型**语言，解释时动态，通常所说的 JavaScript 是指`ECMAScript`、`DOM【文档对象模型】`和`BOM【游览器对象模型】`。`ECMAScript`是标准， `JavaScript`是实现。
 
 ## 变量与数据类型
 数据类型可分为**基本数据类型**：**数字（number）**、**字符串（string）**、**Boolean**、**undefined**、**null**、**symbol**和**引用数据类型**：**Object对象**包括【function、array】。
