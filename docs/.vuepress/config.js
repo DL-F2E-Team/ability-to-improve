@@ -36,16 +36,15 @@ module.exports = {
         title: 'JavaScript',
         children: [
           '/javascript/',
-          '/javascript/Function.md',
+          '/javascript/Event.md',
+          '/javascript/Prototype.md',
           '/javascript/Context.md',
           '/javascript/This.md',
-          '/javascript/Array.md',
-          '/javascript/Prototype.md',
-          '/javascript/Event.md',
           '/javascript/EventLoop.md',
-          '/javascript/Class.md',
-          '/javascript/HOF.md',
+          '/javascript/Array.md',
+          '/javascript/Function.md',
           '/javascript/Curry.md',
+          '/javascript/Class.md',
           '/javascript/SEO.md',
           '/javascript/mobile.md',
           '/javascript/Question.md',
@@ -98,7 +97,9 @@ module.exports = {
       },
       '/Plugin.md',
       '/Vue.md',
-      '/Juejin.md'
+      '/Juejin.md',
+      '/Weixin.md',
+      '/Github.md'
     ],
   }
 };

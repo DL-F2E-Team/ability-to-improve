@@ -1,8 +1,13 @@
 # ECMAScript
 JavaScript 是**弱类型**语言，解释时动态，通常所说的 JavaScript 是指`ECMAScript`、`DOM【文档对象模型】`和`BOM【游览器对象模型】`。`ECMAScript`是标准， `JavaScript`是实现。
 
-## 变量与数据类型
-数据类型可分为**基本数据类型**：**数字（number）**、**字符串（string）**、**Boolean**、**undefined**、**null**、**symbol**和**引用数据类型**：**Object对象**包括【function、array】。
+## 数据类型
+数据类型可分为**基本数据类型**和**引用数据类型**。
+
+1. 基本数据类型：`数字（Number）`、`字符串（String）`、`Boolean`、`undefined`、`null`、**symbol（ES6新增）**、**BigInt（ES2020）**。
+2. 引用数据类型：`Object对象`包括【Function、Array】。
+
+## 变量
 
 `undefined` 和 `is not defined` 是两回事，前者已声明未赋值，后者未声明。
 
@@ -60,7 +65,7 @@ forEach中return**无效果**
 
 JSON.stringify()
 - JSON.parse(JSON.stringify(Obejct))的注意点：无法处理`NaN`、`RegExp`、`Error`、`undefined`，`function`，`symbol`。
-- 该方法可以接受第二个参数JSON.stringify(a, {b,c}, num)
+- 该方法可以接受第二个参数JSON.stringify(value[, replacer [, space]])
 
 变量、（变量声明、变量赋值）=> 变量的初始化、变量提升
 
@@ -95,7 +100,23 @@ parseInt('0xA')     // 10
 parseFloat('0xA')   // 0
 ```
 
-什么情况下 `a == 1 && a == 2 && a == 3` 返回 `true`？隐式强制类型转换(`valueOf()`，`toString()`)
+### 什么情况下 `a == 1 && a == 2 && a == 3` 返回 `true`？
+隐式强制类型转换(`valueOf()`，`toString()`)
+```javascript
+const a = {
+  i: 1,
+  toString: function () {
+    return a.i++;
+  }
+}
+
+const b = {
+    i: 1,
+    valueOf: function () {
+        return b.i++;
+    }
+}
+```
 
 显式强制类转换：假值 - `undefined`， `null`， `false`， `+0`， `-0`， `NaN`， `''`， `Number(...)`。
 
@@ -249,6 +270,8 @@ var str = new RegExp('pattern', 'i')
 var func = foo()
 func()
 ```
+### 闭包产生的本质
+当前环境中存在指向父级作用域的引用
 
 ::: warning 注意
 IIFE是闭包吗？
@@ -265,8 +288,7 @@ HTML5标准规定了 setTimeout() 的第二个参数的最小值不得小于4毫
 在此之前。老版本的浏览器都将最短时间设为10毫秒。**另外，对于那些DOM的变动（尤其是涉及页面重新渲染的部分），通常是间隔16毫秒执行。这时使用 requestAnimationFrame() 的效果要好于 setTimeout();**
 
 ## 断点续传
-
-HTTP1.1协议（RFC2616）中定义了断点续传相关的HTTP头 Range和Content-Range字段，一个最简单的断点续传实现大概如下：
+HTTP1.1协议（RFC2616）中定义了断点续传相关的HTTP头`Range`和`Content-Range`字段，一个最简单的断点续传实现大概如下：
 1. 客户端下载一个1024K的文件，已经下载了其中512K
 2. 网络中断，客户端请求续传，因此需要在HTTP头中申明本次需要续传的片段：Range:bytes=512000-这个头通知服务端从文件的512K位置开始传输文件
 3. 服务端收到断点续传请求，从文件的512K位置开始传输，并且在HTTP头中增加：Content-Range:bytes 512000-/1024000

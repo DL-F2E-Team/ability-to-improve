@@ -62,14 +62,21 @@ var foo = new Foo(); // TypeError: Foo is not a constructor
 ```
 
 ## 高阶函数
-如果某个函数可以接收另一个函数作为参数，该函数就称之为高阶函数（HOF）。
+如果某个函数接收另一个函数作为参数或者返回值为一个函数，该函数就称之为高阶函数（HOF）。
 
-回调函数（最常见的高阶函数）
+**回调函数**是最常见的高阶函数
 ```js
 function fn1(cb){
     cb && cb();
 }
 ```
+
+数组中的高阶函数：
+1. `Array.prototype.map`
+2. `Array.prototype.reduce`
+3. `Array.prototype.filter`
+4. `Array.prototype.sort`
+
 
 ## 函数重载
 重载是面向对象编程语言（比如Java、C#）里的特性，JavaScript语言并不支持该特性。所谓**重载(overload)**，
@@ -77,8 +84,8 @@ function fn1(cb){
 曾经提供了一个非常巧妙的思路实现重载，代码如下：
 
 ```js
-(() => {//IIFE+箭头函数，把要写的代码包起来，避免影响外界，这是个好习惯
-
+(() => {
+    // IIFE+箭头函数，把要写的代码包起来，避免影响外界，这是个好习惯
     // 当函数成为对象的一个属性的时候，可以称之为该对象的方法。
   
     /**
@@ -87,16 +94,18 @@ function fn1(cb){
     * @param {fn}      被添加进object参与重载的函数逻辑
     */
     function overload(object, name, fn) {
-      var oldMethod = object[name];//存放旧函数，本办法灵魂所在，将多个fn串联起来
+      // 存放旧函数，本办法灵魂所在，将多个fn串联起来
+      var oldMethod = object[name];
       object[name] = function() {
         // fn.length为fn定义时的参数个数,arguments.length为重载方法被调用时的参数个数
-        if (fn.length === arguments.length) {//若参数个数匹配上
-          return fn.apply(this, arguments);//就调用指定的函数fn
-        } else if (typeof oldMethod === "function") {//若参数个数不匹配
-          return oldMethod.apply(this, arguments);//就调旧函数
-                                                  //注意：当多次调用overload()时，旧函数中
-                                                  //又有旧函数,层层嵌套,递归地执行if..else
-                                                  //判断,直到找到参数个数匹配的fn
+        if (fn.length === arguments.length) {
+          // 若参数个数匹配上 就调用指定的函数fn
+          return fn.apply(this, arguments);
+        } else if (typeof oldMethod === "function") {
+          // 若参数个数不匹配 就调旧函数
+          return oldMethod.apply(this, arguments);
+          // 注意：当多次调用overload()时，旧函数中又有旧函数,层层嵌套,递归地执行if..else
+          // 判断,直到找到参数个数匹配的fn
         }
       };
     }
@@ -114,7 +123,7 @@ function fn1(cb){
       return "2 param:" + [param1, param2];
     }
   
-    let obj = {};//定义一个对象，以便接下来给它的方法进行重载
+    let obj = {}; // 定义一个对象，以便接下来给它的方法进行重载
     
     overload(obj, "fn", fn0);//给obj添加第1个重载的函数
     overload(obj, "fn", fn1);//给obj添加第2个重载的函数

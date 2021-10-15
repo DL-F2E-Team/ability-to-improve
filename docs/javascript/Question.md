@@ -404,6 +404,9 @@ _.throttle = function(func, wait, options) {
 4. 游览器向服务器发送HTTP请求报文
 5. 服务器向游览器返回HTTP响应报文
 6. 关闭连接，游览器解析文档
+7. 游览器渲染HTML
+8. 浏览器发送请求获取嵌入在 HTML 中的资源（如图片、音频、视频、CSS、JS等等）
+9. 断开连接：TCP 四次挥手
 
 ### 游览器渲染HTML步骤
 
@@ -411,6 +414,10 @@ _.throttle = function(func, wait, options) {
 2. DOM Tree 和 CSSOM Tree 解析完后，形成**渲染树（Render Tree）**。
 3. 节点信息计算（**重排**），这个过程被叫做 Layout(Webkit) 或者 Reflow(Mozilla)。即根据渲染树计算每个节点的几何信息。
 4. 渲染绘制（**重绘**）这个过程被叫做 Painting 或者 Repaint。即根据计算好的信息绘制整个页面。
+
+::: tip
+[经典面试题：从 URL 输入到页面展现到底发生什么？ - 知乎](https://zhuanlan.zhihu.com/p/57895541)
+:::
 
 ## 重绘和重排
 重排**一定**会重绘，重绘**不一定**有重排
@@ -472,23 +479,30 @@ for(var i = 0; i < 5; i++){
 console.log(new Date(), i)
 ```
 
-### 问题：“newArray”中有哪些元素？
+### `b`和`a.x`的输出结果是什么
+```javascript
+let a = {n: 1};
+let b = a;
+a.x = a = {n: 2};
 ```
+
+### 问题：`newArray`中有哪些元素？
+```javascript
 var array = [];
 for(var i = 0; i <3; i++) {
  array.push(() => i);
 }
 
 var newArray = array.map(el => el());
-console.log(newArray); // ??[3, 3, 3]
+console.log(newArray); // [3, 3, 3]
 ```
 
 在for循环的头部声明带有var关键字的变量会为该变量创建单个绑定（存储空间）。  让我们再看一次for循环。
-```
+```javascript
 // 误解作用域:认为存在块级作用域
 var array = [];
 for (var i = 0; i < 3; i++) {
-  // 三个箭头函数体中的每个`'i'`都指向相同的绑定，
+  // 三个箭头函数体中的每个'i'都指向相同的绑定，
   // 这就是为什么它们在循环结束时返回相同的值'3'。
   array.push(() => i);
 }
@@ -496,7 +510,7 @@ var newArray = array.map(el => el());
 console.log(newArray); // [3, 3, 3]
 ```
 如果使用 let 声明一个具有块级作用域的变量，则为每个循环迭代创建一个新的绑定。// 使用ES6块级作用域
-```
+```javascript
 var array = [];
 for (let i = 0; i < 3; i++) {
   // 这一次，每个'i'指的是一个新的的绑定，并保留当前的值。
@@ -507,7 +521,7 @@ var newArray = array.map(el => el());
 console.log(newArray); // [0, 1, 2]
 ```
 解决这个问题的另一种方法是使用闭包。let array = [];
-```
+```javascript
 for (var i = 0; i < 3; i++) {
 
   array[i] = (function(x) {
@@ -520,7 +534,7 @@ const newArray = array.map(el => el());
 console.log(newArray); // [0, 1, 2]
 ```
 
-### 问题：如果我们在浏览器控制台中运行'foo'函数，是否会导致堆栈溢出错误？
+### 问题：如果我们在浏览器控制台中运行foo函数，是否会导致堆栈溢出错误？
 ```
 function foo() {
   setTimeout(foo, 0); // 是否存在堆栈溢出错误?
@@ -535,16 +549,17 @@ JavaScript并发模型基于“事件循环”。 当我们说“浏览器是 JS
 ![eventLoop2.jpg](./images/eventLoop2.jpg)
 
 JS调用栈是后进先出(LIFO)的。引擎每次从堆栈中取出一个函数，然后从上到下依次运行代码。每当它遇到一些异步代码，如setTimeout，它就把它交给Web API(箭头1)。因此，每当事件被触发时，callback 都会被发送到任务队列（箭头2）。事件循环(Event loop)不断地监视任务队列(Task Queue)，并按它们排队的顺序一次处理一个回调。每当调用堆栈(call stack)为空时，Event loop获取回调并将其放入堆栈(stack )(箭头3)中进行处理。请记住，如果调用堆栈不是空的，则事件循环不会将任何回调推入堆栈。现在，有了这些知识，让我们来回答前面提到的问题：
-步骤
-调用 foo()会将foo函数放入调用堆栈(call stack)。
-在处理内部代码时，JS引擎遇到setTimeout。
-然后将foo回调函数传递给WebAPIs(箭头1)并从函数返回，调用堆栈再次为空
-计时器被设置为0，因此foo将被发送到任务队列`<Task Queue>`(箭头2)。
-由于调用堆栈是空的，事件循环将选择foo回调并将其推入调用堆栈进行处理。
-进程再次重复，堆栈不会溢出。
+
+步骤：
+1. 调用 foo()会将foo函数放入调用堆栈(call stack)。
+2. 在处理内部代码时，JS引擎遇到setTimeout。
+3. 然后将foo回调函数传递给WebAPIs(箭头1)并从函数返回，调用堆栈再次为空
+4. 计时器被设置为0，因此foo将被发送到任务队列`<Task Queue>`(箭头2)。
+5. 由于调用堆栈是空的，事件循环将选择foo回调并将其推入调用堆栈进行处理。
+6. 进程再次重复，堆栈不会溢出。
 
 ### 问题: 如果在控制台中运行以下函数，页面(选项卡)的 UI 是否仍然响应
-```
+```javascript
 function foo() {
   return Promise.resolve().then(foo);
 };
@@ -557,7 +572,7 @@ foo()
 
 主要的区别在于他们的执行方式。宏任务在单个循环周期中一次一个地推入堆栈，但是微任务队列总是在执行后返回到事件循环之前清空。因此，如果你以处理条目的速度向这个队列添加条目，那么你就永远在处理微任务。只有当微任务队列为空时，事件循环才会重新渲染页面、现在，当你在控制台中运行以下代码段
 
-```
+```javascript
 function foo() {
   return Promise.resolve().then(foo);
 };
@@ -640,6 +655,7 @@ for(let prop in obj) {
 ```
 
 ## 前端与后端交互，如何实现数据加密
+利用`jsencrypt.js`进行RSA加密【非对称加密算法】、MD5
 
 ## 前端在混合开发中的交互
 
@@ -735,7 +751,7 @@ window.jQuery = window.$ = jQuery
 
 ## 实现函数
 
-### 1.获取获取深层对象的值
+### 1.获取深层对象的值
 ```js
 /**
  * @param obj 需要获取值的目标对象
@@ -787,4 +803,93 @@ function setDeepObjectValue (obj, keyString, value) {
     }, obj)
 }
 setDeepObjectValue(obj, 'organization.config.id', 5) 
+```
+
+## Promise 原理
+```javascript
+class MyPromise {
+  constructor(fn) {
+    this.callbacks = [];
+    this.state = "PENDING";
+    this.value = null;
+
+    fn(this._resolve.bind(this), this._reject.bind(this));
+  }
+
+  then(onFulfilled, onRejected) {
+    return new MyPromise((resolve, reject) =>
+      this._handle({
+        onFulfilled: onFulfilled || null,
+        onRejected: onRejected || null,
+        resolve,
+        reject,
+      })
+    );
+  }
+
+  catch(onRejected) {
+    return this.then(null, onRejected);
+  }
+
+  _handle(callback) {
+    if (this.state === "PENDING") {
+      this.callbacks.push(callback);
+
+      return;
+    }
+
+    let cb =
+      this.state === "FULFILLED" ? callback.onFulfilled : callback.onRejected;
+    if (!cb) {
+      cb = this.state === "FULFILLED" ? callback.resolve : callback.reject;
+      cb(this.value);
+
+      return;
+    }
+
+    let ret;
+
+    try {
+      ret = cb(this.value);
+      cb = this.state === "FULFILLED" ? callback.resolve : callback.reject;
+    } catch (error) {
+      ret = error;
+      cb = callback.reject;
+    } finally {
+      cb(ret);
+    }
+  }
+
+  _resolve(value) {
+    if (value && (typeof value === "object" || typeof value === "function")) {
+      let then = value.then;
+
+      if (typeof then === "function") {
+        then.call(value, this._resolve.bind(this), this._reject.bind(this));
+
+        return;
+      }
+    }
+
+    this.state === "FULFILLED";
+    this.value = value;
+    this.callbacks.forEach((fn) => this._handle(fn));
+  }
+
+  _reject(error) {
+    this.state === "REJECTED";
+    this.value = error;
+    this.callbacks.forEach((fn) => this._handle(fn));
+  }
+}
+
+const p1 = new Promise(function (resolve, reject) {
+  setTimeout(() => reject(new Error("fail")), 3000);
+});
+
+const p2 = new Promise(function (resolve, reject) {
+  setTimeout(() => resolve(p1), 1000);
+});
+
+p2.then((result) => console.log(result)).catch((error) => console.log(error));
 ```

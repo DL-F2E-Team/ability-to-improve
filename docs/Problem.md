@@ -1,4 +1,4 @@
-# the work problems
+# 工作问题记录
 
 ## 1. react、vue router history 模式配置
 history 模式需要 nginx 做配置。
@@ -67,4 +67,11 @@ server {
     rewrite ^.*$ /index.html last;
   }
 }
+```
+
+## 5. echarts@5.2 在 vue3.0二次进入页面无法渲染
+```vue
+onBeforeUnmount(() => {
+    state.myChart.dispose();
+});
 ```
