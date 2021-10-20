@@ -29,12 +29,18 @@ article_header:
   - 减少通过JavaScript代码修改元素样式，尽量使用修改class名方式操作样式或动画；
   - 动画尽量使用在绝对定位或固定定位的元素上；
   - 隐藏在屏幕外，或在页面滚动时，尽量停止动画；
-* CDN
-* gzip压缩
+* CDN 分发
+* minify / gzip压缩
 * 减少HTTP请求（CSS sprite，文件压缩合并）
 * 延迟加载defer async
 * 防抖和节流
 * webpack 
+* 预解析 DNS
+* 缓存
+  - HTTP 协议缓存请求
+  - 离线缓存 manifest
+  - 离线数据缓存 localStorage
+* 服务端渲染  
 
 ## SEO优化
 - 合理的`title`、`description`、`keywords`

@@ -1,4 +1,5 @@
 # BOM
+[[TOC]]
 
 ## 跨域
 狭义的跨域指游览器同源策略限制，通常我们所说的便是狭义跨域。
@@ -183,7 +184,7 @@ key (index) —— 获取某个索引的key
 强缓存 => 协商缓存（304） => 最新资源
 * 强缓存
   - Expires
-  - Cache-control
+  - Cache-control **优先级更高**
 * 协商缓存
   - Last-Modified/If-Modified-Since
   - Etag/If-None-Match
