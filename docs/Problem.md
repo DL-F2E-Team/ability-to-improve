@@ -1,4 +1,4 @@
-# 工作问题记录
+# 工作记录
 
 ## 1. react、vue router history 模式配置
 history 模式需要 nginx 做配置。
@@ -75,3 +75,10 @@ onBeforeUnmount(() => {
     state.myChart.dispose();
 });
 ```
+
+## 6. 跨域问题
+1. 服务端配置**跨域资源共享**后依旧不生效
+
+原因：可能是前端配置了自定义的 headers `'X-Requested-With': 'XMLHttpRequest',`
+
+`'X-Requested-With': 'XMLHttpRequest',`：是告诉游览器这是一个 Ajax 异步请求。

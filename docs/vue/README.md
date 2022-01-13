@@ -1,4 +1,7 @@
 # Vuejs@2.x
+
+[[toc]]
+
 `Vuejs`是单向数据流和双向数据绑定的。
 
 `Vuejs`的两个核心：
@@ -236,7 +239,7 @@ V代表View，负责系统向用户的展示，主要由HTML及JSP等完成；
 9. `sync`
 10. `observable`
 
-## `Vue.observable`
+## Vue.observable
 轻量级的`Vuex`，用作状态管理
 
 ```js
@@ -701,7 +704,8 @@ watch: {
 }
 ```
 
-## 自定义指令(v-check, v-focus) 的方法有哪些? 它有哪些钩子函数? 还有哪些钩子函数参数
+## 自定义指令
+### 自定义指令(v-check, v-focus) 的方法有哪些? 它有哪些钩子函数? 还有哪些钩子函数参数
 全局定义指令：在 vue 对象的 directive 方法里面有两个参数, 一个是指令名称, 另一个是函数。
 组件内定义指令：directives
 钩子函数: bind(绑定事件出发)、inserted(节点插入时候触发)、update(组件内相关更新)

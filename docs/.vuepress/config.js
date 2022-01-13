@@ -5,7 +5,7 @@ module.exports = {
   markdown: {
     lineNumbers: true,
     toc: {
-      includeLevel: [1, 2]
+      includeLevel: [2, 3]
     },
   },
   themeConfig: {
